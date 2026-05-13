@@ -24,6 +24,32 @@ body {
   overflow: hidden;
 }
 
+.role-banner {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  z-index: 10;
+}
+
+.role-banner.principal {
+  background: rgba(74, 222, 128, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(74, 222, 128, 0.4);
+}
+
+.role-banner.mirror {
+  background: rgba(167, 139, 250, 0.15);
+  color: #a78bfa;
+  border: 1px solid rgba(167, 139, 250, 0.4);
+}
+
 .container {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px);
@@ -167,23 +193,6 @@ body {
   margin-top: 12px;
 }
 
-.warning-banner {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255, 170, 59, 0.15);
-  border: 1px solid rgba(255, 170, 59, 0.4);
-  color: #ffaa3b;
-  padding: 8px 16px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-family: 'JetBrains Mono', monospace;
-  display: none;
-}
-
-.warning-banner.show { display: block; }
-
 @media (max-width: 600px) {
   .clock { font-size: 36px; }
   .pin-code { font-size: 32px; }
@@ -193,8 +202,8 @@ body {
 </head>
 <body>
 
-<div class="warning-banner" id="warningBanner">
-  ⚠ Esta pestaña debe permanecer visible
+<div class="role-banner principal" id="roleBanner">
+  ◉ INICIANDO
 </div>
 
 <div class="container">
@@ -217,7 +226,7 @@ body {
     <div class="progress-bar">
       <div class="progress-fill" id="progressFill" style="width: 100%"></div>
     </div>
-    <div class="progress-text" id="progressText">Nuevo código en 30s</div>
+    <div class="progress-text" id="progressText">Esperando código...</div>
   </div>
 
   <div class="error" id="errorMsg"></div>
@@ -233,44 +242,48 @@ body {
 const SUPABASE_URL = 'https://raykzuncciaaouleezmx.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJheWt6dW5jY2lhYW91bGVlem14Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NjQ2MzIsImV4cCI6MjA5NDI0MDYzMn0.w50r_YXzMPZjM8BqJYkP1yA5i_sl4yz3i7io_Fx6dX8';
 const BRANCH_ID = '11111111-1111-1111-1111-111111111111';
-const TOKEN_DURATION_MS = 60000; // 60 segundos (más tolerante)
+const TOKEN_DURATION_MS = 60000; // 60 segundos
+const HEARTBEAT_INTERVAL_MS = 5000; // 5 segundos
+const LEADER_TIMEOUT_MS = 20000; // 20 segundos sin heartbeat = líder muerto
+
+// ID único de esta pestaña (cambia cada vez que se abre)
+const TAB_ID = 'tab_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10);
 
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+let isLeader = false;
 let currentToken = null;
 let lastTokenTime = 0;
 let qrInstance = null;
-let wakeLock = null;
+let realtimeChannel = null;
 
-// ============ WAKE LOCK ============
-// Pide al navegador que no duerma la pantalla
-async function requestWakeLock() {
-  try {
-    if ('wakeLock' in navigator) {
-      wakeLock = await navigator.wakeLock.request('screen');
-      console.log('Wake Lock activado');
-    }
-  } catch (err) {
-    console.log('Wake Lock no disponible:', err);
+// ============ UI HELPERS ============
+function setRoleBanner(role) {
+  const banner = document.getElementById('roleBanner');
+  if (role === 'principal') {
+    banner.className = 'role-banner principal';
+    banner.textContent = '◉ PANTALLA PRINCIPAL';
+  } else if (role === 'mirror') {
+    banner.className = 'role-banner mirror';
+    banner.textContent = '🔁 PANTALLA ESPEJO';
+  } else {
+    banner.className = 'role-banner principal';
+    banner.textContent = '◉ ' + role;
   }
 }
 
-// ============ DETECCIÓN DE PESTAÑA INACTIVA ============
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible') {
-    // La pestaña volvió al frente
-    document.getElementById('warningBanner').classList.remove('show');
-    console.log('Pestaña visible - verificando token');
-    checkAndRefreshToken();
-    requestWakeLock();
+function setStatus(connected, role) {
+  const dot = document.getElementById('statusDot');
+  const text = document.getElementById('statusText');
+  if (connected) {
+    dot.className = 'status-dot';
+    text.textContent = 'Conectado (' + (role === 'principal' ? 'Principal' : 'Espejo') + ')';
   } else {
-    // La pestaña pasó a segundo plano
-    document.getElementById('warningBanner').classList.add('show');
-    console.log('Pestaña oculta');
+    dot.className = 'status-dot error';
+    text.textContent = 'Sin conexión';
   }
-});
+}
 
-// ============ RELOJ ============
 function updateClock() {
   const now = new Date();
   document.getElementById('clock').textContent =
@@ -279,21 +292,6 @@ function updateClock() {
     now.toLocaleDateString('es-AR', {
       weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
     });
-}
-
-function generateRandomCode(length) {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let result = '';
-  for (let i = 0; i < length; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return result;
-}
-
-function generatePin() {
-  let pin = '';
-  for (let i = 0; i < 6; i++) pin += Math.floor(Math.random() * 10);
-  return pin;
 }
 
 function renderQR(text) {
@@ -313,20 +311,33 @@ function renderQR(text) {
   }
 }
 
-function setStatus(connected) {
-  const dot = document.getElementById('statusDot');
-  const text = document.getElementById('statusText');
-  if (connected) {
-    dot.className = 'status-dot';
-    text.textContent = 'Conectado';
-  } else {
-    dot.className = 'status-dot error';
-    text.textContent = 'Sin conexión';
+function displayToken(qrCode, pinCode, createdAt) {
+  renderQR(qrCode);
+  document.getElementById('pinCode').textContent = pinCode;
+  if (createdAt) {
+    lastTokenTime = new Date(createdAt).getTime();
   }
 }
 
-// ============ GENERAR NUEVO TOKEN ============
+function generateRandomCode(length) {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+}
+
+function generatePin() {
+  let pin = '';
+  for (let i = 0; i < 6; i++) pin += Math.floor(Math.random() * 10);
+  return pin;
+}
+
+// ============ LIDER: GENERAR TOKEN ============
 async function generateNewToken() {
+  if (!isLeader) return;
+
   try {
     const qrCode = generateRandomCode(16);
     const pinCode = generatePin();
@@ -354,23 +365,110 @@ async function generateNewToken() {
 
     currentToken = data;
     lastTokenTime = Date.now();
-
-    renderQR(qrCode);
-    document.getElementById('pinCode').textContent = pinCode;
+    displayToken(qrCode, pinCode);
+    setStatus(true, 'principal');
     document.getElementById('errorMsg').textContent = '';
-    setStatus(true);
 
-    console.log('Token generado:', pinCode, 'expira en', TOKEN_DURATION_MS / 1000, 's');
+    console.log('[LIDER] Token generado:', pinCode);
 
   } catch (err) {
     console.error('Error generando token:', err);
-    document.getElementById('errorMsg').textContent =
-      'Error: ' + err.message;
-    setStatus(false);
+    document.getElementById('errorMsg').textContent = 'Error: ' + err.message;
+    setStatus(false, 'principal');
   }
 }
 
-// ============ TIMER PRINCIPAL (basado en tiempo real) ============
+// ============ SEGUIDOR: CARGAR TOKEN ACTUAL ============
+async function loadCurrentToken() {
+  try {
+    const { data: tokens, error } = await db
+      .from('active_tokens')
+      .select('*')
+      .eq('branch_id', BRANCH_ID)
+      .order('created_at', { ascending: false })
+      .limit(1);
+
+    if (error) throw error;
+
+    if (tokens && tokens.length > 0) {
+      const t = tokens[0];
+      displayToken(t.qr_code, t.pin_code, t.created_at);
+      setStatus(true, isLeader ? 'principal' : 'mirror');
+    }
+  } catch (err) {
+    console.error('Error cargando token:', err);
+  }
+}
+
+// ============ HEARTBEAT (Líder) ============
+async function sendHeartbeat() {
+  if (!isLeader) return;
+
+  try {
+    await db
+      .from('display_leaders')
+      .upsert({
+        branch_id: BRANCH_ID,
+        leader_id: TAB_ID,
+        last_heartbeat: new Date().toISOString()
+      });
+  } catch (err) {
+    console.error('Error en heartbeat:', err);
+  }
+}
+
+// ============ ELECCIÓN DE LÍDER ============
+async function checkAndElectLeader() {
+  try {
+    const { data, error } = await db
+      .from('display_leaders')
+      .select('*')
+      .eq('branch_id', BRANCH_ID)
+      .single();
+
+    const now = Date.now();
+
+    // Si NO hay líder o el líder está muerto, intento ser líder
+    const noLeader = !data;
+    const leaderDead = data && 
+      (now - new Date(data.last_heartbeat).getTime()) > LEADER_TIMEOUT_MS;
+    const iAmLeader = data && data.leader_id === TAB_ID;
+
+    if (noLeader || leaderDead || iAmLeader) {
+      // Intentar ser líder
+      const { error: claimError } = await db
+        .from('display_leaders')
+        .upsert({
+          branch_id: BRANCH_ID,
+          leader_id: TAB_ID,
+          last_heartbeat: new Date().toISOString()
+        });
+
+      if (!claimError) {
+        if (!isLeader) {
+          console.log('[ELECCIÓN] Soy el nuevo líder');
+          isLeader = true;
+          setRoleBanner('principal');
+          setStatus(true, 'principal');
+          await generateNewToken();
+        }
+      }
+    } else {
+      // Hay un líder vivo y no soy yo
+      if (isLeader) {
+        console.log('[ELECCIÓN] Perdí el liderazgo');
+      }
+      isLeader = false;
+      setRoleBanner('mirror');
+      setStatus(true, 'mirror');
+      await loadCurrentToken();
+    }
+  } catch (err) {
+    console.error('Error en elección:', err);
+  }
+}
+
+// ============ TIMER PRINCIPAL ============
 function tickTimer() {
   updateClock();
 
@@ -385,18 +483,29 @@ function tickTimer() {
   document.getElementById('progressText').textContent =
     `Nuevo código en ${seconds}s`;
 
-  // Si el token expiró o está por expirar, generar uno nuevo
-  if (remaining <= 0) {
+  // Si soy líder y el token expiró, generar uno nuevo
+  if (isLeader && remaining <= 0) {
     generateNewToken();
   }
 }
 
-// ============ VERIFICAR Y REFRESCAR SI HACE FALTA ============
-async function checkAndRefreshToken() {
-  // Si el token tiene más de 50 segundos, generar uno nuevo
-  if (!lastTokenTime || (Date.now() - lastTokenTime) > 50000) {
-    await generateNewToken();
-  }
+// ============ REALTIME: ESCUCHAR CAMBIOS ============
+function setupRealtime() {
+  realtimeChannel = db
+    .channel('qr-changes')
+    .on('postgres_changes', {
+      event: 'INSERT',
+      schema: 'public',
+      table: 'active_tokens',
+      filter: `branch_id=eq.${BRANCH_ID}`
+    }, (payload) => {
+      // Si soy mirror, actualizar pantalla
+      if (!isLeader && payload.new) {
+        displayToken(payload.new.qr_code, payload.new.pin_code, payload.new.created_at);
+        console.log('[MIRROR] Token actualizado:', payload.new.pin_code);
+      }
+    })
+    .subscribe();
 }
 
 // ============ IP PÚBLICA ============
@@ -408,14 +517,15 @@ async function updatePublicIP() {
 
     document.getElementById('ipInfo').textContent = `IP local: ${ip}`;
 
-    await db
-      .from('branches')
-      .update({
-        public_ip: ip,
-        ip_last_updated: new Date().toISOString()
-      })
-      .eq('id', BRANCH_ID);
-
+    if (isLeader) {
+      await db
+        .from('branches')
+        .update({
+          public_ip: ip,
+          ip_last_updated: new Date().toISOString()
+        })
+        .eq('id', BRANCH_ID);
+    }
   } catch (err) {
     console.error('No se pudo detectar la IP:', err);
   }
@@ -437,19 +547,49 @@ async function loadBranchInfo() {
   }
 }
 
+// ============ LIBERAR LIDERAZGO AL CERRAR ============
+window.addEventListener('beforeunload', async () => {
+  if (isLeader) {
+    try {
+      // Marcar heartbeat muy viejo para que otro tome el liderazgo rápido
+      await db
+        .from('display_leaders')
+        .update({
+          last_heartbeat: new Date(Date.now() - LEADER_TIMEOUT_MS - 1000).toISOString()
+        })
+        .eq('branch_id', BRANCH_ID)
+        .eq('leader_id', TAB_ID);
+    } catch (err) {
+      // ignorar
+    }
+  }
+});
+
 // ============ INIT ============
 async function init() {
   updateClock();
   await loadBranchInfo();
   await updatePublicIP();
-  await generateNewToken();
-  await requestWakeLock();
 
-  // Timer que corre cada segundo
+  // Setup realtime para recibir tokens nuevos
+  setupRealtime();
+
+  // Primera elección de líder
+  await checkAndElectLeader();
+
+  // Si no soy líder, cargar el token actual
+  if (!isLeader) {
+    await loadCurrentToken();
+  }
+
+  // Timer del reloj y barra
   setInterval(tickTimer, 1000);
 
-  // Verificación de respaldo cada 5 segundos (por si setInterval falla)
-  setInterval(checkAndRefreshToken, 5000);
+  // Heartbeat (solo si soy líder)
+  setInterval(sendHeartbeat, HEARTBEAT_INTERVAL_MS);
+
+  // Re-elección cada 10 segundos (por si el líder murió)
+  setInterval(checkAndElectLeader, 10000);
 
   // Actualizar IP cada hora
   setInterval(updatePublicIP, 3600000);
