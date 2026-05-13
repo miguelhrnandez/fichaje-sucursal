@@ -939,33 +939,68 @@ function submitPin() {
   processCode(pinValue, 'pin');
 }
 
-// ============ PROCESAR CÓDIGO ============
+// ============ PROCESAR CÓDIGO (VERSIÓN MEJORADA CON LOGS) ============
 async function processCode(code, method) {
   showLoading(true);
 
   try {
-    // 1. Verificar que el código existe y está activo
+    const codeUpper = code.toString().trim().toUpperCase();
+    const codeLower = code.toString().trim();
+
+    console.log('================================');
+    console.log('PROCESANDO CÓDIGO:', code);
+    console.log('Método:', method);
+
+    // 1. Buscar TODOS los tokens de la sucursal (sin filtrar por expiración local)
     const { data: tokens, error: tokError } = await db
       .from('active_tokens')
       .select('*')
-      .eq('branch_id', BRANCH_ID)
-      .gt('expires_at', new Date().toISOString());
+      .eq('branch_id', BRANCH_ID);
 
-    if (tokError) throw tokError;
+    if (tokError) {
+      console.error('Error consultando tokens:', tokError);
+      throw tokError;
+    }
 
+    console.log('Tokens encontrados en BD:', tokens.length);
+    tokens.forEach((t, i) => {
+      console.log(`  Token ${i+1}: PIN=${t.pin_code}, QR=${t.qr_code}, Expira=${t.expires_at}`);
+    });
+
+    // Buscar coincidencia
     const validToken = tokens.find(t => 
-      t.qr_code === code || t.pin_code === code
+      t.qr_code.toUpperCase() === codeUpper || 
+      t.pin_code === codeLower
     );
 
     if (!validToken) {
-      throw new Error('Código inválido o expirado. Probá con uno nuevo.');
+      console.error('❌ No se encontró ningún token que coincida con:', code);
+      throw new Error('Código inválido. Verificá el PIN en la pantalla del local.');
     }
+
+    console.log('✓ Token encontrado:', validToken);
+
+    // Verificar expiración con la hora del servidor (con margen de tolerancia)
+    const expiresAt = new Date(validToken.expires_at);
+    const now = new Date();
+    const diffSeconds = (expiresAt - now) / 1000;
+    
+    console.log('Segundos hasta expirar:', diffSeconds);
+    
+    if (diffSeconds < -10) {
+      console.error('❌ Token expirado hace', Math.abs(diffSeconds), 'segundos');
+      throw new Error('Código expirado. Probá con uno nuevo.');
+    }
+
+    console.log('✓ Token válido');
 
     // 2. Verificar IP (que esté en el WiFi del local)
     const ipMatch = await verifyIP();
     if (!ipMatch) {
       throw new Error('No estás en la red WiFi del local. Conectate al WiFi y volvé a intentar.');
     }
+
+    console.log('✓ IP verificada');
 
     // 3. Registrar fichaje
     const roleToUse = nextAction === 'in' ? selectedRole : (lastPunch?.role || selectedRole);
@@ -984,6 +1019,9 @@ async function processCode(code, method) {
 
     if (punchError) throw punchError;
 
+    console.log('✓ FICHAJE REGISTRADO');
+    console.log('================================');
+
     showLoading(false);
     showResult(true, nextAction);
 
@@ -991,6 +1029,7 @@ async function processCode(code, method) {
     updateStatus();
 
   } catch (err) {
+    console.error('❌ ERROR:', err);
     showLoading(false);
     showResult(false, null, err.message);
   }
@@ -998,25 +1037,28 @@ async function processCode(code, method) {
 
 async function verifyIP() {
   try {
-    // Obtener IP del cliente
     const ipResp = await fetch('https://api.ipify.org?format=json');
     const ipData = await ipResp.json();
     clientIP = ipData.ip;
 
-    // Obtener IP de la sucursal
+    console.log('IP cliente:', clientIP);
+
     const { data: branch } = await db
       .from('branches')
       .select('public_ip')
       .eq('id', BRANCH_ID)
       .single();
 
+    console.log('IP sucursal:', branch?.public_ip);
+
     if (!branch || !branch.public_ip) {
-      // Si la sucursal no tiene IP guardada, no podemos verificar
-      console.warn('Sucursal sin IP configurada');
-      return true; // Por ahora permitimos, después lo hacemos obligatorio
+      console.warn('Sucursal sin IP configurada - permitiendo');
+      return true;
     }
 
-    return clientIP === branch.public_ip;
+    const match = clientIP === branch.public_ip;
+    console.log('IPs coinciden?', match);
+    return match;
   } catch (err) {
     console.error('Error verificando IP:', err);
     return false;
