@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fichaje</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: #fff;
+  min-height: 100vh;
+  padding: 16px;
+}
+
+.screen {
+  max-width: 440px;
+  margin: 0 auto;
+  min-height: calc(100vh - 32px);
+  display: flex;
+  flex-direction: column;
+}
+
+.screen.hidden { display: none; }
+
+/* ====== LOGIN ====== */
+.login-header {
+  text-align: center;
+  margin: 40px 0 30px;
+}
+
+.logo {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, #4ade80, #22d3ee);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 28px;
+}
+
+.login-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  letter-spacing: -0.02em;
+}
+
+.login-subtitle {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.employees-list {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.employee-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 14px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  color: #fff;
+  font-family: inherit;
+  text-align: left;
+  transition: all 0.15s;
+  margin-bottom: 6px;
+}
+
+.employee-btn:last-child { margin-bottom: 0; }
+
+.employee-btn:hover, .employee-btn.selected {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(74, 222, 128, 0.4);
+}
+
+.emp-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #4ade80, #22d3ee);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  flex-shrink: 0;
+  color: #0f3460;
+}
+
+.emp-info { flex: 1; }
+.emp-name { font-size: 15px; font-weight: 500; }
+.emp-role { font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-top: 2px; }
+
+.badge-manager {
+  font-size: 9px;
+  padding: 3px 7px;
+  background: rgba(255, 179, 128, 0.2);
+  color: #ffb380;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.password-section {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.password-section label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 8px;
+}
+
+input {
+  width: 100%;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  outline: none;
+}
+
+input:focus { border-color: #4ade80; }
+
+.btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #4ade80, #22d3ee);
+  color: #0f3460;
+  border: none;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 14px;
+  transition: transform 0.15s;
+}
+
+.btn:hover { transform: translateY(-1px); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-weight: 500;
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+  color: #fff;
+}
+
+.error-box {
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  color: #ff6b6b;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-top: 12px;
+  display: none;
+}
+
+.error-box.show { display: block; }
+
+/* ====== DASHBOARD ====== */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+}
+
+.user-info { display: flex; align-items: center; gap: 12px; }
+.user-name { font-weight: 500; font-size: 15px; }
+.user-role { font-size: 12px; color: rgba(255, 255, 255, 0.5); }
+
+.logout-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 8px 14px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.clock-display {
+  text-align: center;
+  padding: 30px 0;
+}
+
+.clock-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 56px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #fff, #a0a0ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.clock-date {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: capitalize;
+  margin-top: 4px;
+}
+
+.status-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.status-pill.in {
+  background: rgba(74, 222, 128, 0.2);
+  color: #4ade80;
+}
+
+.status-pill.out {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.status-pill.in .status-dot { animation: pulse 2s infinite; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.action-btn {
+  width: 100%;
+  padding: 28px;
+  border: none;
+  border-radius: 20px;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 24px 0;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.action-btn.in {
+  background: linear-gradient(135deg, #4ade80, #22d3ee);
+  color: #0f3460;
+  box-shadow: 0 10px 30px rgba(74, 222, 128, 0.3);
+}
+
+.action-btn.out {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+  box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+}
+
+.role-section {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 18px;
+  margin-top: 16px;
+}
+
+.role-section h3 {
+  font-size: 13px;
+  margin-bottom: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.role-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.role-chip {
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.role-chip.active {
+  background: rgba(74, 222, 128, 0.15);
+  border-color: #4ade80;
+  color: #4ade80;
+}
+
+/* ====== SCANNER ====== */
+.scanner-screen {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 100;
+  display: none;
+  flex-direction: column;
+}
+
+.scanner-screen.show { display: flex; }
+
+.scanner-header {
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.scanner-title { font-size: 16px; font-weight: 600; }
+.close-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 28px;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+}
+
+.video-wrap {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+#scanner-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.scan-frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 250px;
+  height: 250px;
+  border: 3px solid #4ade80;
+  border-radius: 20px;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+}
+
+.scanner-hint {
+  position: absolute;
+  bottom: 100px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #fff;
+  font-size: 14px;
+  padding: 0 20px;
+}
+
+.scanner-footer {
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.9);
+}
+
+/* ====== PIN ENTRY ====== */
+.pin-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.pin-display {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 16px 24px;
+  margin: 20px 0;
+  min-width: 240px;
+  text-align: center;
+}
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  width: 100%;
+  max-width: 280px;
+}
+
+.key {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 18px;
+  font-family: inherit;
+  font-size: 22px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+}
+
+.key:active { background: rgba(255, 255, 255, 0.15); }
+.key.fn { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
+
+/* ====== RESULT MODAL ====== */
+.result-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.result-overlay.show { display: flex; }
+
+.result-card {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 32px;
+  max-width: 360px;
+  width: 100%;
+  text-align: center;
+}
+
+.result-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.result-card.success { border-color: rgba(74, 222, 128, 0.4); }
+.result-card.error { border-color: rgba(255, 107, 107, 0.4); }
+
+.result-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.result-message {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 24px;
+}
+
+.result-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  color: #4ade80;
+  margin-bottom: 24px;
+}
+
+/* ====== LOADING ====== */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+  backdrop-filter: blur(10px);
+}
+
+.loading-overlay.show { display: flex; }
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #4ade80;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<div class="screen" id="loginScreen">
+  <div class="login-header">
+    <div class="logo">⏱</div>
+    <div class="login-title">Fichaje</div>
+    <div class="login-subtitle">Seleccioná tu nombre</div>
+  </div>
+
+  <div class="employees-list" id="employeesList"></div>
+
+  <div class="password-section" id="passwordSection" style="display:none;">
+    <label>Contraseña</label>
+    <input type="password" id="passwordInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    <div class="error-box" id="loginError">Contraseña incorrecta</div>
+    <button class="btn" onclick="doLogin()">Ingresar</button>
+    <button class="btn btn-ghost" onclick="cancelLogin()" style="margin-top:8px;">Cancelar</button>
+  </div>
+</div>
+
+<!-- ============ DASHBOARD ============ -->
+<div class="screen hidden" id="dashboardScreen">
+  <div class="topbar">
+    <div class="user-info">
+      <div class="emp-avatar" id="userAvatar">--</div>
+      <div>
+        <div class="user-name" id="userName">--</div>
+        <div class="user-role" id="userRole">--</div>
+      </div>
+    </div>
+    <button class="logout-btn" onclick="logout()">Salir</button>
+  </div>
+
+  <div class="clock-display">
+    <div class="clock-time" id="clockTime">--:--:--</div>
+    <div class="clock-date" id="clockDate">--</div>
+  </div>
+
+  <div class="status-pill out" id="statusPill">
+    <div class="status-dot"></div>
+    <span id="statusText">Fuera de turno</span>
+  </div>
+
+  <div class="role-section" id="roleSection">
+    <h3>Puesto que vas a cubrir</h3>
+    <div class="role-chips" id="roleChips"></div>
+  </div>
+
+  <button class="action-btn in" id="actionBtn" onclick="startFichaje()">
+    FICHAR ENTRADA
+  </button>
+</div>
+
+<!-- ============ SCANNER ============ -->
+<div class="scanner-screen" id="scannerScreen">
+  <div class="scanner-header">
+    <div class="scanner-title">Escaneá el QR</div>
+    <button class="close-btn" onclick="closeScanner()">×</button>
+  </div>
+  <div class="video-wrap">
+    <video id="scanner-video" autoplay playsinline muted></video>
+    <canvas id="scanner-canvas" style="display:none;"></canvas>
+    <div class="scan-frame"></div>
+    <div class="scanner-hint">Apuntá la cámara al QR de la pantalla del local</div>
+  </div>
+  <div class="scanner-footer">
+    <button class="btn btn-ghost" onclick="switchToPIN()">Usar PIN en su lugar</button>
+  </div>
+</div>
+
+<!-- ============ PIN ENTRY ============ -->
+<div class="screen hidden" id="pinScreen">
+  <div class="topbar">
+    <div style="font-weight:600;">Ingresá el PIN</div>
+    <button class="logout-btn" onclick="closePIN()">Cancelar</button>
+  </div>
+  <div class="pin-screen">
+    <p style="text-align:center;color:rgba(255,255,255,0.6);font-size:14px;">
+      Mirá el PIN en la pantalla del local
+    </p>
+    <div class="pin-display" id="pinDisplay">______</div>
+    <div class="keypad">
+      <button class="key" onclick="addPin('1')">1</button>
+      <button class="key" onclick="addPin('2')">2</button>
+      <button class="key" onclick="addPin('3')">3</button>
+      <button class="key" onclick="addPin('4')">4</button>
+      <button class="key" onclick="addPin('5')">5</button>
+      <button class="key" onclick="addPin('6')">6</button>
+      <button class="key" onclick="addPin('7')">7</button>
+      <button class="key" onclick="addPin('8')">8</button>
+      <button class="key" onclick="addPin('9')">9</button>
+      <button class="key fn" onclick="clearPin()">C</button>
+      <button class="key" onclick="addPin('0')">0</button>
+      <button class="key fn" onclick="submitPin()">✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ RESULT ============ -->
+<div class="result-overlay" id="resultOverlay">
+  <div class="result-card" id="resultCard">
+    <div class="result-icon" id="resultIcon">✓</div>
+    <div class="result-title" id="resultTitle">Fichaje exitoso</div>
+    <div class="result-message" id="resultMessage">--</div>
+    <div class="result-time" id="resultTime">--:--:--</div>
+    <button class="btn" onclick="closeResult()">Continuar</button>
+  </div>
+</div>
+
+<!-- ============ LOADING ============ -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://raykzuncciaaouleezmx.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJheWt6dW5jY2lhYW91bGVlem14Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NjQ2MzIsImV4cCI6MjA5NDI0MDYzMn0.w50r_YXzMPZjM8BqJYkP1yA5i_sl4yz3i7io_Fx6dX8';
+const BRANCH_ID = '11111111-1111-1111-1111-111111111111';
+
+const ROLES = [
+  { id: 'cajera', label: 'Cajera' },
+  { id: 'encargada', label: 'Encargada' },
+  { id: 'reponedora', label: 'Reponedora' },
+  { id: 'limpieza', label: 'Limpieza' },
+  { id: 'atencion', label: 'Atención al cliente' }
+];
+
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let currentUser = null;
+let selectedEmployee = null;
+let employees = [];
+let selectedRole = 'cajera';
+let lastPunch = null;
+let nextAction = 'in';
+let pinValue = '';
+let scannerStream = null;
+let scannerLoop = null;
+let clientIP = null;
+
+// ============ RELOJ ============
+function updateClock() {
+  const now = new Date();
+  const el1 = document.getElementById('clockTime');
+  const el2 = document.getElementById('clockDate');
+  if (el1) {
+    el1.textContent = now.toLocaleTimeString('es-AR', { hour12: false });
+    el2.textContent = now.toLocaleDateString('es-AR', {
+      weekday: 'long', day: 'numeric', month: 'long'
+    });
+  }
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// ============ LOGIN ============
+async function loadEmployees() {
+  try {
+    const { data, error } = await db
+      .from('employees')
+      .select('*')
+      .eq('active', true)
+      .order('full_name');
+
+    if (error) throw error;
+    employees = data;
+    renderEmployees();
+  } catch (err) {
+    console.error('Error cargando empleadas:', err);
+  }
+}
+
+function renderEmployees() {
+  const list = document.getElementById('employeesList');
+  list.innerHTML = employees.map(emp => `
+    <button class="employee-btn" onclick="selectEmployee('${emp.id}')" data-id="${emp.id}">
+      <div class="emp-avatar">${getInitials(emp.full_name)}</div>
+      <div class="emp-info">
+        <div class="emp-name">${emp.full_name}</div>
+        <div class="emp-role">${ROLES.find(r => r.id === emp.default_role)?.label || emp.default_role}</div>
+      </div>
+      ${emp.is_manager ? '<div class="badge-manager">Jefa</div>' : ''}
+    </button>
+  `).join('');
+}
+
+function getInitials(name) {
+  return name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
+}
+
+function selectEmployee(id) {
+  selectedEmployee = employees.find(e => e.id === id);
+  document.querySelectorAll('.employee-btn').forEach(b => {
+    b.classList.toggle('selected', b.dataset.id === id);
+  });
+  document.getElementById('passwordSection').style.display = 'block';
+  document.getElementById('passwordInput').focus();
+}
+
+function cancelLogin() {
+  selectedEmployee = null;
+  document.getElementById('passwordSection').style.display = 'none';
+  document.getElementById('passwordInput').value = '';
+  document.getElementById('loginError').classList.remove('show');
+  document.querySelectorAll('.employee-btn').forEach(b => b.classList.remove('selected'));
+}
+
+async function doLogin() {
+  if (!selectedEmployee) return;
+  const pass = document.getElementById('passwordInput').value;
+
+  if (pass !== selectedEmployee.password) {
+    document.getElementById('loginError').classList.add('show');
+    return;
+  }
+
+  currentUser = selectedEmployee;
+  selectedRole = currentUser.default_role;
+  await loadLastPunch();
+  showDashboard();
+}
+
+function logout() {
+  currentUser = null;
+  selectedEmployee = null;
+  document.getElementById('loginScreen').classList.remove('hidden');
+  document.getElementById('dashboardScreen').classList.add('hidden');
+  cancelLogin();
+}
+
+// ============ DASHBOARD ============
+function showDashboard() {
+  document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('dashboardScreen').classList.remove('hidden');
+  document.getElementById('userAvatar').textContent = getInitials(currentUser.full_name);
+  document.getElementById('userName').textContent = currentUser.full_name;
+  document.getElementById('userRole').textContent = 
+    ROLES.find(r => r.id === currentUser.default_role)?.label || currentUser.default_role;
+  renderRoles();
+  updateStatus();
+}
+
+function renderRoles() {
+  const container = document.getElementById('roleChips');
+  container.innerHTML = ROLES.map(r => `
+    <button class="role-chip ${r.id === selectedRole ? 'active' : ''}" 
+            onclick="setRole('${r.id}')">${r.label}</button>
+  `).join('');
+}
+
+function setRole(id) {
+  selectedRole = id;
+  renderRoles();
+}
+
+async function loadLastPunch() {
+  try {
+    const { data } = await db
+      .from('punches')
+      .select('*')
+      .eq('employee_id', currentUser.id)
+      .order('timestamp', { ascending: false })
+      .limit(1);
+
+    lastPunch = data && data[0] ? data[0] : null;
+
+    if (lastPunch && lastPunch.punch_type === 'in') {
+      const hoursAgo = (Date.now() - new Date(lastPunch.timestamp).getTime()) / 3600000;
+      if (hoursAgo > 16) lastPunch = null;
+    }
+  } catch (err) {
+    console.error('Error cargando último fichaje:', err);
+  }
+}
+
+function updateStatus() {
+  const pill = document.getElementById('statusPill');
+  const text = document.getElementById('statusText');
+  const btn = document.getElementById('actionBtn');
+  const roleSec = document.getElementById('roleSection');
+
+  if (lastPunch && lastPunch.punch_type === 'in') {
+    nextAction = 'out';
+    pill.className = 'status-pill in';
+    text.textContent = 'Trabajando — ' + (ROLES.find(r => r.id === lastPunch.role)?.label || lastPunch.role);
+    btn.className = 'action-btn out';
+    btn.textContent = 'FICHAR SALIDA';
+    roleSec.style.display = 'none';
+  } else {
+    nextAction = 'in';
+    pill.className = 'status-pill out';
+    text.textContent = 'Fuera de turno';
+    btn.className = 'action-btn in';
+    btn.textContent = 'FICHAR ENTRADA';
+    roleSec.style.display = 'block';
+  }
+}
+
+// ============ FICHAJE ============
+function startFichaje() {
+  openScanner();
+}
+
+// ============ SCANNER QR ============
+async function openScanner() {
+  document.getElementById('scannerScreen').classList.add('show');
+
+  try {
+    scannerStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: 'environment' }
+    });
+    const video = document.getElementById('scanner-video');
+    video.srcObject = scannerStream;
+    video.onloadedmetadata = () => {
+      video.play();
+      scanLoop();
+    };
+  } catch (err) {
+    console.error('Error abriendo cámara:', err);
+    closeScanner();
+    switchToPIN();
+  }
+}
+
+function scanLoop() {
+  const video = document.getElementById('scanner-video');
+  const canvas = document.getElementById('scanner-canvas');
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+  scannerLoop = setInterval(() => {
+    if (video.readyState !== video.HAVE_ENOUGH_DATA) return;
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+    if (code && code.data) {
+      clearInterval(scannerLoop);
+      scannerLoop = null;
+      processCode(code.data, 'qr');
+    }
+  }, 200);
+}
+
+function closeScanner() {
+  document.getElementById('scannerScreen').classList.remove('show');
+  if (scannerStream) {
+    scannerStream.getTracks().forEach(t => t.stop());
+    scannerStream = null;
+  }
+  if (scannerLoop) {
+    clearInterval(scannerLoop);
+    scannerLoop = null;
+  }
+}
+
+// ============ PIN ============
+function switchToPIN() {
+  closeScanner();
+  document.getElementById('dashboardScreen').classList.add('hidden');
+  document.getElementById('pinScreen').classList.remove('hidden');
+  pinValue = '';
+  updatePinDisplay();
+}
+
+function closePIN() {
+  document.getElementById('pinScreen').classList.add('hidden');
+  document.getElementById('dashboardScreen').classList.remove('hidden');
+  pinValue = '';
+}
+
+function addPin(digit) {
+  if (pinValue.length >= 6) return;
+  pinValue += digit;
+  updatePinDisplay();
+  if (pinValue.length === 6) {
+    setTimeout(submitPin, 300);
+  }
+}
+
+function clearPin() {
+  pinValue = '';
+  updatePinDisplay();
+}
+
+function updatePinDisplay() {
+  const display = document.getElementById('pinDisplay');
+  let str = '';
+  for (let i = 0; i < 6; i++) {
+    str += i < pinValue.length ? pinValue[i] : '_';
+  }
+  display.textContent = str;
+}
+
+function submitPin() {
+  if (pinValue.length !== 6) return;
+  closePIN();
+  processCode(pinValue, 'pin');
+}
+
+// ============ PROCESAR CÓDIGO ============
+async function processCode(code, method) {
+  showLoading(true);
+
+  try {
+    // 1. Verificar que el código existe y está activo
+    const { data: tokens, error: tokError } = await db
+      .from('active_tokens')
+      .select('*')
+      .eq('branch_id', BRANCH_ID)
+      .gt('expires_at', new Date().toISOString());
+
+    if (tokError) throw tokError;
+
+    const validToken = tokens.find(t => 
+      t.qr_code === code || t.pin_code === code
+    );
+
+    if (!validToken) {
+      throw new Error('Código inválido o expirado. Probá con uno nuevo.');
+    }
+
+    // 2. Verificar IP (que esté en el WiFi del local)
+    const ipMatch = await verifyIP();
+    if (!ipMatch) {
+      throw new Error('No estás en la red WiFi del local. Conectate al WiFi y volvé a intentar.');
+    }
+
+    // 3. Registrar fichaje
+    const roleToUse = nextAction === 'in' ? selectedRole : (lastPunch?.role || selectedRole);
+
+    const { error: punchError } = await db
+      .from('punches')
+      .insert({
+        employee_id: currentUser.id,
+        branch_id: BRANCH_ID,
+        punch_type: nextAction,
+        role: roleToUse,
+        method: method,
+        client_ip: clientIP,
+        ip_verified: true
+      });
+
+    if (punchError) throw punchError;
+
+    showLoading(false);
+    showResult(true, nextAction);
+
+    await loadLastPunch();
+    updateStatus();
+
+  } catch (err) {
+    showLoading(false);
+    showResult(false, null, err.message);
+  }
+}
+
+async function verifyIP() {
+  try {
+    // Obtener IP del cliente
+    const ipResp = await fetch('https://api.ipify.org?format=json');
+    const ipData = await ipResp.json();
+    clientIP = ipData.ip;
+
+    // Obtener IP de la sucursal
+    const { data: branch } = await db
+      .from('branches')
+      .select('public_ip')
+      .eq('id', BRANCH_ID)
+      .single();
+
+    if (!branch || !branch.public_ip) {
+      // Si la sucursal no tiene IP guardada, no podemos verificar
+      console.warn('Sucursal sin IP configurada');
+      return true; // Por ahora permitimos, después lo hacemos obligatorio
+    }
+
+    return clientIP === branch.public_ip;
+  } catch (err) {
+    console.error('Error verificando IP:', err);
+    return false;
+  }
+}
+
+// ============ RESULTADO ============
+function showResult(success, action, errorMsg) {
+  const card = document.getElementById('resultCard');
+  const icon = document.getElementById('resultIcon');
+  const title = document.getElementById('resultTitle');
+  const message = document.getElementById('resultMessage');
+  const time = document.getElementById('resultTime');
+
+  if (success) {
+    card.className = 'result-card success';
+    icon.textContent = '✓';
+    title.textContent = action === 'in' ? '¡Entrada registrada!' : '¡Salida registrada!';
+    message.textContent = `${currentUser.full_name} — ${ROLES.find(r => r.id === selectedRole)?.label}`;
+    time.textContent = new Date().toLocaleTimeString('es-AR', { hour12: false });
+  } else {
+    card.className = 'result-card error';
+    icon.textContent = '✕';
+    title.textContent = 'No se pudo fichar';
+    message.textContent = errorMsg || 'Error desconocido';
+    time.textContent = '';
+  }
+
+  document.getElementById('resultOverlay').classList.add('show');
+}
+
+function closeResult() {
+  document.getElementById('resultOverlay').classList.remove('show');
+}
+
+function showLoading(show) {
+  document.getElementById('loadingOverlay').classList.toggle('show', show);
+}
+
+// ============ INIT ============
+loadEmployees();
+</script>
+
+</body>
+</html>
