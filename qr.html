@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sistema de Fichaje - Pantalla QR</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<!-- ✅ Cambiado: davidshimjs/qrcodejs es el más confiable para HTML plano -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
 
@@ -71,7 +72,9 @@ body {
   display: inline-block;
 }
 
+/* ✅ qrcodejs genera un div con una imagen adentro, no un canvas */
 #qrcode { display: block; }
+#qrcode img { display: block; }
 
 .pin-section {
   margin-top: 20px;
@@ -146,6 +149,8 @@ body {
   animation: pulse 2s infinite;
 }
 
+.status-dot.error { background: #ff6b6b; animation: none; }
+
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.4; }
@@ -181,7 +186,8 @@ body {
   </div>
 
   <div class="qr-container">
-    <canvas id="qrcode"></canvas>
+    <!-- ✅ qrcodejs necesita un div, no un canvas -->
+    <div id="qrcode"></div>
   </div>
 
   <div class="pin-section">
@@ -201,8 +207,8 @@ body {
 </div>
 
 <div class="status">
-  <div class="status-dot"></div>
-  <span id="statusText">Conectado</span>
+  <div class="status-dot" id="statusDot"></div>
+  <span id="statusText">Conectando...</span>
 </div>
 
 <script>
@@ -214,6 +220,7 @@ const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 let currentToken = null;
 let secondsLeft = 30;
+let qrInstance = null; // ✅ guardamos la instancia para poder reusar/limpiar
 
 function updateClock() {
   const now = new Date();
@@ -242,6 +249,38 @@ function generatePin() {
   return pin;
 }
 
+function renderQR(text) {
+  const container = document.getElementById('qrcode');
+
+  if (qrInstance) {
+    // ✅ Si ya existe una instancia, actualizamos el contenido
+    qrInstance.clear();
+    qrInstance.makeCode(text);
+  } else {
+    // ✅ Primera vez: creamos la instancia
+    qrInstance = new QRCode(container, {
+      text: text,
+      width: 260,
+      height: 260,
+      colorDark: '#1a1a2e',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  }
+}
+
+function setStatus(connected) {
+  const dot = document.getElementById('statusDot');
+  const text = document.getElementById('statusText');
+  if (connected) {
+    dot.className = 'status-dot';
+    text.textContent = 'Conectado';
+  } else {
+    dot.className = 'status-dot error';
+    text.textContent = 'Sin conexión';
+  }
+}
+
 async function generateNewToken() {
   try {
     const qrCode = generateRandomCode(16);
@@ -268,28 +307,26 @@ async function generateNewToken() {
 
     currentToken = data;
 
-    QRCode.toCanvas(document.getElementById('qrcode'), qrCode, {
-      width: 280,
-      margin: 1,
-      color: { dark: '#1a1a2e', light: '#ffffff' }
-    });
+    // ✅ Usamos nuestra función que maneja tanto primer render como updates
+    renderQR(qrCode);
 
     document.getElementById('pinCode').textContent = pinCode;
     secondsLeft = 30;
     document.getElementById('progressFill').style.width = '100%';
     document.getElementById('errorMsg').textContent = '';
-    document.getElementById('statusText').textContent = 'Conectado';
+    setStatus(true);
 
   } catch (err) {
-    console.error('Error:', err);
+    console.error('Error generando token:', err);
     document.getElementById('errorMsg').textContent =
       'Error de conexión: ' + err.message;
-    document.getElementById('statusText').textContent = 'Sin conexión';
+    setStatus(false);
   }
 }
 
 function updateProgress() {
   secondsLeft--;
+  if (secondsLeft < 0) secondsLeft = 0;
   const percentage = (secondsLeft / 30) * 100;
   document.getElementById('progressFill').style.width = percentage + '%';
   document.getElementById('progressText').textContent =
