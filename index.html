@@ -914,9 +914,8 @@ function addPin(digit) {
   if (pinValue.length >= 6) return;
   pinValue += digit;
   updatePinDisplay();
-  if (pinValue.length === 6) {
-    setTimeout(submitPin, 300);
-  }
+  // ya NO ejecutamos submitPin automáticamente
+  // el usuario debe presionar ✓ explícitamente
 }
 
 function clearPin() {
@@ -935,8 +934,10 @@ function updatePinDisplay() {
 
 function submitPin() {
   if (pinValue.length !== 6) return;
+  const codeToProcess = pinValue; // ← guardamos el valor antes de cerrar
+  pinValue = ''; // ← limpiamos para evitar doble ejecución
   closePIN();
-  processCode(pinValue, 'pin');
+  processCode(codeToProcess, 'pin');
 }
 
 // ============ PROCESAR CÓDIGO (VERSIÓN MEJORADA CON LOGS) ============
