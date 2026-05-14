@@ -1049,7 +1049,10 @@ function calculateBreakMinutesToday() {
 }
 
 function formatMinutes(mins) {
-  if (mins < 1) return '< 1 min';
+  if (mins < 1) {
+    const seconds = Math.round(mins * 60);
+    return `${seconds}s`;
+  }
   const h = Math.floor(mins / 60);
   const m = Math.floor(mins % 60);
   if (h === 0) return `${m} min`;
