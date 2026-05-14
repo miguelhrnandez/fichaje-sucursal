@@ -1062,9 +1062,40 @@ function showDaySummary() {
   
   const entrada = todayPunches.find(p => p.punch_type === 'in');
   const salida = todayPunches.filter(p => p.punch_type === 'out').pop();
-  const breaksCount = todayPunches.filter(p => p.punch_type === 'break_start').length;
-  const breakMins = calculateBreakMinutesToday();
   const prodMins = calculateProductiveMinutesToday();
+
+  // Construir lista de breaks (pares de break_start + break_end)
+  const breaks = [];
+  let currentStart = null;
+  for (const p of todayPunches) {
+    if (p.punch_type === 'break_start') {
+      currentStart = p;
+    } else if (p.punch_type === 'break_end' && currentStart) {
+      const startTime = new Date(currentStart.timestamp);
+      const endTime = new Date(p.timestamp);
+      const durationMin = (endTime - startTime) / 60000;
+      breaks.push({
+        startTime: startTime,
+        endTime: endTime,
+        durationMin: durationMin,
+        ongoing: false
+      });
+      currentStart = null;
+    }
+  }
+  // Si hay un break en curso (sin terminar todavía)
+  if (currentStart) {
+    const startTime = new Date(currentStart.timestamp);
+    const durationMin = (Date.now() - startTime.getTime()) / 60000;
+    breaks.push({
+      startTime: startTime,
+      endTime: null,
+      durationMin: durationMin,
+      ongoing: true
+    });
+  }
+
+  const totalBreakMins = breaks.reduce((sum, b) => sum + b.durationMin, 0);
 
   let html = '';
   if (entrada) {
@@ -1073,10 +1104,38 @@ function showDaySummary() {
   if (salida) {
     html += `<div class="summary-row"><span class="label">Salida</span><span>${formatTime(salida.timestamp)}</span></div>`;
   }
-  if (breaksCount > 0) {
-    html += `<div class="summary-row"><span class="label">Breaks (${breaksCount})</span><span>${formatMinutes(breakMins)}</span></div>`;
+  
+  // Sección de breaks detallada
+  if (breaks.length > 0) {
+    html += `<div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.1);">`;
+    html += `<div class="label" style="margin-bottom:6px;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;">BREAKS (${breaks.length})</div>`;
+    
+    breaks.forEach((b, i) => {
+      const endStr = b.ongoing 
+        ? `<span style="color:#fbbf24;">en curso</span>` 
+        : formatTime(b.endTime);
+      html += `
+        <div class="summary-row" style="font-size:12px;">
+          <span class="label">Break ${i + 1}</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;">
+            ${formatTime(b.startTime)} → ${endStr} 
+            <span style="color:rgba(255,255,255,0.5);">(${formatMinutes(b.durationMin)})</span>
+          </span>
+        </div>`;
+    });
+    
+    html += `<div class="summary-row" style="font-size:12px;margin-top:4px;color:rgba(255,255,255,0.6);">
+      <span class="label">Total breaks</span>
+      <span>${formatMinutes(totalBreakMins)}</span>
+    </div>`;
+    html += `</div>`;
   }
-  html += `<div class="summary-row" style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.1);"><span class="label">Productivas</span><span style="color:#4ade80;font-weight:600;">${formatMinutes(prodMins)}</span></div>`;
+  
+  // Línea de productivas
+  html += `<div class="summary-row" style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.1);">
+    <span class="label">Productivas</span>
+    <span style="color:#4ade80;font-weight:600;">${formatMinutes(prodMins)}</span>
+  </div>`;
   
   content.innerHTML = html;
   summary.style.display = 'block';
