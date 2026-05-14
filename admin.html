@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel de Jefa - Fichaje</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: #fff;
+  min-height: 100vh;
+}
+
+.screen { display: none; }
+.screen.show { display: block; }
+
+/* ====== LOGIN ====== */
+.login-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.login-box {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  border-radius: 24px;
+  padding: 40px 32px;
+  max-width: 380px;
+  width: 100%;
+}
+
+.logo-admin {
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 32px;
+}
+
+.login-title {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  letter-spacing: -0.02em;
+}
+
+.login-subtitle {
+  text-align: center;
+  font-size: 13px;
+  color: rgba(167, 139, 250, 0.8);
+  margin-bottom: 28px;
+  letter-spacing: 0.05em;
+}
+
+.field-group { margin-bottom: 14px; }
+
+.field-label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 8px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+input, select {
+  width: 100%;
+  padding: 13px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  outline: none;
+}
+
+input:focus, select:focus { border-color: #a78bfa; }
+select option { background: #1a1a2e; }
+
+.btn-admin {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 14px;
+}
+
+.btn-admin:hover { transform: translateY(-1px); }
+.btn-admin:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.btn-ghost {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.error-box {
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  color: #ff6b6b;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-top: 12px;
+  display: none;
+}
+
+.error-box.show { display: block; }
+
+/* ====== ADMIN LAYOUT ====== */
+.admin-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(167, 139, 250, 0.2);
+}
+
+.admin-title-block { display: flex; align-items: center; gap: 14px; }
+
+.admin-title h1 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.admin-title .subtitle {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 2px;
+}
+
+.admin-actions { display: flex; gap: 10px; }
+
+.back-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 10px 16px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.back-btn:hover { color: #fff; border-color: rgba(255, 255, 255, 0.3); }
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 4px;
+  border-radius: 12px;
+  overflow-x: auto;
+}
+
+.tab {
+  background: transparent;
+  border: none;
+  padding: 10px 18px;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+.tab.active {
+  background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+  color: #fff;
+}
+
+.tab.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* ====== FILTERS ====== */
+.filters-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.filter-select {
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.month-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.month-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 6px;
+  font-family: inherit;
+}
+
+.month-btn:hover { background: rgba(255, 255, 255, 0.05); }
+.month-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.month-display {
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: capitalize;
+  min-width: 130px;
+  text-align: center;
+}
+
+/* ====== TABLE ====== */
+.group-section {
+  margin-bottom: 28px;
+}
+
+.group-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(167, 139, 250, 0.2);
+}
+
+.group-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #a78bfa;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.group-count {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.summary-table th {
+  text-align: left;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-family: 'JetBrains Mono', monospace;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.summary-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.summary-table tr:last-child td { border-bottom: none; }
+.summary-table tr.clickable { cursor: pointer; transition: background 0.15s; }
+.summary-table tr.clickable:hover td { background: rgba(167, 139, 250, 0.08); }
+
+.cell-name { font-weight: 500; }
+.cell-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+}
+.cell-num.green { color: #4ade80; }
+.cell-num.muted { color: rgba(255, 255, 255, 0.5); }
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 14px;
+}
+
+/* ====== DETAIL MODAL ====== */
+.detail-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 200;
+  padding: 20px;
+  overflow-y: auto;
+  backdrop-filter: blur(8px);
+}
+
+.detail-overlay.show { display: flex; }
+
+.detail-card {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  border-radius: 20px;
+  padding: 28px;
+  max-width: 700px;
+  width: 100%;
+  margin: auto;
+}
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.detail-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.detail-subtitle {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.close-x {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  width: 32px;
+  height: 32px;
+  font-size: 18px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.detail-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.stat-box {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+}
+
+.stat-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: #a78bfa;
+}
+
+.stat-label {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+
+.day-row {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+}
+
+.day-row-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.day-date {
+  font-weight: 500;
+  text-transform: capitalize;
+  font-size: 14px;
+}
+
+.day-prod {
+  font-family: 'JetBrains Mono', monospace;
+  color: #4ade80;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.day-detail {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.day-detail .punch-pair {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+@media (max-width: 600px) {
+  .admin-wrap { padding: 14px; }
+  .detail-stats { grid-template-columns: repeat(2, 1fr); }
+  .summary-table { font-size: 12px; }
+  .summary-table th, .summary-table td { padding: 10px 8px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<div class="screen show" id="loginScreen">
+  <div class="login-wrap">
+    <div class="login-box">
+      <div class="logo-admin">⚙️</div>
+      <div class="login-title">Panel de Jefa</div>
+      <div class="login-subtitle">Acceso exclusivo</div>
+
+      <div class="field-group">
+        <label class="field-label">USUARIO</label>
+        <input type="text" id="usernameInput" placeholder="sramirez" autocapitalize="none">
+      </div>
+      <div class="field-group">
+        <label class="field-label">CONTRASEÑA</label>
+        <input type="password" id="passwordInput" placeholder="••••••••"
+               onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+
+      <div class="error-box" id="loginError"></div>
+
+      <button class="btn-admin" onclick="doLogin()">Ingresar</button>
+      <button class="btn-ghost" onclick="window.location.href='index.html'">← Volver a la app</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ADMIN ============ -->
+<div class="screen" id="adminScreen">
+  <div class="admin-wrap">
+    <div class="admin-header">
+      <div class="admin-title-block">
+        <div class="logo-admin" style="width:44px;height:44px;font-size:20px;">⚙️</div>
+        <div class="admin-title">
+          <h1>Panel de Jefa</h1>
+          <div class="subtitle" id="adminUserName">--</div>
+        </div>
+      </div>
+      <div class="admin-actions">
+        <a class="back-btn" href="index.html">← App</a>
+        <button class="back-btn" onclick="logout()">Salir</button>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('summary')">📊 Resumen</button>
+      <button class="tab disabled" title="Próxima sesión">📅 Horarios</button>
+      <button class="tab disabled" title="Próxima sesión">⚠ Alertas</button>
+      <button class="tab disabled" title="Próxima sesión">👥 Empleadas</button>
+      <button class="tab disabled" title="Próxima sesión">📝 Fichaje manual</button>
+      <button class="tab disabled" title="Próxima sesión">📥 Exportar</button>
+    </div>
+
+    <!-- Pestaña RESUMEN -->
+    <div class="tab-content active" id="tab-summary">
+      <div class="filters-bar">
+        <div class="filter-group">
+          <span class="filter-label">Puesto:</span>
+          <select class="filter-select" id="filterRole" onchange="renderSummary()">
+            <option value="all">Todos los puestos</option>
+            <option value="cajera">Cajeras</option>
+            <option value="encargada">Encargadas</option>
+            <option value="reponedora">Reponedoras</option>
+            <option value="limpieza">Limpieza</option>
+            <option value="atencion">Atención al cliente</option>
+            <option value="promotor">Promotores</option>
+          </select>
+        </div>
+        <div class="month-nav">
+          <button class="month-btn" onclick="changeMonth(-1)">◀</button>
+          <div class="month-display" id="monthDisplay">--</div>
+          <button class="month-btn" onclick="changeMonth(1)" id="nextMonthBtn">▶</button>
+        </div>
+      </div>
+
+      <div id="summaryContent">
+        <div class="empty-state">Cargando datos...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DETAIL MODAL ============ -->
+<div class="detail-overlay" id="detailOverlay">
+  <div class="detail-card">
+    <div class="detail-header">
+      <div>
+        <div class="detail-title" id="detailName">--</div>
+        <div class="detail-subtitle" id="detailSubtitle">--</div>
+      </div>
+      <button class="close-x" onclick="closeDetail()">×</button>
+    </div>
+    <div class="detail-stats" id="detailStats"></div>
+    <div id="detailDays"></div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://raykzuncciaaouleezmx.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJheWt6dW5jY2lhYW91bGVlem14Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NjQ2MzIsImV4cCI6MjA5NDI0MDYzMn0.w50r_YXzMPZjM8BqJYkP1yA5i_sl4yz3i7io_Fx6dX8';
+
+const ROLES = {
+  cajera: 'Cajeras',
+  encargada: 'Encargadas',
+  reponedora: 'Reponedoras',
+  limpieza: 'Limpieza',
+  atencion: 'Atención al cliente',
+  promotor: 'Promotores'
+};
+
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let currentUser = null;
+let employees = [];
+let allPunches = [];
+let viewMonth = new Date();
+viewMonth.setDate(1);
+
+// ============ LOGIN ============
+async function doLogin() {
+  const username = document.getElementById('usernameInput').value.trim().toLowerCase();
+  const password = document.getElementById('passwordInput').value;
+  const errBox = document.getElementById('loginError');
+  errBox.classList.remove('show');
+
+  if (!username || !password) {
+    errBox.textContent = 'Completá usuario y contraseña';
+    errBox.classList.add('show');
+    return;
+  }
+
+  try {
+    const { data } = await db
+      .from('employees')
+      .select('*')
+      .eq('username', username)
+      .eq('active', true)
+      .single();
+
+    if (!data || data.password !== password) {
+      errBox.textContent = 'Usuario o contraseña incorrectos';
+      errBox.classList.add('show');
+      return;
+    }
+
+    if (!data.is_manager && !data.is_admin) {
+      errBox.textContent = 'No tenés permisos para acceder a este panel';
+      errBox.classList.add('show');
+      return;
+    }
+
+    currentUser = data;
+    document.getElementById('loginScreen').classList.remove('show');
+    document.getElementById('adminScreen').classList.add('show');
+    document.getElementById('adminUserName').textContent = 
+      currentUser.full_name + (currentUser.is_admin ? ' · Admin' : ' · Jefa');
+
+    await loadAllData();
+    renderSummary();
+  } catch (err) {
+    console.error('Error en login:', err);
+    errBox.textContent = 'Error de conexión';
+    errBox.classList.add('show');
+  }
+}
+
+function logout() {
+  currentUser = null;
+  document.getElementById('adminScreen').classList.remove('show');
+  document.getElementById('loginScreen').classList.add('show');
+  document.getElementById('usernameInput').value = '';
+  document.getElementById('passwordInput').value = '';
+}
+
+// ============ TABS ============
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+// ============ DATA LOAD ============
+async function loadAllData() {
+  try {
+    const { data: emps } = await db
+      .from('employees')
+      .select('*')
+      .eq('active', true)
+      .order('full_name');
+
+    employees = emps || [];
+
+    // Cargar fichajes del mes en vista
+    const start = new Date(viewMonth);
+    const end = new Date(viewMonth);
+    end.setMonth(end.getMonth() + 1);
+
+    const { data: punches } = await db
+      .from('punches')
+      .select('*')
+      .gte('timestamp', start.toISOString())
+      .lt('timestamp', end.toISOString())
+      .order('timestamp', { ascending: true });
+
+    allPunches = punches || [];
+  } catch (err) {
+    console.error('Error cargando datos:', err);
+  }
+}
+
+// ============ MONTH NAV ============
+async function changeMonth(delta) {
+  viewMonth.setMonth(viewMonth.getMonth() + delta);
+  
+  // No permitir ir al futuro más allá del mes actual
+  const now = new Date();
+  now.setDate(1);
+  if (viewMonth > now) {
+    viewMonth = now;
+  }
+  
+  updateMonthDisplay();
+  await loadAllData();
+  renderSummary();
+}
+
+function updateMonthDisplay() {
+  const display = document.getElementById('monthDisplay');
+  display.textContent = viewMonth.toLocaleDateString('es-AR', { 
+    month: 'long', 
+    year: 'numeric' 
+  });
+
+  // Deshabilitar "siguiente" si es mes actual
+  const now = new Date();
+  now.setDate(1);
+  document.getElementById('nextMonthBtn').disabled = 
+    viewMonth.getFullYear() === now.getFullYear() && 
+    viewMonth.getMonth() === now.getMonth();
+}
+
+// ============ CÁLCULOS ============
+function getEmployeeStats(empId) {
+  const empPunches = allPunches.filter(p => p.employee_id === empId);
+  
+  let totalMin = 0;
+  let breakMin = 0;
+  let breakCount = 0;
+  const daysWorked = new Set();
+
+  // Procesar por día
+  const byDay = {};
+  empPunches.forEach(p => {
+    const day = new Date(p.timestamp).toDateString();
+    if (!byDay[day]) byDay[day] = [];
+    byDay[day].push(p);
+  });
+
+  for (const day in byDay) {
+    const dayPunches = byDay[day].sort((a, b) => 
+      new Date(a.timestamp) - new Date(b.timestamp)
+    );
+    
+    let dayWork = 0;
+    let dayBreak = 0;
+    let currentIn = null;
+    let currentBreakStart = null;
+    let hasIn = false;
+
+    for (const p of dayPunches) {
+      const t = new Date(p.timestamp).getTime();
+      
+      if (p.punch_type === 'in') {
+        currentIn = t;
+        hasIn = true;
+      } else if (p.punch_type === 'out' && currentIn) {
+        dayWork += (t - currentIn) / 60000;
+        currentIn = null;
+      } else if (p.punch_type === 'break_start') {
+        currentBreakStart = t;
+        breakCount++;
+      } else if (p.punch_type === 'break_end' && currentBreakStart) {
+        dayBreak += (t - currentBreakStart) / 60000;
+        currentBreakStart = null;
+      }
+    }
+
+    if (hasIn) daysWorked.add(day);
+    totalMin += dayWork;
+    breakMin += dayBreak;
+  }
+
+  return {
+    totalHours: totalMin / 60,
+    productiveHours: (totalMin - breakMin) / 60,
+    daysWorked: daysWorked.size,
+    breakCount: breakCount,
+    breakHours: breakMin / 60
+  };
+}
+
+function getDayDetails(empId) {
+  const empPunches = allPunches.filter(p => p.employee_id === empId);
+  const byDay = {};
+
+  empPunches.forEach(p => {
+    const day = new Date(p.timestamp).toDateString();
+    if (!byDay[day]) byDay[day] = [];
+    byDay[day].push(p);
+  });
+
+  const result = [];
+  for (const day in byDay) {
+    const dayPunches = byDay[day].sort((a, b) => 
+      new Date(a.timestamp) - new Date(b.timestamp)
+    );
+    
+    let dayWork = 0;
+    let dayBreak = 0;
+    let entrada = null;
+    let salida = null;
+    const breaks = [];
+    let currentIn = null;
+    let currentBreakStart = null;
+
+    for (const p of dayPunches) {
+      const t = new Date(p.timestamp).getTime();
+      
+      if (p.punch_type === 'in') {
+        currentIn = t;
+        if (!entrada) entrada = p.timestamp;
+      } else if (p.punch_type === 'out' && currentIn) {
+        dayWork += (t - currentIn) / 60000;
+        salida = p.timestamp;
+        currentIn = null;
+      } else if (p.punch_type === 'break_start') {
+        currentBreakStart = { time: t, ts: p.timestamp };
+      } else if (p.punch_type === 'break_end' && currentBreakStart) {
+        const dur = (t - currentBreakStart.time) / 60000;
+        dayBreak += dur;
+        breaks.push({
+          start: currentBreakStart.ts,
+          end: p.timestamp,
+          duration: dur
+        });
+        currentBreakStart = null;
+      }
+    }
+
+    result.push({
+      date: new Date(day),
+      entrada: entrada,
+      salida: salida,
+      totalMin: dayWork,
+      breakMin: dayBreak,
+      productiveMin: dayWork - dayBreak,
+      breaks: breaks,
+      role: dayPunches[0]?.role
+    });
+  }
+
+  return result.sort((a, b) => b.date - a.date);
+}
+
+// ============ RENDER ============
+function renderSummary() {
+  const filter = document.getElementById('filterRole').value;
+  const container = document.getElementById('summaryContent');
+
+  // Filtrar empleadas
+  let filtered = employees;
+  if (filter !== 'all') {
+    filtered = employees.filter(e => e.default_role === filter);
+  }
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="empty-state">No hay empleadas con este filtro</div>';
+    return;
+  }
+
+  // Agrupar por puesto
+  const groups = {};
+  filtered.forEach(e => {
+    if (!groups[e.default_role]) groups[e.default_role] = [];
+    groups[e.default_role].push(e);
+  });
+
+  let html = '';
+  const orderedRoles = ['cajera', 'encargada', 'reponedora', 'limpieza', 'atencion', 'promotor'];
+  
+  for (const role of orderedRoles) {
+    if (!groups[role]) continue;
+    const emps = groups[role];
+    
+    html += `
+      <div class="group-section">
+        <div class="group-header">
+          <div class="group-title">${ROLES[role] || role}</div>
+          <div class="group-count">${emps.length} ${emps.length === 1 ? 'empleada' : 'empleadas'}</div>
+        </div>
+        <table class="summary-table">
+          <thead>
+            <tr>
+              <th style="width:35%">Empleada</th>
+              <th>Días</th>
+              <th>Total</th>
+              <th>Productivas</th>
+              <th>Breaks</th>
+            </tr>
+          </thead>
+          <tbody>
+    `;
+    
+    for (const emp of emps) {
+      const stats = getEmployeeStats(emp.id);
+      const initials = emp.full_name.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
+      
+      html += `
+        <tr class="clickable" onclick="showDetail('${emp.id}')">
+          <td>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#a78bfa,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;">${initials}</div>
+              <div>
+                <div class="cell-name">${emp.full_name}</div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.4);">@${emp.username}</div>
+              </div>
+            </div>
+          </td>
+          <td class="cell-num">${stats.daysWorked}</td>
+          <td class="cell-num">${formatHours(stats.totalHours)}</td>
+          <td class="cell-num green">${formatHours(stats.productiveHours)}</td>
+          <td class="cell-num muted">${stats.breakCount} · ${formatHours(stats.breakHours)}</td>
+        </tr>
+      `;
+    }
+    
+    html += '</tbody></table></div>';
+  }
+
+  container.innerHTML = html;
+}
+
+function formatHours(hours) {
+  if (hours < 0.01) return '—';
+  const h = Math.floor(hours);
+  const m = Math.round((hours - h) * 60);
+  if (h === 0) return `${m}min`;
+  if (m === 0) return `${h}h`;
+  return `${h}h ${m}min`;
+}
+
+function formatTime(iso) {
+  return new Date(iso).toLocaleTimeString('es-AR', { 
+    hour: '2-digit', minute: '2-digit', hour12: false 
+  });
+}
+
+function formatDate(date) {
+  return date.toLocaleDateString('es-AR', { 
+    weekday: 'short', day: 'numeric', month: 'short' 
+  });
+}
+
+// ============ DETAIL ============
+function showDetail(empId) {
+  const emp = employees.find(e => e.id === empId);
+  if (!emp) return;
+
+  const stats = getEmployeeStats(empId);
+  const days = getDayDetails(empId);
+
+  document.getElementById('detailName').textContent = emp.full_name;
+  document.getElementById('detailSubtitle').textContent = 
+    `${ROLES[emp.default_role] || emp.default_role} · ${viewMonth.toLocaleDateString('es-AR', { month: 'long', year: 'numeric' })}`;
+
+  document.getElementById('detailStats').innerHTML = `
+    <div class="stat-box">
+      <div class="stat-value">${stats.daysWorked}</div>
+      <div class="stat-label">Días</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">${formatHours(stats.totalHours)}</div>
+      <div class="stat-label">Total</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value" style="color:#4ade80;">${formatHours(stats.productiveHours)}</div>
+      <div class="stat-label">Productivas</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">${stats.breakCount}</div>
+      <div class="stat-label">Breaks (${formatHours(stats.breakHours)})</div>
+    </div>
+  `;
+
+  const daysContainer = document.getElementById('detailDays');
+  if (days.length === 0) {
+    daysContainer.innerHTML = '<div class="empty-state">Sin fichajes este mes</div>';
+  } else {
+    daysContainer.innerHTML = days.map(d => {
+      let breaksHtml = '';
+      if (d.breaks.length > 0) {
+        breaksHtml = '<div style="margin-top:6px;font-size:11px;color:rgba(255,255,255,0.5);">';
+        breaksHtml += `Breaks: ${d.breaks.map(b => 
+          `${formatTime(b.start)}-${b.end ? formatTime(b.end) : '?'} (${Math.round(b.duration)}m)`
+        ).join(', ')}`;
+        breaksHtml += '</div>';
+      }
+      return `
+        <div class="day-row">
+          <div class="day-row-header">
+            <div class="day-date">${formatDate(d.date)}</div>
+            <div class="day-prod">${formatHours(d.productiveMin / 60)}</div>
+          </div>
+          <div class="day-detail">
+            <span class="punch-pair">↓ ${d.entrada ? formatTime(d.entrada) : '?'} → ↑ ${d.salida ? formatTime(d.salida) : '?'}</span>
+            <span style="color:rgba(255,255,255,0.4);">${ROLES[d.role] || d.role || ''}</span>
+          </div>
+          ${breaksHtml}
+        </div>
+      `;
+    }).join('');
+  }
+
+  document.getElementById('detailOverlay').classList.add('show');
+}
+
+function closeDetail() {
+  document.getElementById('detailOverlay').classList.remove('show');
+}
+
+// ============ INIT ============
+updateMonthDisplay();
+document.getElementById('usernameInput').focus();
+</script>
+
+</body>
+</html>
