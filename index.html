@@ -30,10 +30,7 @@ body {
 .screen.hidden { display: none; }
 
 /* ====== LOGIN ====== */
-.login-header {
-  text-align: center;
-  margin: 60px 0 40px;
-}
+.login-header { text-align: center; margin: 60px 0 40px; }
 
 .logo {
   width: 72px;
@@ -54,10 +51,7 @@ body {
   letter-spacing: -0.02em;
 }
 
-.login-subtitle {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.5);
-}
+.login-subtitle { font-size: 14px; color: rgba(255, 255, 255, 0.5); }
 
 .login-box {
   background: rgba(255, 255, 255, 0.05);
@@ -104,11 +98,7 @@ input:focus { border-color: #4ade80; }
   font-weight: 700;
   cursor: pointer;
   margin-top: 14px;
-  transition: transform 0.15s;
 }
-
-.btn:hover { transform: translateY(-1px); }
-.btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
 .btn-ghost {
   background: transparent;
@@ -156,14 +146,8 @@ input:focus { border-color: #4ade80; }
   color: #0f3460;
 }
 
-.emp-avatar.admin {
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-}
-
-.emp-avatar.manager {
-  background: linear-gradient(135deg, #a78bfa, #8b5cf6);
-  color: #fff;
-}
+.emp-avatar.admin { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+.emp-avatar.manager { background: linear-gradient(135deg, #a78bfa, #8b5cf6); color: #fff; }
 
 .logout-btn {
   background: rgba(255, 255, 255, 0.05);
@@ -204,10 +188,7 @@ input:focus { border-color: #4ade80; }
   text-decoration: none;
 }
 
-.clock-display {
-  text-align: center;
-  padding: 20px 0;
-}
+.clock-display { text-align: center; padding: 20px 0; }
 
 .clock-time {
   font-family: 'JetBrains Mono', monospace;
@@ -238,20 +219,9 @@ input:focus { border-color: #4ade80; }
   width: fit-content;
 }
 
-.status-pill.in {
-  background: rgba(74, 222, 128, 0.2);
-  color: #4ade80;
-}
-
-.status-pill.out {
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.status-pill.break {
-  background: rgba(251, 191, 36, 0.2);
-  color: #fbbf24;
-}
+.status-pill.in { background: rgba(74, 222, 128, 0.2); color: #4ade80; }
+.status-pill.out { background: rgba(255, 255, 255, 0.08); color: rgba(255, 255, 255, 0.7); }
+.status-pill.break { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
 
 .status-dot {
   width: 8px;
@@ -352,7 +322,6 @@ input:focus { border-color: #4ade80; }
 
 .summary-row .label { color: rgba(255, 255, 255, 0.5); }
 
-/* ====== ADMIN MESSAGE ====== */
 .admin-msg-box {
   text-align: center;
   padding: 40px 20px;
@@ -384,7 +353,6 @@ input:focus { border-color: #4ade80; }
   line-height: 1.5;
 }
 
-/* ====== SCANNER ====== */
 .scanner-screen {
   position: fixed;
   inset: 0;
@@ -405,6 +373,7 @@ input:focus { border-color: #4ade80; }
 }
 
 .scanner-title { font-size: 16px; font-weight: 600; }
+
 .close-btn {
   background: transparent;
   border: none;
@@ -451,57 +420,6 @@ input:focus { border-color: #4ade80; }
   padding: 0 20px;
 }
 
-.scanner-footer {
-  padding: 20px;
-  background: rgba(0, 0, 0, 0.9);
-}
-
-/* ====== PIN ENTRY ====== */
-.pin-screen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-}
-
-.pin-display {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 36px;
-  font-weight: 700;
-  letter-spacing: 0.3em;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 14px;
-  padding: 16px 24px;
-  margin: 20px 0;
-  min-width: 240px;
-  text-align: center;
-}
-
-.keypad {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  width: 100%;
-  max-width: 280px;
-}
-
-.key {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 14px;
-  padding: 18px;
-  font-family: inherit;
-  font-size: 22px;
-  font-weight: 600;
-  color: #fff;
-  cursor: pointer;
-}
-
-.key:active { background: rgba(255, 255, 255, 0.15); }
-.key.fn { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
-
-/* ====== RESULT MODAL ====== */
 .result-overlay {
   position: fixed;
   inset: 0;
@@ -551,7 +469,6 @@ input:focus { border-color: #4ade80; }
   margin-bottom: 24px;
 }
 
-/* ====== LOADING ====== */
 .loading-overlay {
   position: fixed;
   inset: 0;
@@ -581,7 +498,7 @@ input:focus { border-color: #4ade80; }
 </head>
 <body>
 
-<!-- ============ LOGIN ============ -->
+<!-- LOGIN -->
 <div class="screen" id="loginScreen">
   <div class="login-header">
     <div class="logo">⏱</div>
@@ -604,7 +521,7 @@ input:focus { border-color: #4ade80; }
   </div>
 </div>
 
-<!-- ============ DASHBOARD ============ -->
+<!-- DASHBOARD -->
 <div class="screen hidden" id="dashboardScreen">
   <div class="topbar">
     <div class="user-info">
@@ -627,7 +544,6 @@ input:focus { border-color: #4ade80; }
     <a class="admin-link" href="admin.html">Panel →</a>
   </div>
 
-  <!-- Mensaje especial para admin -->
   <div id="adminMessage" style="display:none;">
     <div class="admin-msg-box">
       <div class="admin-msg-icon">⚙️</div>
@@ -640,7 +556,6 @@ input:focus { border-color: #4ade80; }
     </div>
   </div>
 
-  <!-- Mensaje si la empleada NO tiene puesto asignado -->
   <div id="noRoleMessage" style="display:none;">
     <div class="admin-msg-box">
       <div class="admin-msg-icon" style="background:linear-gradient(135deg,#ff6b6b,#ee5a52);">⚠</div>
@@ -652,7 +567,6 @@ input:focus { border-color: #4ade80; }
     </div>
   </div>
 
-  <!-- Contenido normal del fichaje -->
   <div id="fichajeContent">
     <div class="clock-display">
       <div class="clock-time" id="clockTime">--:--:--</div>
@@ -669,7 +583,7 @@ input:focus { border-color: #4ade80; }
     </div>
 
     <div id="actionsContainer">
-      <button class="action-btn in" id="actionBtnIn" onclick="startFichaje('in')">
+      <button class="action-btn in" onclick="startFichaje('in')">
         FICHAR ENTRADA
       </button>
     </div>
@@ -681,52 +595,21 @@ input:focus { border-color: #4ade80; }
   </div>
 </div>
 
-<!-- ============ SCANNER ============ -->
+<!-- SCANNER -->
 <div class="scanner-screen" id="scannerScreen">
   <div class="scanner-header">
-    <div class="scanner-title">Escaneá el QR</div>
+    <div class="scanner-title">Escaneá el QR del local</div>
     <button class="close-btn" onclick="closeScanner()">×</button>
   </div>
   <div class="video-wrap">
     <video id="scanner-video" autoplay playsinline muted></video>
     <canvas id="scanner-canvas" style="display:none;"></canvas>
     <div class="scan-frame"></div>
-    <div class="scanner-hint">Apuntá la cámara al QR de la pantalla del local</div>
-  </div>
-  <div class="scanner-footer">
-    <button class="btn btn-ghost" onclick="switchToPIN()">Usar PIN en su lugar</button>
+    <div class="scanner-hint">Apuntá la cámara al QR que está en la pared</div>
   </div>
 </div>
 
-<!-- ============ PIN ENTRY ============ -->
-<div class="screen hidden" id="pinScreen">
-  <div class="topbar">
-    <div style="font-weight:600;">Ingresá el PIN</div>
-    <button class="logout-btn" onclick="closePIN()">Cancelar</button>
-  </div>
-  <div class="pin-screen">
-    <p style="text-align:center;color:rgba(255,255,255,0.6);font-size:14px;">
-      Mirá el PIN en la pantalla del local
-    </p>
-    <div class="pin-display" id="pinDisplay">______</div>
-    <div class="keypad">
-      <button class="key" onclick="addPin('1')">1</button>
-      <button class="key" onclick="addPin('2')">2</button>
-      <button class="key" onclick="addPin('3')">3</button>
-      <button class="key" onclick="addPin('4')">4</button>
-      <button class="key" onclick="addPin('5')">5</button>
-      <button class="key" onclick="addPin('6')">6</button>
-      <button class="key" onclick="addPin('7')">7</button>
-      <button class="key" onclick="addPin('8')">8</button>
-      <button class="key" onclick="addPin('9')">9</button>
-      <button class="key fn" onclick="clearPin()">C</button>
-      <button class="key" onclick="addPin('0')">0</button>
-      <button class="key fn" onclick="submitPin()">✓</button>
-    </div>
-  </div>
-</div>
-
-<!-- ============ RESULT ============ -->
+<!-- RESULT -->
 <div class="result-overlay" id="resultOverlay">
   <div class="result-card" id="resultCard">
     <div class="result-icon" id="resultIcon">✓</div>
@@ -737,7 +620,7 @@ input:focus { border-color: #4ade80; }
   </div>
 </div>
 
-<!-- ============ LOADING ============ -->
+<!-- LOADING -->
 <div class="loading-overlay" id="loadingOverlay">
   <div class="spinner"></div>
 </div>
@@ -747,9 +630,10 @@ const SUPABASE_URL = 'https://raykzuncciaaouleezmx.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJheWt6dW5jY2lhYW91bGVlem14Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NjQ2MzIsImV4cCI6MjA5NDI0MDYzMn0.w50r_YXzMPZjM8BqJYkP1yA5i_sl4yz3i7io_Fx6dX8';
 const BRANCH_ID = '11111111-1111-1111-1111-111111111111';
 
-// Mapeo de roles a etiquetas legibles
+// EL CÓDIGO FIJO DEL QR
+const QR_CODE_VALID = 'FICHAJE-SUCURSAL-2026';
+
 const ROLE_LABELS = {
-  // Empleadas
   recepcionista: 'Recepcionista',
   pretester: 'Pretester',
   host: 'Host',
@@ -757,12 +641,10 @@ const ROLE_LABELS = {
   presentador: 'Presentador',
   enrutador: 'Enrutador',
   asesor: 'Asesor PAI',
-  // Jefas
   jefa_promotoras: 'Jefa de Promotoras',
   jefa_salon: 'Jefa de Salón',
   jefe_presentacion: 'Jefe de Presentación',
   jefe_ventas: 'Jefe de Ventas',
-  // Admin
   admin: 'Administrador'
 };
 
@@ -772,13 +654,11 @@ let currentUser = null;
 let todayPunches = [];
 let currentState = 'out';
 let pendingAction = null;
-let pinValue = '';
 let scannerStream = null;
 let scannerLoop = null;
 let clientIP = null;
 let liveCounterInterval = null;
 
-// ============ RELOJ ============
 function updateClock() {
   const now = new Date();
   const el1 = document.getElementById('clockTime');
@@ -793,7 +673,6 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-// ============ LOGIN ============
 async function doLogin() {
   const username = document.getElementById('usernameInput').value.trim().toLowerCase();
   const password = document.getElementById('passwordInput').value;
@@ -813,13 +692,7 @@ async function doLogin() {
       .eq('active', true)
       .single();
 
-    if (error || !data) {
-      errBox.textContent = 'Usuario o contraseña incorrectos';
-      errBox.classList.add('show');
-      return;
-    }
-
-    if (data.password !== password) {
+    if (error || !data || data.password !== password) {
       errBox.textContent = 'Usuario o contraseña incorrectos';
       errBox.classList.add('show');
       return;
@@ -833,7 +706,7 @@ async function doLogin() {
     showDashboard();
   } catch (err) {
     console.error('Error en login:', err);
-    errBox.textContent = 'Error de conexión. Reintentá.';
+    errBox.textContent = 'Error de conexión.';
     errBox.classList.add('show');
   }
 }
@@ -842,21 +715,16 @@ function logout() {
   currentUser = null;
   todayPunches = [];
   currentState = 'out';
-  if (liveCounterInterval) {
-    clearInterval(liveCounterInterval);
-    liveCounterInterval = null;
-  }
+  if (liveCounterInterval) { clearInterval(liveCounterInterval); liveCounterInterval = null; }
   document.getElementById('loginScreen').classList.remove('hidden');
   document.getElementById('dashboardScreen').classList.add('hidden');
   document.getElementById('usernameInput').value = '';
 }
 
-// ============ DASHBOARD ============
 function showDashboard() {
   document.getElementById('loginScreen').classList.add('hidden');
   document.getElementById('dashboardScreen').classList.remove('hidden');
 
-  // Avatar e info del usuario
   const avatar = document.getElementById('userAvatar');
   avatar.textContent = getInitials(currentUser.full_name);
   avatar.className = 'emp-avatar';
@@ -864,10 +732,8 @@ function showDashboard() {
   else if (currentUser.is_manager) avatar.classList.add('manager');
 
   document.getElementById('userName').textContent = currentUser.full_name;
-  document.getElementById('userRole').textContent = 
-    ROLE_LABELS[currentUser.default_role] || currentUser.default_role;
+  document.getElementById('userRole').textContent = ROLE_LABELS[currentUser.default_role] || currentUser.default_role;
 
-  // CASO 1: Es ADMIN puro → mostrar mensaje, no ficha
   if (currentUser.is_admin && !currentUser.is_manager) {
     document.getElementById('adminBanner').style.display = 'none';
     document.getElementById('fichajeContent').style.display = 'none';
@@ -876,7 +742,6 @@ function showDashboard() {
     return;
   }
 
-  // CASO 2: NO tiene default_role asignado → bloquear
   if (!currentUser.default_role) {
     document.getElementById('adminBanner').style.display = 'none';
     document.getElementById('fichajeContent').style.display = 'none';
@@ -885,14 +750,9 @@ function showDashboard() {
     return;
   }
 
-  // CASO 3: Es JEFA → ficha + ve banner del panel
   if (currentUser.is_manager) {
-    document.getElementById('adminBannerTitle').textContent = 'Acceso de Jefa';
-    document.getElementById('adminBannerSubtitle').textContent = 'Podés gestionar al equipo';
     document.getElementById('adminBanner').style.display = 'flex';
-  } 
-  // CASO 4: Empleada normal → solo ficha
-  else {
+  } else {
     document.getElementById('adminBanner').style.display = 'none';
   }
 
@@ -907,42 +767,30 @@ function getInitials(name) {
   return name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
 }
 
-// ============ ESTADO Y FICHAJES ============
 async function loadTodayPunches() {
   try {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-
     const { data } = await db
       .from('punches')
       .select('*')
       .eq('employee_id', currentUser.id)
       .gte('timestamp', today.toISOString())
       .order('timestamp', { ascending: true });
-
     todayPunches = data || [];
     determineState();
   } catch (err) {
-    console.error('Error cargando fichajes:', err);
+    console.error(err);
     todayPunches = [];
   }
 }
 
 function determineState() {
-  if (todayPunches.length === 0) {
-    currentState = 'out';
-    return;
-  }
-
+  if (todayPunches.length === 0) { currentState = 'out'; return; }
   const last = todayPunches[todayPunches.length - 1];
-
-  if (last.punch_type === 'in' || last.punch_type === 'break_end') {
-    currentState = 'in';
-  } else if (last.punch_type === 'break_start') {
-    currentState = 'break';
-  } else if (last.punch_type === 'out') {
-    currentState = 'out';
-  }
+  if (last.punch_type === 'in' || last.punch_type === 'break_end') currentState = 'in';
+  else if (last.punch_type === 'break_start') currentState = 'break';
+  else if (last.punch_type === 'out') currentState = 'out';
 }
 
 function updateStatusAndButtons() {
@@ -952,56 +800,43 @@ function updateStatusAndButtons() {
   const actions = document.getElementById('actionsContainer');
   const summary = document.getElementById('daySummary');
 
-  if (liveCounterInterval) {
-    clearInterval(liveCounterInterval);
-    liveCounterInterval = null;
-  }
+  if (liveCounterInterval) { clearInterval(liveCounterInterval); liveCounterInterval = null; }
 
   if (currentState === 'out') {
     pill.className = 'status-pill out';
     text.textContent = todayPunches.length > 0 ? 'Turno finalizado' : 'Fuera de turno';
     counter.style.display = 'none';
-    
     if (todayPunches.length === 0) {
-      actions.innerHTML = `
-        <button class="action-btn in" onclick="startFichaje('in')">FICHAR ENTRADA</button>
-      `;
+      actions.innerHTML = `<button class="action-btn in" onclick="startFichaje('in')">FICHAR ENTRADA</button>`;
       summary.style.display = 'none';
     } else {
       actions.innerHTML = '';
       showDaySummary();
     }
-
   } else if (currentState === 'in') {
     pill.className = 'status-pill in';
     text.textContent = `Trabajando · ${ROLE_LABELS[currentUser.default_role] || currentUser.default_role}`;
     counter.style.display = 'flex';
-
     const breaksToday = todayPunches.filter(p => p.punch_type === 'break_start').length;
     const canBreak = breaksToday < currentUser.max_breaks_per_shift;
-
     actions.innerHTML = `
       <button class="action-btn break-start" onclick="startFichaje('break_start')" ${canBreak ? '' : 'disabled'}>
         ${canBreak ? '☕ INICIAR BREAK' : `☕ Sin breaks disponibles (${breaksToday}/${currentUser.max_breaks_per_shift})`}
       </button>
       <button class="action-btn out" onclick="startFichaje('out')">FICHAR SALIDA</button>
     `;
-
     startLiveCounter('work');
     showDaySummary();
-
   } else if (currentState === 'break') {
     pill.className = 'status-pill break';
     text.textContent = '☕ En break';
     counter.style.display = 'flex';
-
     actions.innerHTML = `
       <button class="action-btn break-end" onclick="startFichaje('break_end')">TERMINAR BREAK</button>
       <div style="text-align:center;color:rgba(255,255,255,0.5);font-size:12px;margin-top:8px;">
         Terminá el break para poder fichar salida
       </div>
     `;
-
     startLiveCounter('break');
     showDaySummary();
   }
@@ -1025,62 +860,23 @@ function startLiveCounter(mode) {
 }
 
 function calculateProductiveMinutesToday() {
-  let workMinutes = 0;
-  let breakMinutes = 0;
-  let currentIn = null;
-  let currentBreakStart = null;
-
+  let workMinutes = 0, breakMinutes = 0;
+  let currentIn = null, currentBreakStart = null;
   for (const p of todayPunches) {
     const t = new Date(p.timestamp).getTime();
-    if (p.punch_type === 'in') {
-      currentIn = t;
-    } else if (p.punch_type === 'out' && currentIn) {
-      workMinutes += (t - currentIn) / 60000;
-      currentIn = null;
-    } else if (p.punch_type === 'break_start') {
-      currentBreakStart = t;
-    } else if (p.punch_type === 'break_end' && currentBreakStart) {
-      breakMinutes += (t - currentBreakStart) / 60000;
-      currentBreakStart = null;
-    }
+    if (p.punch_type === 'in') currentIn = t;
+    else if (p.punch_type === 'out' && currentIn) { workMinutes += (t - currentIn) / 60000; currentIn = null; }
+    else if (p.punch_type === 'break_start') currentBreakStart = t;
+    else if (p.punch_type === 'break_end' && currentBreakStart) { breakMinutes += (t - currentBreakStart) / 60000; currentBreakStart = null; }
   }
-
-  if (currentIn && currentState === 'in') {
-    workMinutes += (Date.now() - currentIn) / 60000;
-  }
-  if (currentBreakStart && currentState === 'break') {
-    breakMinutes += (Date.now() - currentBreakStart) / 60000;
-  }
-
+  if (currentIn && currentState === 'in') workMinutes += (Date.now() - currentIn) / 60000;
+  if (currentBreakStart && currentState === 'break') breakMinutes += (Date.now() - currentBreakStart) / 60000;
   return Math.max(0, workMinutes - breakMinutes);
 }
 
-function calculateBreakMinutesToday() {
-  let breakMinutes = 0;
-  let currentBreakStart = null;
-
-  for (const p of todayPunches) {
-    const t = new Date(p.timestamp).getTime();
-    if (p.punch_type === 'break_start') {
-      currentBreakStart = t;
-    } else if (p.punch_type === 'break_end' && currentBreakStart) {
-      breakMinutes += (t - currentBreakStart) / 60000;
-      currentBreakStart = null;
-    }
-  }
-  if (currentBreakStart && currentState === 'break') {
-    breakMinutes += (Date.now() - currentBreakStart) / 60000;
-  }
-  return breakMinutes;
-}
-
 function formatMinutes(mins) {
-  if (mins < 1) {
-    const seconds = Math.round(mins * 60);
-    return `${seconds}s`;
-  }
-  const h = Math.floor(mins / 60);
-  const m = Math.floor(mins % 60);
+  if (mins < 1) return `${Math.round(mins * 60)}s`;
+  const h = Math.floor(mins / 60), m = Math.floor(mins % 60);
   if (h === 0) return `${m} min`;
   return `${h}h ${m}min`;
 }
@@ -1088,17 +884,14 @@ function formatMinutes(mins) {
 function showDaySummary() {
   const summary = document.getElementById('daySummary');
   const content = document.getElementById('summaryContent');
-  
   const entrada = todayPunches.find(p => p.punch_type === 'in');
   const salida = todayPunches.filter(p => p.punch_type === 'out').pop();
   const prodMins = calculateProductiveMinutesToday();
-
   const breaks = [];
   let currentStart = null;
   for (const p of todayPunches) {
-    if (p.punch_type === 'break_start') {
-      currentStart = p;
-    } else if (p.punch_type === 'break_end' && currentStart) {
+    if (p.punch_type === 'break_start') currentStart = p;
+    else if (p.punch_type === 'break_end' && currentStart) {
       const startTime = new Date(currentStart.timestamp);
       const endTime = new Date(p.timestamp);
       const durationMin = (endTime - startTime) / 60000;
@@ -1111,47 +904,20 @@ function showDaySummary() {
     const durationMin = (Date.now() - startTime.getTime()) / 60000;
     breaks.push({ startTime, endTime: null, durationMin, ongoing: true });
   }
-
-  const totalBreakMins = breaks.reduce((sum, b) => sum + b.durationMin, 0);
-
+  const totalBreakMins = breaks.reduce((s, b) => s + b.durationMin, 0);
   let html = '';
-  if (entrada) {
-    html += `<div class="summary-row"><span class="label">Entrada</span><span>${formatTime(entrada.timestamp)}</span></div>`;
-  }
-  if (salida) {
-    html += `<div class="summary-row"><span class="label">Salida</span><span>${formatTime(salida.timestamp)}</span></div>`;
-  }
-  
+  if (entrada) html += `<div class="summary-row"><span class="label">Entrada</span><span>${formatTime(entrada.timestamp)}</span></div>`;
+  if (salida) html += `<div class="summary-row"><span class="label">Salida</span><span>${formatTime(salida.timestamp)}</span></div>`;
   if (breaks.length > 0) {
     html += `<div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.1);">`;
     html += `<div class="label" style="margin-bottom:6px;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;">BREAKS (${breaks.length})</div>`;
-    
     breaks.forEach((b, i) => {
-      const endStr = b.ongoing 
-        ? `<span style="color:#fbbf24;">en curso</span>` 
-        : formatTime(b.endTime);
-      html += `
-        <div class="summary-row" style="font-size:12px;">
-          <span class="label">Break ${i + 1}</span>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;">
-            ${formatTime(b.startTime)} → ${endStr} 
-            <span style="color:rgba(255,255,255,0.5);">(${formatMinutes(b.durationMin)})</span>
-          </span>
-        </div>`;
+      const endStr = b.ongoing ? `<span style="color:#fbbf24;">en curso</span>` : formatTime(b.endTime);
+      html += `<div class="summary-row" style="font-size:12px;"><span class="label">Break ${i + 1}</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;">${formatTime(b.startTime)} → ${endStr} <span style="color:rgba(255,255,255,0.5);">(${formatMinutes(b.durationMin)})</span></span></div>`;
     });
-    
-    html += `<div class="summary-row" style="font-size:12px;margin-top:4px;color:rgba(255,255,255,0.6);">
-      <span class="label">Total breaks</span>
-      <span>${formatMinutes(totalBreakMins)}</span>
-    </div>`;
-    html += `</div>`;
+    html += `<div class="summary-row" style="font-size:12px;margin-top:4px;color:rgba(255,255,255,0.6);"><span class="label">Total breaks</span><span>${formatMinutes(totalBreakMins)}</span></div></div>`;
   }
-  
-  html += `<div class="summary-row" style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.1);">
-    <span class="label">Productivas</span>
-    <span style="color:#4ade80;font-weight:600;">${formatMinutes(prodMins)}</span>
-  </div>`;
-  
+  html += `<div class="summary-row" style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.1);"><span class="label">Productivas</span><span style="color:#4ade80;font-weight:600;">${formatMinutes(prodMins)}</span></div>`;
   content.innerHTML = html;
   summary.style.display = 'block';
 }
@@ -1160,7 +926,7 @@ function formatTime(iso) {
   return new Date(iso).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit', hour12: false });
 }
 
-// ============ FICHAJE ============
+// FICHAJE
 function startFichaje(actionType) {
   pendingAction = actionType;
   if (actionType === 'break_start' || actionType === 'break_end') {
@@ -1173,57 +939,43 @@ function startFichaje(actionType) {
 async function processBreak(actionType) {
   showLoading(true);
   try {
-    const ipMatch = await verifyIP();
-    if (!ipMatch) {
-      throw new Error('No estás en la red WiFi del local.');
-    }
+    const ipValid = await verifyAndUpdateIP();
+    if (!ipValid) throw new Error('No estás en la red WiFi del local.');
 
-    const { error } = await db
-      .from('punches')
-      .insert({
-        employee_id: currentUser.id,
-        branch_id: BRANCH_ID,
-        punch_type: actionType,
-        role: currentUser.default_role,
-        method: 'manual',
-        client_ip: clientIP,
-        ip_verified: true
-      });
-
+    const { error } = await db.from('punches').insert({
+      employee_id: currentUser.id,
+      branch_id: BRANCH_ID,
+      punch_type: actionType,
+      role: currentUser.default_role,
+      method: 'manual',
+      client_ip: clientIP,
+      ip_verified: true
+    });
     if (error) throw error;
 
     showLoading(false);
-    
     const isStart = actionType === 'break_start';
-    showResult('success', isStart ? '☕ Break iniciado' : '✓ Break terminado', 
+    showResult('success', isStart ? '☕ Break iniciado' : '✓ Break terminado',
       isStart ? 'Disfrutá tu descanso' : 'Volviste al trabajo');
-
     await loadTodayPunches();
     updateStatusAndButtons();
-
   } catch (err) {
     showLoading(false);
     showResult('error', 'No se pudo registrar', err.message);
   }
 }
 
-// ============ SCANNER QR ============
 async function openScanner() {
   document.getElementById('scannerScreen').classList.add('show');
   try {
-    scannerStream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: 'environment' }
-    });
+    scannerStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
     const video = document.getElementById('scanner-video');
     video.srcObject = scannerStream;
-    video.onloadedmetadata = () => {
-      video.play();
-      scanLoop();
-    };
+    video.onloadedmetadata = () => { video.play(); scanLoop(); };
   } catch (err) {
-    console.error('Error abriendo cámara:', err);
+    console.error(err);
     closeScanner();
-    switchToPIN();
+    showResult('error', 'No se pudo abrir la cámara', 'Verificá los permisos de cámara en tu navegador.');
   }
 }
 
@@ -1231,7 +983,6 @@ function scanLoop() {
   const video = document.getElementById('scanner-video');
   const canvas = document.getElementById('scanner-canvas');
   const ctx = canvas.getContext('2d', { willReadFrequently: true });
-
   scannerLoop = setInterval(() => {
     if (video.readyState !== video.HAVE_ENOUGH_DATA) return;
     canvas.width = video.videoWidth;
@@ -1239,172 +990,143 @@ function scanLoop() {
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const code = jsQR(imageData.data, imageData.width, imageData.height);
-
     if (code && code.data) {
       clearInterval(scannerLoop);
       scannerLoop = null;
-      processCode(code.data, 'qr');
+      processCode(code.data);
     }
   }, 200);
 }
 
 function closeScanner() {
   document.getElementById('scannerScreen').classList.remove('show');
-  if (scannerStream) {
-    scannerStream.getTracks().forEach(t => t.stop());
-    scannerStream = null;
-  }
-  if (scannerLoop) {
-    clearInterval(scannerLoop);
-    scannerLoop = null;
-  }
+  if (scannerStream) { scannerStream.getTracks().forEach(t => t.stop()); scannerStream = null; }
+  if (scannerLoop) { clearInterval(scannerLoop); scannerLoop = null; }
 }
 
-// ============ PIN ============
-function switchToPIN() {
+async function processCode(code) {
   closeScanner();
-  document.getElementById('dashboardScreen').classList.add('hidden');
-  document.getElementById('pinScreen').classList.remove('hidden');
-  pinValue = '';
-  updatePinDisplay();
-}
-
-function closePIN() {
-  document.getElementById('pinScreen').classList.add('hidden');
-  document.getElementById('dashboardScreen').classList.remove('hidden');
-  pinValue = '';
-}
-
-function addPin(digit) {
-  if (pinValue.length >= 6) return;
-  pinValue += digit;
-  updatePinDisplay();
-}
-
-function clearPin() {
-  pinValue = '';
-  updatePinDisplay();
-}
-
-function updatePinDisplay() {
-  const display = document.getElementById('pinDisplay');
-  let str = '';
-  for (let i = 0; i < 6; i++) {
-    str += i < pinValue.length ? pinValue[i] : '_';
-  }
-  display.textContent = str;
-}
-
-function submitPin() {
-  if (pinValue.length !== 6) return;
-  const code = pinValue;
-  pinValue = '';
-  closePIN();
-  processCode(code, 'pin');
-}
-
-// ============ PROCESAR CÓDIGO ============
-async function processCode(code, method) {
   showLoading(true);
-
   try {
-    const codeUpper = code.toString().trim().toUpperCase();
-    const codeLower = code.toString().trim();
-
-    const { data: tokens, error: tokError } = await db
-      .from('active_tokens')
-      .select('*')
-      .eq('branch_id', BRANCH_ID);
-
-    if (tokError) throw tokError;
-
-    const validToken = tokens.find(t => 
-      t.qr_code.toUpperCase() === codeUpper || 
-      t.pin_code === codeLower
-    );
-
-    if (!validToken) {
-      throw new Error('Código inválido. Verificá el PIN en la pantalla del local.');
+    // Verificar que el QR sea el correcto
+    if (code.trim().toUpperCase() !== QR_CODE_VALID.toUpperCase()) {
+      throw new Error('Este QR no es válido. Verificá que estés escaneando el QR del local.');
     }
 
-    const expiresAt = new Date(validToken.expires_at);
-    const now = new Date();
-    const diffSeconds = (expiresAt - now) / 1000;
-    
-    if (diffSeconds < -30) {
-      throw new Error('Código expirado. Probá con uno nuevo.');
-    }
+    // Verificar y actualizar IP
+    const ipValid = await verifyAndUpdateIP();
+    if (!ipValid) throw new Error('No estás en la red WiFi del local.');
 
-    const ipMatch = await verifyIP();
-    if (!ipMatch) {
-      throw new Error('No estás en la red WiFi del local.');
-    }
-
-    const { error: punchError } = await db
-      .from('punches')
-      .insert({
-        employee_id: currentUser.id,
-        branch_id: BRANCH_ID,
-        punch_type: pendingAction,
-        role: currentUser.default_role,
-        method: method,
-        client_ip: clientIP,
-        ip_verified: true
-      });
-
-    if (punchError) throw punchError;
+    // Registrar fichaje
+    const { error } = await db.from('punches').insert({
+      employee_id: currentUser.id,
+      branch_id: BRANCH_ID,
+      punch_type: pendingAction,
+      role: currentUser.default_role,
+      method: 'qr',
+      client_ip: clientIP,
+      ip_verified: true
+    });
+    if (error) throw error;
 
     showLoading(false);
-    
     const msg = pendingAction === 'in' ? '¡Entrada registrada!' : '¡Salida registrada!';
-    showResult('success', msg, `${currentUser.full_name} · ${ROLE_LABELS[currentUser.default_role] || currentUser.default_role}`);
-
+    showResult('success', msg, `${currentUser.full_name} · ${ROLE_LABELS[currentUser.default_role]}`);
     await loadTodayPunches();
     updateStatusAndButtons();
-
   } catch (err) {
     showLoading(false);
     showResult('error', 'No se pudo fichar', err.message);
   }
 }
 
-async function verifyIP() {
+// LÓGICA NUEVA DE IP DINÁMICA
+async function verifyAndUpdateIP() {
   try {
+    // 1. Obtener mi IP actual
     const ipResp = await fetch('https://api.ipify.org?format=json');
     const ipData = await ipResp.json();
     clientIP = ipData.ip;
+    console.log('Mi IP actual:', clientIP);
 
+    // 2. Obtener IP guardada de la sucursal
     const { data: branch } = await db
       .from('branches')
       .select('public_ip')
       .eq('id', BRANCH_ID)
       .single();
 
-    if (!branch || !branch.public_ip) {
+    const branchIP = branch?.public_ip;
+    console.log('IP guardada de la sucursal:', branchIP);
+
+    // CASO A: No hay IP guardada (primera vez)
+    if (!branchIP) {
+      console.log('Sin IP guardada - actualizando con la actual');
+      await db.from('branches').update({
+        public_ip: clientIP,
+        ip_last_updated: new Date().toISOString()
+      }).eq('id', BRANCH_ID);
       return true;
     }
 
-    return clientIP === branch.public_ip;
+    // CASO B: La IP coincide
+    if (clientIP === branchIP) {
+      console.log('IP coincide ✓');
+      return true;
+    }
+
+    // CASO C: La IP NO coincide - verificar si hay gente fichada hoy
+    console.log('IP NO coincide - verificando si hay gente fichada hoy');
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const { data: todayPunchesData } = await db
+      .from('punches')
+      .select('client_ip')
+      .gte('timestamp', today.toISOString())
+      .not('client_ip', 'is', null);
+
+    if (!todayPunchesData || todayPunchesData.length === 0) {
+      // No hay nadie fichado hoy - aceptar nueva IP
+      console.log('Nadie fichó hoy - aceptando nueva IP');
+      await db.from('branches').update({
+        public_ip: clientIP,
+        ip_last_updated: new Date().toISOString()
+      }).eq('id', BRANCH_ID);
+      return true;
+    }
+
+    // Hay gente fichada hoy - verificar si mi IP coincide con la de ellos
+    const ipsHoy = [...new Set(todayPunchesData.map(p => p.client_ip))];
+    console.log('IPs usadas hoy:', ipsHoy);
+    
+    if (ipsHoy.includes(clientIP)) {
+      // Mi IP coincide con la de alguien que ya fichó hoy - todo OK
+      console.log('Mi IP coincide con alguien fichado hoy - actualizando branches');
+      await db.from('branches').update({
+        public_ip: clientIP,
+        ip_last_updated: new Date().toISOString()
+      }).eq('id', BRANCH_ID);
+      return true;
+    }
+
+    // Mi IP no coincide con NADIE de hoy - posible trampa
+    console.log('Mi IP no coincide con nadie de hoy - RECHAZAR');
+    return false;
+
   } catch (err) {
     console.error('Error verificando IP:', err);
     return false;
   }
 }
 
-// ============ RESULTADO ============
 function showResult(type, title, message) {
   const card = document.getElementById('resultCard');
-  const icon = document.getElementById('resultIcon');
-  const titleEl = document.getElementById('resultTitle');
-  const messageEl = document.getElementById('resultMessage');
-  const timeEl = document.getElementById('resultTime');
-
+  document.getElementById('resultIcon').textContent = type === 'success' ? '✓' : '✕';
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultMessage').textContent = message;
+  document.getElementById('resultTime').textContent = new Date().toLocaleTimeString('es-AR', { hour12: false });
   card.className = `result-card ${type}`;
-  icon.textContent = type === 'success' ? '✓' : type === 'warning' ? '⚠' : '✕';
-  titleEl.textContent = title;
-  messageEl.textContent = message;
-  timeEl.textContent = new Date().toLocaleTimeString('es-AR', { hour12: false });
-
   document.getElementById('resultOverlay').classList.add('show');
 }
 
