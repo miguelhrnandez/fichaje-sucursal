@@ -117,11 +117,6 @@ input:focus { border-color: #4ade80; }
   font-weight: 500;
 }
 
-.btn-admin {
-  background: linear-gradient(135deg, #a78bfa, #8b5cf6);
-  color: #fff;
-}
-
 .error-box {
   background: rgba(255, 107, 107, 0.1);
   border: 1px solid rgba(255, 107, 107, 0.3);
@@ -159,6 +154,15 @@ input:focus { border-color: #4ade80; }
   font-size: 14px;
   flex-shrink: 0;
   color: #0f3460;
+}
+
+.emp-avatar.admin {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+}
+
+.emp-avatar.manager {
+  background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+  color: #fff;
 }
 
 .logout-btn {
@@ -321,45 +325,6 @@ input:focus { border-color: #4ade80; }
   box-shadow: none;
 }
 
-.role-section {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 18px;
-  margin-top: 16px;
-}
-
-.role-section h3 {
-  font-size: 13px;
-  margin-bottom: 12px;
-  color: rgba(255, 255, 255, 0.6);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.role-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.role-chip {
-  padding: 8px 14px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  color: #fff;
-  font-family: inherit;
-  font-size: 13px;
-  cursor: pointer;
-}
-
-.role-chip.active {
-  background: rgba(74, 222, 128, 0.15);
-  border-color: #4ade80;
-  color: #4ade80;
-}
-
 .day-summary {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -386,6 +351,38 @@ input:focus { border-color: #4ade80; }
 }
 
 .summary-row .label { color: rgba(255, 255, 255, 0.5); }
+
+/* ====== ADMIN MESSAGE ====== */
+.admin-msg-box {
+  text-align: center;
+  padding: 40px 20px;
+  margin-top: 40px;
+}
+
+.admin-msg-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+}
+
+.admin-msg-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.admin-msg-text {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
 
 /* ====== SCANNER ====== */
 .scanner-screen {
@@ -622,42 +619,65 @@ input:focus { border-color: #4ade80; }
 
   <div class="admin-banner" id="adminBanner" style="display:none;">
     <div class="admin-text">
-      <strong>Acceso de Jefa</strong>
-      <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;">
+      <strong id="adminBannerTitle">Acceso de Jefa</strong>
+      <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;" id="adminBannerSubtitle">
         Podés gestionar al equipo
       </div>
     </div>
     <a class="admin-link" href="admin.html">Panel →</a>
   </div>
 
-  <div class="clock-display">
-    <div class="clock-time" id="clockTime">--:--:--</div>
-    <div class="clock-date" id="clockDate">--</div>
+  <!-- Mensaje especial para admin -->
+  <div id="adminMessage" style="display:none;">
+    <div class="admin-msg-box">
+      <div class="admin-msg-icon">⚙️</div>
+      <div class="admin-msg-title">Sos administrador</div>
+      <div class="admin-msg-text">
+        Vos no fichás como empleada operativa.<br>
+        Andá al panel para gestionar el sistema.
+      </div>
+      <a class="admin-link" href="admin.html" style="display:inline-block;padding:14px 24px;">Ir al Panel →</a>
+    </div>
   </div>
 
-  <div class="status-pill out" id="statusPill">
-    <div class="status-dot"></div>
-    <span id="statusText">Fuera de turno</span>
+  <!-- Mensaje si la empleada NO tiene puesto asignado -->
+  <div id="noRoleMessage" style="display:none;">
+    <div class="admin-msg-box">
+      <div class="admin-msg-icon" style="background:linear-gradient(135deg,#ff6b6b,#ee5a52);">⚠</div>
+      <div class="admin-msg-title">No tenés puesto asignado</div>
+      <div class="admin-msg-text">
+        Tu jefa todavía no te asignó un puesto.<br>
+        Hablá con ella para que pueda fichar.
+      </div>
+    </div>
   </div>
 
-  <div class="live-counter" id="liveCounter" style="display:none;">
-    <span id="liveCounterText">--</span>
-  </div>
+  <!-- Contenido normal del fichaje -->
+  <div id="fichajeContent">
+    <div class="clock-display">
+      <div class="clock-time" id="clockTime">--:--:--</div>
+      <div class="clock-date" id="clockDate">--</div>
+    </div>
 
-  <div class="role-section" id="roleSection">
-    <h3>Puesto que vas a cubrir</h3>
-    <div class="role-chips" id="roleChips"></div>
-  </div>
+    <div class="status-pill out" id="statusPill">
+      <div class="status-dot"></div>
+      <span id="statusText">Fuera de turno</span>
+    </div>
 
-  <div id="actionsContainer">
-    <button class="action-btn in" id="actionBtnIn" onclick="startFichaje('in')">
-      FICHAR ENTRADA
-    </button>
-  </div>
+    <div class="live-counter" id="liveCounter" style="display:none;">
+      <span id="liveCounterText">--</span>
+    </div>
 
-  <div class="day-summary" id="daySummary" style="display:none;">
-    <h4>RESUMEN DEL DÍA</h4>
-    <div id="summaryContent"></div>
+    <div id="actionsContainer">
+      <button class="action-btn in" id="actionBtnIn" onclick="startFichaje('in')">
+        FICHAR ENTRADA
+      </button>
+    </div>
+
+    <div class="day-summary" id="daySummary" style="display:none;">
+      <h4>RESUMEN DEL DÍA</h4>
+      <div id="summaryContent"></div>
+    </div>
   </div>
 </div>
 
@@ -727,21 +747,30 @@ const SUPABASE_URL = 'https://raykzuncciaaouleezmx.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJheWt6dW5jY2lhYW91bGVlem14Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NjQ2MzIsImV4cCI6MjA5NDI0MDYzMn0.w50r_YXzMPZjM8BqJYkP1yA5i_sl4yz3i7io_Fx6dX8';
 const BRANCH_ID = '11111111-1111-1111-1111-111111111111';
 
-const ROLES = [
-  { id: 'cajera', label: 'Cajera' },
-  { id: 'encargada', label: 'Encargada' },
-  { id: 'reponedora', label: 'Reponedora' },
-  { id: 'limpieza', label: 'Limpieza' },
-  { id: 'atencion', label: 'Atención al cliente' },
-  { id: 'promotor', label: 'Promotor' }
-];
+// Mapeo de roles a etiquetas legibles
+const ROLE_LABELS = {
+  // Empleadas
+  recepcionista: 'Recepcionista',
+  pretester: 'Pretester',
+  host: 'Host',
+  promotor: 'Promotor',
+  presentador: 'Presentador',
+  enrutador: 'Enrutador',
+  asesor: 'Asesor PAI',
+  // Jefas
+  jefa_promotoras: 'Jefa de Promotoras',
+  jefa_salon: 'Jefa de Salón',
+  jefe_presentacion: 'Jefe de Presentación',
+  jefe_ventas: 'Jefe de Ventas',
+  // Admin
+  admin: 'Administrador'
+};
 
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 let currentUser = null;
-let selectedRole = 'cajera';
-let todayPunches = []; // todos los fichajes de hoy
-let currentState = 'out'; // 'out' | 'in' | 'break'
+let todayPunches = [];
+let currentState = 'out';
 let pendingAction = null;
 let pinValue = '';
 let scannerStream = null;
@@ -797,7 +826,6 @@ async function doLogin() {
     }
 
     currentUser = data;
-    selectedRole = data.default_role;
     errBox.classList.remove('show');
     document.getElementById('passwordInput').value = '';
 
@@ -827,34 +855,56 @@ function logout() {
 function showDashboard() {
   document.getElementById('loginScreen').classList.add('hidden');
   document.getElementById('dashboardScreen').classList.remove('hidden');
-  document.getElementById('userAvatar').textContent = getInitials(currentUser.full_name);
+
+  // Avatar e info del usuario
+  const avatar = document.getElementById('userAvatar');
+  avatar.textContent = getInitials(currentUser.full_name);
+  avatar.className = 'emp-avatar';
+  if (currentUser.is_admin) avatar.classList.add('admin');
+  else if (currentUser.is_manager) avatar.classList.add('manager');
+
   document.getElementById('userName').textContent = currentUser.full_name;
   document.getElementById('userRole').textContent = 
-    ROLES.find(r => r.id === currentUser.default_role)?.label || currentUser.default_role;
+    ROLE_LABELS[currentUser.default_role] || currentUser.default_role;
 
-  // Banner admin solo para jefas/admins
-  document.getElementById('adminBanner').style.display = 
-    (currentUser.is_manager || currentUser.is_admin) ? 'flex' : 'none';
+  // CASO 1: Es ADMIN puro → mostrar mensaje, no ficha
+  if (currentUser.is_admin && !currentUser.is_manager) {
+    document.getElementById('adminBanner').style.display = 'none';
+    document.getElementById('fichajeContent').style.display = 'none';
+    document.getElementById('noRoleMessage').style.display = 'none';
+    document.getElementById('adminMessage').style.display = 'block';
+    return;
+  }
 
-  renderRoles();
+  // CASO 2: NO tiene default_role asignado → bloquear
+  if (!currentUser.default_role) {
+    document.getElementById('adminBanner').style.display = 'none';
+    document.getElementById('fichajeContent').style.display = 'none';
+    document.getElementById('adminMessage').style.display = 'none';
+    document.getElementById('noRoleMessage').style.display = 'block';
+    return;
+  }
+
+  // CASO 3: Es JEFA → ficha + ve banner del panel
+  if (currentUser.is_manager) {
+    document.getElementById('adminBannerTitle').textContent = 'Acceso de Jefa';
+    document.getElementById('adminBannerSubtitle').textContent = 'Podés gestionar al equipo';
+    document.getElementById('adminBanner').style.display = 'flex';
+  } 
+  // CASO 4: Empleada normal → solo ficha
+  else {
+    document.getElementById('adminBanner').style.display = 'none';
+  }
+
+  document.getElementById('adminMessage').style.display = 'none';
+  document.getElementById('noRoleMessage').style.display = 'none';
+  document.getElementById('fichajeContent').style.display = 'block';
+
   updateStatusAndButtons();
 }
 
 function getInitials(name) {
   return name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
-}
-
-function renderRoles() {
-  const container = document.getElementById('roleChips');
-  container.innerHTML = ROLES.map(r => `
-    <button class="role-chip ${r.id === selectedRole ? 'active' : ''}" 
-            onclick="setRole('${r.id}')">${r.label}</button>
-  `).join('');
-}
-
-function setRole(id) {
-  selectedRole = id;
-  renderRoles();
 }
 
 // ============ ESTADO Y FICHAJES ============
@@ -899,22 +949,18 @@ function updateStatusAndButtons() {
   const pill = document.getElementById('statusPill');
   const text = document.getElementById('statusText');
   const counter = document.getElementById('liveCounter');
-  const roleSec = document.getElementById('roleSection');
   const actions = document.getElementById('actionsContainer');
   const summary = document.getElementById('daySummary');
 
-  // Limpiar contador anterior
   if (liveCounterInterval) {
     clearInterval(liveCounterInterval);
     liveCounterInterval = null;
   }
 
   if (currentState === 'out') {
-    // Fuera de turno: mostrar selector de rol + botón ENTRADA
     pill.className = 'status-pill out';
     text.textContent = todayPunches.length > 0 ? 'Turno finalizado' : 'Fuera de turno';
     counter.style.display = 'none';
-    roleSec.style.display = todayPunches.length === 0 ? 'block' : 'none';
     
     if (todayPunches.length === 0) {
       actions.innerHTML = `
@@ -927,14 +973,10 @@ function updateStatusAndButtons() {
     }
 
   } else if (currentState === 'in') {
-    // Trabajando: ENTRADA hecha, puede tomar break o salir
-    const currentRole = getCurrentWorkRole();
     pill.className = 'status-pill in';
-    text.textContent = `Trabajando · ${ROLES.find(r => r.id === currentRole)?.label || currentRole}`;
+    text.textContent = `Trabajando · ${ROLE_LABELS[currentUser.default_role] || currentUser.default_role}`;
     counter.style.display = 'flex';
-    roleSec.style.display = 'none';
 
-    // Verificar si puede tomar break
     const breaksToday = todayPunches.filter(p => p.punch_type === 'break_start').length;
     const canBreak = breaksToday < currentUser.max_breaks_per_shift;
 
@@ -949,11 +991,9 @@ function updateStatusAndButtons() {
     showDaySummary();
 
   } else if (currentState === 'break') {
-    // En break: solo puede terminar break
     pill.className = 'status-pill break';
     text.textContent = '☕ En break';
     counter.style.display = 'flex';
-    roleSec.style.display = 'none';
 
     actions.innerHTML = `
       <button class="action-btn break-end" onclick="startFichaje('break_end')">TERMINAR BREAK</button>
@@ -965,17 +1005,6 @@ function updateStatusAndButtons() {
     startLiveCounter('break');
     showDaySummary();
   }
-}
-
-function getCurrentWorkRole() {
-  // El rol actual es el de la última entrada o break_end
-  for (let i = todayPunches.length - 1; i >= 0; i--) {
-    const p = todayPunches[i];
-    if (p.punch_type === 'in' || p.punch_type === 'break_end') {
-      return p.role || currentUser.default_role;
-    }
-  }
-  return currentUser.default_role;
 }
 
 function startLiveCounter(mode) {
@@ -996,7 +1025,6 @@ function startLiveCounter(mode) {
 }
 
 function calculateProductiveMinutesToday() {
-  // Suma de (out - in) - (break_end - break_start)
   let workMinutes = 0;
   let breakMinutes = 0;
   let currentIn = null;
@@ -1017,11 +1045,9 @@ function calculateProductiveMinutesToday() {
     }
   }
 
-  // Si está trabajando ahora
   if (currentIn && currentState === 'in') {
     workMinutes += (Date.now() - currentIn) / 60000;
   }
-  // Si está en break ahora
   if (currentBreakStart && currentState === 'break') {
     breakMinutes += (Date.now() - currentBreakStart) / 60000;
   }
@@ -1067,7 +1093,6 @@ function showDaySummary() {
   const salida = todayPunches.filter(p => p.punch_type === 'out').pop();
   const prodMins = calculateProductiveMinutesToday();
 
-  // Construir lista de breaks (pares de break_start + break_end)
   const breaks = [];
   let currentStart = null;
   for (const p of todayPunches) {
@@ -1077,25 +1102,14 @@ function showDaySummary() {
       const startTime = new Date(currentStart.timestamp);
       const endTime = new Date(p.timestamp);
       const durationMin = (endTime - startTime) / 60000;
-      breaks.push({
-        startTime: startTime,
-        endTime: endTime,
-        durationMin: durationMin,
-        ongoing: false
-      });
+      breaks.push({ startTime, endTime, durationMin, ongoing: false });
       currentStart = null;
     }
   }
-  // Si hay un break en curso (sin terminar todavía)
   if (currentStart) {
     const startTime = new Date(currentStart.timestamp);
     const durationMin = (Date.now() - startTime.getTime()) / 60000;
-    breaks.push({
-      startTime: startTime,
-      endTime: null,
-      durationMin: durationMin,
-      ongoing: true
-    });
+    breaks.push({ startTime, endTime: null, durationMin, ongoing: true });
   }
 
   const totalBreakMins = breaks.reduce((sum, b) => sum + b.durationMin, 0);
@@ -1108,7 +1122,6 @@ function showDaySummary() {
     html += `<div class="summary-row"><span class="label">Salida</span><span>${formatTime(salida.timestamp)}</span></div>`;
   }
   
-  // Sección de breaks detallada
   if (breaks.length > 0) {
     html += `<div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.1);">`;
     html += `<div class="label" style="margin-bottom:6px;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;">BREAKS (${breaks.length})</div>`;
@@ -1134,7 +1147,6 @@ function showDaySummary() {
     html += `</div>`;
   }
   
-  // Línea de productivas
   html += `<div class="summary-row" style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.1);">
     <span class="label">Productivas</span>
     <span style="color:#4ade80;font-weight:600;">${formatMinutes(prodMins)}</span>
@@ -1151,7 +1163,6 @@ function formatTime(iso) {
 // ============ FICHAJE ============
 function startFichaje(actionType) {
   pendingAction = actionType;
-  // Para breaks no necesita QR, basta con confirmar y procesar
   if (actionType === 'break_start' || actionType === 'break_end') {
     processBreak(actionType);
   } else {
@@ -1162,13 +1173,10 @@ function startFichaje(actionType) {
 async function processBreak(actionType) {
   showLoading(true);
   try {
-    // Verificar IP igual
     const ipMatch = await verifyIP();
     if (!ipMatch) {
       throw new Error('No estás en la red WiFi del local.');
     }
-
-    const role = getCurrentWorkRole();
 
     const { error } = await db
       .from('punches')
@@ -1176,7 +1184,7 @@ async function processBreak(actionType) {
         employee_id: currentUser.id,
         branch_id: BRANCH_ID,
         punch_type: actionType,
-        role: role,
+        role: currentUser.default_role,
         method: 'manual',
         client_ip: clientIP,
         ip_verified: true
@@ -1188,7 +1196,7 @@ async function processBreak(actionType) {
     
     const isStart = actionType === 'break_start';
     showResult('success', isStart ? '☕ Break iniciado' : '✓ Break terminado', 
-      isStart ? 'Disfrutá tu descanso' : `Volviste al trabajo`);
+      isStart ? 'Disfrutá tu descanso' : 'Volviste al trabajo');
 
     await loadTodayPunches();
     updateStatusAndButtons();
@@ -1332,15 +1340,13 @@ async function processCode(code, method) {
       throw new Error('No estás en la red WiFi del local.');
     }
 
-    const roleToUse = pendingAction === 'in' ? selectedRole : getCurrentWorkRole();
-
     const { error: punchError } = await db
       .from('punches')
       .insert({
         employee_id: currentUser.id,
         branch_id: BRANCH_ID,
         punch_type: pendingAction,
-        role: roleToUse,
+        role: currentUser.default_role,
         method: method,
         client_ip: clientIP,
         ip_verified: true
@@ -1351,7 +1357,7 @@ async function processCode(code, method) {
     showLoading(false);
     
     const msg = pendingAction === 'in' ? '¡Entrada registrada!' : '¡Salida registrada!';
-    showResult('success', msg, `${currentUser.full_name} · ${ROLES.find(r => r.id === roleToUse)?.label}`);
+    showResult('success', msg, `${currentUser.full_name} · ${ROLE_LABELS[currentUser.default_role] || currentUser.default_role}`);
 
     await loadTodayPunches();
     updateStatusAndButtons();
@@ -1410,7 +1416,6 @@ function showLoading(show) {
   document.getElementById('loadingOverlay').classList.toggle('show', show);
 }
 
-// Inicialización
 document.getElementById('usernameInput').focus();
 </script>
 
