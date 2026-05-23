@@ -20,7 +20,7 @@ body {
 .screen { display: none; }
 .screen.show { display: block; }
 
-/* ====== LOGIN ====== */
+/* LOGIN */
 .login-wrap {
   min-height: 100vh;
   display: flex;
@@ -55,7 +55,6 @@ body {
   font-size: 26px;
   font-weight: 700;
   margin-bottom: 4px;
-  letter-spacing: -0.02em;
 }
 
 .login-subtitle {
@@ -63,7 +62,6 @@ body {
   font-size: 13px;
   color: rgba(167, 139, 250, 0.8);
   margin-bottom: 28px;
-  letter-spacing: 0.05em;
 }
 
 .field-group { margin-bottom: 14px; }
@@ -107,9 +105,6 @@ select option { background: #1a1a2e; }
   margin-top: 14px;
 }
 
-.btn-admin:hover { transform: translateY(-1px); }
-.btn-admin:disabled { opacity: 0.4; cursor: not-allowed; }
-
 .btn-ghost {
   width: 100%;
   padding: 12px;
@@ -136,7 +131,7 @@ select option { background: #1a1a2e; }
 
 .error-box.show { display: block; }
 
-/* ====== ADMIN LAYOUT ====== */
+/* ADMIN LAYOUT */
 .admin-wrap {
   max-width: 1200px;
   margin: 0 auto;
@@ -164,6 +159,19 @@ select option { background: #1a1a2e; }
   font-size: 12px;
   color: rgba(255, 255, 255, 0.5);
   margin-top: 2px;
+}
+
+.admin-title .team-tag {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 2px 8px;
+  background: rgba(167, 139, 250, 0.2);
+  border-radius: 6px;
+  font-size: 10px;
+  color: #a78bfa;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: 'JetBrains Mono', monospace;
 }
 
 .admin-actions { display: flex; gap: 10px; }
@@ -221,7 +229,7 @@ select option { background: #1a1a2e; }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
-/* ====== FILTERS ====== */
+/* FILTERS */
 .filters-bar {
   display: flex;
   flex-wrap: wrap;
@@ -289,10 +297,8 @@ select option { background: #1a1a2e; }
   text-align: center;
 }
 
-/* ====== TABLE ====== */
-.group-section {
-  margin-bottom: 28px;
-}
+/* GROUP SECTIONS */
+.group-section { margin-bottom: 28px; }
 
 .group-header {
   display: flex;
@@ -312,6 +318,37 @@ select option { background: #1a1a2e; }
 }
 
 .group-count {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.team-section {
+  background: rgba(167, 139, 250, 0.04);
+  border: 1px solid rgba(167, 139, 250, 0.15);
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 20px;
+}
+
+.team-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(167, 139, 250, 0.15);
+}
+
+.team-name {
+  font-size: 18px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #a78bfa, #c4b5fd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.team-meta {
   font-size: 11px;
   color: rgba(255, 255, 255, 0.4);
   font-family: 'JetBrains Mono', monospace;
@@ -356,14 +393,28 @@ select option { background: #1a1a2e; }
 .cell-num.green { color: #4ade80; }
 .cell-num.muted { color: rgba(255, 255, 255, 0.5); }
 
+.badge-jefa {
+  display: inline-block;
+  padding: 2px 6px;
+  background: rgba(167, 139, 250, 0.2);
+  color: #a78bfa;
+  border-radius: 4px;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-left: 6px;
+  vertical-align: middle;
+  font-family: 'JetBrains Mono', monospace;
+}
+
 .empty-state {
   text-align: center;
-  padding: 60px 20px;
+  padding: 40px 20px;
   color: rgba(255, 255, 255, 0.4);
   font-size: 14px;
 }
 
-/* ====== DETAIL MODAL ====== */
+/* DETAIL MODAL */
 .detail-overlay {
   position: fixed;
   inset: 0;
@@ -396,16 +447,8 @@ select option { background: #1a1a2e; }
   margin-bottom: 20px;
 }
 
-.detail-title {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-
-.detail-subtitle {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.5);
-}
+.detail-title { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+.detail-subtitle { font-size: 13px; color: rgba(255, 255, 255, 0.5); }
 
 .close-x {
   background: rgba(255, 255, 255, 0.05);
@@ -460,12 +503,7 @@ select option { background: #1a1a2e; }
   margin-bottom: 6px;
 }
 
-.day-date {
-  font-weight: 500;
-  text-transform: capitalize;
-  font-size: 14px;
-}
-
+.day-date { font-weight: 500; text-transform: capitalize; font-size: 14px; }
 .day-prod {
   font-family: 'JetBrains Mono', monospace;
   color: #4ade80;
@@ -479,9 +517,37 @@ select option { background: #1a1a2e; }
   font-family: 'JetBrains Mono', monospace;
 }
 
-.day-detail .punch-pair {
-  display: inline-block;
-  margin-right: 10px;
+.day-detail .punch-pair { display: inline-block; margin-right: 10px; }
+
+/* NO PERMISSION */
+.no-permission {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.no-permission-box {
+  background: rgba(255, 107, 107, 0.05);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  border-radius: 20px;
+  padding: 40px 32px;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+}
+
+.no-permission-icon {
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 32px;
 }
 
 @media (max-width: 600px) {
@@ -494,7 +560,7 @@ select option { background: #1a1a2e; }
 </head>
 <body>
 
-<!-- ============ LOGIN ============ -->
+<!-- LOGIN -->
 <div class="screen show" id="loginScreen">
   <div class="login-wrap">
     <div class="login-box">
@@ -504,7 +570,7 @@ select option { background: #1a1a2e; }
 
       <div class="field-group">
         <label class="field-label">USUARIO</label>
-        <input type="text" id="usernameInput" placeholder="sramirez" autocapitalize="none">
+        <input type="text" id="usernameInput" placeholder="nfuentes" autocapitalize="none">
       </div>
       <div class="field-group">
         <label class="field-label">CONTRASEÑA</label>
@@ -520,15 +586,31 @@ select option { background: #1a1a2e; }
   </div>
 </div>
 
-<!-- ============ ADMIN ============ -->
+<!-- NO PERMISSION -->
+<div class="screen" id="noPermissionScreen">
+  <div class="no-permission">
+    <div class="no-permission-box">
+      <div class="no-permission-icon">🚫</div>
+      <div style="font-size:22px;font-weight:700;margin-bottom:8px;">No tenés permisos</div>
+      <div style="font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:24px;">
+        Este panel es solo para jefas y administradores.<br>
+        Si crees que es un error, contactá con tu jefa.
+      </div>
+      <button class="btn-admin" onclick="goToApp()">← Volver a la app</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN -->
 <div class="screen" id="adminScreen">
   <div class="admin-wrap">
     <div class="admin-header">
       <div class="admin-title-block">
         <div class="logo-admin" style="width:44px;height:44px;font-size:20px;">⚙️</div>
         <div class="admin-title">
-          <h1>Panel de Jefa</h1>
+          <h1 id="adminPanelTitle">Panel</h1>
           <div class="subtitle" id="adminUserName">--</div>
+          <div class="team-tag" id="adminTeamTag" style="display:none;"></div>
         </div>
       </div>
       <div class="admin-actions">
@@ -538,7 +620,7 @@ select option { background: #1a1a2e; }
     </div>
 
     <div class="tabs">
-      <button class="tab active" onclick="switchTab('summary')">📊 Resumen</button>
+      <button class="tab active" onclick="switchTab('summary', event)">📊 Resumen</button>
       <button class="tab disabled" title="Próxima sesión">📅 Horarios</button>
       <button class="tab disabled" title="Próxima sesión">⚠ Alertas</button>
       <button class="tab disabled" title="Próxima sesión">👥 Empleadas</button>
@@ -546,21 +628,25 @@ select option { background: #1a1a2e; }
       <button class="tab disabled" title="Próxima sesión">📥 Exportar</button>
     </div>
 
-    <!-- Pestaña RESUMEN -->
     <div class="tab-content active" id="tab-summary">
       <div class="filters-bar">
+        <!-- Selector de equipo (solo para admin) -->
+        <div class="filter-group" id="teamFilterGroup" style="display:none;">
+          <span class="filter-label">Equipo:</span>
+          <select class="filter-select" id="filterTeam" onchange="renderSummary()">
+            <option value="all">Todos los equipos</option>
+          </select>
+        </div>
+        
+        <!-- Selector de puesto -->
         <div class="filter-group">
           <span class="filter-label">Puesto:</span>
           <select class="filter-select" id="filterRole" onchange="renderSummary()">
             <option value="all">Todos los puestos</option>
-            <option value="cajera">Cajeras</option>
-            <option value="encargada">Encargadas</option>
-            <option value="reponedora">Reponedoras</option>
-            <option value="limpieza">Limpieza</option>
-            <option value="atencion">Atención al cliente</option>
-            <option value="promotor">Promotores</option>
           </select>
         </div>
+        
+        <!-- Selector de mes -->
         <div class="month-nav">
           <button class="month-btn" onclick="changeMonth(-1)">◀</button>
           <div class="month-display" id="monthDisplay">--</div>
@@ -575,7 +661,7 @@ select option { background: #1a1a2e; }
   </div>
 </div>
 
-<!-- ============ DETAIL MODAL ============ -->
+<!-- DETAIL -->
 <div class="detail-overlay" id="detailOverlay">
   <div class="detail-card">
     <div class="detail-header">
@@ -594,18 +680,34 @@ select option { background: #1a1a2e; }
 const SUPABASE_URL = 'https://raykzuncciaaouleezmx.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJheWt6dW5jY2lhYW91bGVlem14Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NjQ2MzIsImV4cCI6MjA5NDI0MDYzMn0.w50r_YXzMPZjM8BqJYkP1yA5i_sl4yz3i7io_Fx6dX8';
 
-const ROLES = {
-  cajera: 'Cajeras',
-  encargada: 'Encargadas',
-  reponedora: 'Reponedoras',
-  limpieza: 'Limpieza',
-  atencion: 'Atención al cliente',
-  promotor: 'Promotores'
+// Etiquetas legibles de roles
+const ROLE_LABELS = {
+  recepcionista: 'Recepcionistas',
+  pretester: 'Pretesters',
+  host: 'Hosts',
+  promotor: 'Promotores',
+  presentador: 'Presentadores',
+  enrutador: 'Enrutadores',
+  asesor: 'Asesores PAI',
+  jefa_promotoras: 'Jefa de Promotoras',
+  jefa_salon: 'Jefa de Salón',
+  jefe_presentacion: 'Jefe de Presentación',
+  jefe_ventas: 'Jefe de Ventas',
+  admin: 'Administrador'
+};
+
+// Mapeo de qué puestos pertenecen a cada equipo
+const TEAM_ROLES = {
+  'Promotoras': ['promotor', 'jefa_promotoras'],
+  'Salón': ['recepcionista', 'pretester', 'host', 'jefa_salon'],
+  'Presentación': ['presentador', 'enrutador', 'jefe_presentacion'],
+  'Ventas': ['asesor', 'jefe_ventas']
 };
 
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 let currentUser = null;
+let teams = [];
 let employees = [];
 let allPunches = [];
 let viewMonth = new Date();
@@ -627,7 +729,7 @@ async function doLogin() {
   try {
     const { data } = await db
       .from('employees')
-      .select('*')
+      .select('*, teams(name)')
       .eq('username', username)
       .eq('active', true)
       .single();
@@ -639,18 +741,33 @@ async function doLogin() {
     }
 
     if (!data.is_manager && !data.is_admin) {
-      errBox.textContent = 'No tenés permisos para acceder a este panel';
-      errBox.classList.add('show');
+      // NO TIENE PERMISOS
+      document.getElementById('loginScreen').classList.remove('show');
+      document.getElementById('noPermissionScreen').classList.add('show');
       return;
     }
 
     currentUser = data;
     document.getElementById('loginScreen').classList.remove('show');
     document.getElementById('adminScreen').classList.add('show');
-    document.getElementById('adminUserName').textContent = 
-      currentUser.full_name + (currentUser.is_admin ? ' · Admin' : ' · Jefa');
+
+    // Mostrar info según rol
+    if (currentUser.is_admin) {
+      document.getElementById('adminPanelTitle').textContent = 'Panel de Administrador';
+      document.getElementById('adminUserName').textContent = currentUser.full_name;
+      document.getElementById('adminTeamTag').style.display = 'inline-block';
+      document.getElementById('adminTeamTag').textContent = 'TODOS LOS EQUIPOS';
+    } else {
+      // Es jefa
+      const teamName = data.teams?.name || 'Sin equipo';
+      document.getElementById('adminPanelTitle').textContent = 'Panel de Jefa';
+      document.getElementById('adminUserName').textContent = currentUser.full_name;
+      document.getElementById('adminTeamTag').style.display = 'inline-block';
+      document.getElementById('adminTeamTag').textContent = `EQUIPO ${teamName.toUpperCase()}`;
+    }
 
     await loadAllData();
+    setupFilters();
     renderSummary();
   } catch (err) {
     console.error('Error en login:', err);
@@ -662,31 +779,43 @@ async function doLogin() {
 function logout() {
   currentUser = null;
   document.getElementById('adminScreen').classList.remove('show');
+  document.getElementById('noPermissionScreen').classList.remove('show');
   document.getElementById('loginScreen').classList.add('show');
   document.getElementById('usernameInput').value = '';
   document.getElementById('passwordInput').value = '';
 }
 
+function goToApp() {
+  window.location.href = 'index.html';
+}
+
 // ============ TABS ============
-function switchTab(name) {
+function switchTab(name, evt) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  event.target.classList.add('active');
+  if (evt && evt.target) evt.target.classList.add('active');
   document.getElementById('tab-' + name).classList.add('active');
 }
 
 // ============ DATA LOAD ============
 async function loadAllData() {
   try {
-    const { data: emps } = await db
-      .from('employees')
-      .select('*')
-      .eq('active', true)
-      .order('full_name');
+    // Cargar equipos
+    const { data: teamsData } = await db.from('teams').select('*').order('name');
+    teams = teamsData || [];
 
+    // Cargar empleadas (filtradas según el rol)
+    let empQuery = db.from('employees').select('*, teams(name)').eq('active', true);
+    
+    if (!currentUser.is_admin && currentUser.team_id) {
+      // Jefa: solo su equipo
+      empQuery = empQuery.eq('team_id', currentUser.team_id);
+    }
+    
+    const { data: emps } = await empQuery.order('full_name');
     employees = emps || [];
 
-    // Cargar fichajes del mes en vista
+    // Cargar fichajes del mes
     const start = new Date(viewMonth);
     const end = new Date(viewMonth);
     end.setMonth(end.getMonth() + 1);
@@ -704,17 +833,60 @@ async function loadAllData() {
   }
 }
 
+// ============ FILTROS ============
+function setupFilters() {
+  const teamFilter = document.getElementById('teamFilterGroup');
+  const teamSelect = document.getElementById('filterTeam');
+  const roleSelect = document.getElementById('filterRole');
+
+  // Selector de equipo: SOLO para admin
+  if (currentUser.is_admin) {
+    teamFilter.style.display = 'flex';
+    teamSelect.innerHTML = '<option value="all">Todos los equipos</option>';
+    teams.forEach(t => {
+      teamSelect.innerHTML += `<option value="${t.id}">${t.name}</option>`;
+    });
+  } else {
+    teamFilter.style.display = 'none';
+  }
+
+  // Selector de puesto: dinámico según equipo
+  updateRoleFilter();
+}
+
+function updateRoleFilter() {
+  const roleSelect = document.getElementById('filterRole');
+  let availableRoles = [];
+
+  if (currentUser.is_admin) {
+    const selectedTeam = document.getElementById('filterTeam').value;
+    if (selectedTeam === 'all') {
+      // Todos los puestos
+      availableRoles = ['recepcionista', 'pretester', 'host', 'promotor', 'presentador', 'enrutador', 'asesor',
+                        'jefa_salon', 'jefa_promotoras', 'jefe_presentacion', 'jefe_ventas'];
+    } else {
+      // Solo puestos del equipo seleccionado
+      const team = teams.find(t => t.id === selectedTeam);
+      if (team) availableRoles = TEAM_ROLES[team.name] || [];
+    }
+  } else {
+    // Jefa: solo puestos de SU equipo
+    const team = teams.find(t => t.id === currentUser.team_id);
+    if (team) availableRoles = TEAM_ROLES[team.name] || [];
+  }
+
+  roleSelect.innerHTML = '<option value="all">Todos los puestos</option>';
+  availableRoles.forEach(role => {
+    roleSelect.innerHTML += `<option value="${role}">${ROLE_LABELS[role] || role}</option>`;
+  });
+}
+
 // ============ MONTH NAV ============
 async function changeMonth(delta) {
   viewMonth.setMonth(viewMonth.getMonth() + delta);
-  
-  // No permitir ir al futuro más allá del mes actual
   const now = new Date();
   now.setDate(1);
-  if (viewMonth > now) {
-    viewMonth = now;
-  }
-  
+  if (viewMonth > now) viewMonth = now;
   updateMonthDisplay();
   await loadAllData();
   renderSummary();
@@ -722,29 +894,19 @@ async function changeMonth(delta) {
 
 function updateMonthDisplay() {
   const display = document.getElementById('monthDisplay');
-  display.textContent = viewMonth.toLocaleDateString('es-AR', { 
-    month: 'long', 
-    year: 'numeric' 
-  });
-
-  // Deshabilitar "siguiente" si es mes actual
+  display.textContent = viewMonth.toLocaleDateString('es-AR', { month: 'long', year: 'numeric' });
   const now = new Date();
   now.setDate(1);
   document.getElementById('nextMonthBtn').disabled = 
-    viewMonth.getFullYear() === now.getFullYear() && 
-    viewMonth.getMonth() === now.getMonth();
+    viewMonth.getFullYear() === now.getFullYear() && viewMonth.getMonth() === now.getMonth();
 }
 
 // ============ CÁLCULOS ============
 function getEmployeeStats(empId) {
   const empPunches = allPunches.filter(p => p.employee_id === empId);
-  
-  let totalMin = 0;
-  let breakMin = 0;
-  let breakCount = 0;
+  let totalMin = 0, breakMin = 0, breakCount = 0;
   const daysWorked = new Set();
 
-  // Procesar por día
   const byDay = {};
   empPunches.forEach(p => {
     const day = new Date(p.timestamp).toDateString();
@@ -753,32 +915,16 @@ function getEmployeeStats(empId) {
   });
 
   for (const day in byDay) {
-    const dayPunches = byDay[day].sort((a, b) => 
-      new Date(a.timestamp) - new Date(b.timestamp)
-    );
-    
-    let dayWork = 0;
-    let dayBreak = 0;
-    let currentIn = null;
-    let currentBreakStart = null;
-    let hasIn = false;
+    const dayPunches = byDay[day].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+    let dayWork = 0, dayBreak = 0;
+    let currentIn = null, currentBreakStart = null, hasIn = false;
 
     for (const p of dayPunches) {
       const t = new Date(p.timestamp).getTime();
-      
-      if (p.punch_type === 'in') {
-        currentIn = t;
-        hasIn = true;
-      } else if (p.punch_type === 'out' && currentIn) {
-        dayWork += (t - currentIn) / 60000;
-        currentIn = null;
-      } else if (p.punch_type === 'break_start') {
-        currentBreakStart = t;
-        breakCount++;
-      } else if (p.punch_type === 'break_end' && currentBreakStart) {
-        dayBreak += (t - currentBreakStart) / 60000;
-        currentBreakStart = null;
-      }
+      if (p.punch_type === 'in') { currentIn = t; hasIn = true; }
+      else if (p.punch_type === 'out' && currentIn) { dayWork += (t - currentIn) / 60000; currentIn = null; }
+      else if (p.punch_type === 'break_start') { currentBreakStart = t; breakCount++; }
+      else if (p.punch_type === 'break_end' && currentBreakStart) { dayBreak += (t - currentBreakStart) / 60000; currentBreakStart = null; }
     }
 
     if (hasIn) daysWorked.add(day);
@@ -790,7 +936,7 @@ function getEmployeeStats(empId) {
     totalHours: totalMin / 60,
     productiveHours: (totalMin - breakMin) / 60,
     daysWorked: daysWorked.size,
-    breakCount: breakCount,
+    breakCount,
     breakHours: breakMin / 60
   };
 }
@@ -798,7 +944,6 @@ function getEmployeeStats(empId) {
 function getDayDetails(empId) {
   const empPunches = allPunches.filter(p => p.employee_id === empId);
   const byDay = {};
-
   empPunches.forEach(p => {
     const day = new Date(p.timestamp).toDateString();
     if (!byDay[day]) byDay[day] = [];
@@ -807,51 +952,29 @@ function getDayDetails(empId) {
 
   const result = [];
   for (const day in byDay) {
-    const dayPunches = byDay[day].sort((a, b) => 
-      new Date(a.timestamp) - new Date(b.timestamp)
-    );
-    
-    let dayWork = 0;
-    let dayBreak = 0;
-    let entrada = null;
-    let salida = null;
+    const dayPunches = byDay[day].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+    let dayWork = 0, dayBreak = 0;
+    let entrada = null, salida = null;
     const breaks = [];
-    let currentIn = null;
-    let currentBreakStart = null;
+    let currentIn = null, currentBreakStart = null;
 
     for (const p of dayPunches) {
       const t = new Date(p.timestamp).getTime();
-      
-      if (p.punch_type === 'in') {
-        currentIn = t;
-        if (!entrada) entrada = p.timestamp;
-      } else if (p.punch_type === 'out' && currentIn) {
-        dayWork += (t - currentIn) / 60000;
-        salida = p.timestamp;
-        currentIn = null;
-      } else if (p.punch_type === 'break_start') {
-        currentBreakStart = { time: t, ts: p.timestamp };
-      } else if (p.punch_type === 'break_end' && currentBreakStart) {
+      if (p.punch_type === 'in') { currentIn = t; if (!entrada) entrada = p.timestamp; }
+      else if (p.punch_type === 'out' && currentIn) { dayWork += (t - currentIn) / 60000; salida = p.timestamp; currentIn = null; }
+      else if (p.punch_type === 'break_start') { currentBreakStart = { time: t, ts: p.timestamp }; }
+      else if (p.punch_type === 'break_end' && currentBreakStart) {
         const dur = (t - currentBreakStart.time) / 60000;
         dayBreak += dur;
-        breaks.push({
-          start: currentBreakStart.ts,
-          end: p.timestamp,
-          duration: dur
-        });
+        breaks.push({ start: currentBreakStart.ts, end: p.timestamp, duration: dur });
         currentBreakStart = null;
       }
     }
 
     result.push({
       date: new Date(day),
-      entrada: entrada,
-      salida: salida,
-      totalMin: dayWork,
-      breakMin: dayBreak,
-      productiveMin: dayWork - dayBreak,
-      breaks: breaks,
-      role: dayPunches[0]?.role
+      entrada, salida, totalMin: dayWork, breakMin: dayBreak,
+      productiveMin: dayWork - dayBreak, breaks, role: dayPunches[0]?.role
     });
   }
 
@@ -860,39 +983,87 @@ function getDayDetails(empId) {
 
 // ============ RENDER ============
 function renderSummary() {
-  const filter = document.getElementById('filterRole').value;
+  const teamFilter = document.getElementById('filterTeam')?.value || 'all';
+  const roleFilter = document.getElementById('filterRole')?.value || 'all';
   const container = document.getElementById('summaryContent');
 
   // Filtrar empleadas
   let filtered = employees;
-  if (filter !== 'all') {
-    filtered = employees.filter(e => e.default_role === filter);
+
+  if (currentUser.is_admin && teamFilter !== 'all') {
+    filtered = filtered.filter(e => e.team_id === teamFilter);
   }
+
+  if (roleFilter !== 'all') {
+    filtered = filtered.filter(e => e.default_role === roleFilter);
+  }
+
+  // Actualizar filtro de puesto al cambiar equipo
+  if (currentUser.is_admin) updateRoleFilter();
 
   if (filtered.length === 0) {
     container.innerHTML = '<div class="empty-state">No hay empleadas con este filtro</div>';
     return;
   }
 
+  let html = '';
+
+  // SI ES ADMIN Y NO HAY FILTRO DE EQUIPO: agrupar por EQUIPO
+  if (currentUser.is_admin && teamFilter === 'all') {
+    const byTeam = {};
+    filtered.forEach(e => {
+      const teamName = e.teams?.name || 'Sin equipo';
+      if (!byTeam[teamName]) byTeam[teamName] = [];
+      byTeam[teamName].push(e);
+    });
+
+    const orderedTeams = ['Salón', 'Promotoras', 'Presentación', 'Ventas', 'Sin equipo'];
+    for (const teamName of orderedTeams) {
+      if (!byTeam[teamName]) continue;
+      const emps = byTeam[teamName];
+      html += `
+        <div class="team-section">
+          <div class="team-header">
+            <div class="team-name">🏢 ${teamName}</div>
+            <div class="team-meta">${emps.length} ${emps.length === 1 ? 'persona' : 'personas'}</div>
+          </div>
+          ${renderEmployeesGroupedByRole(emps)}
+        </div>`;
+    }
+  } else {
+    // JEFA o ADMIN con equipo filtrado: agrupar por PUESTO
+    html = renderEmployeesGroupedByRole(filtered);
+  }
+
+  container.innerHTML = html;
+}
+
+function renderEmployeesGroupedByRole(emps) {
   // Agrupar por puesto
   const groups = {};
-  filtered.forEach(e => {
+  emps.forEach(e => {
     if (!groups[e.default_role]) groups[e.default_role] = [];
     groups[e.default_role].push(e);
   });
 
+  const orderedRoles = [
+    'jefa_salon', 'jefa_promotoras', 'jefe_presentacion', 'jefe_ventas',
+    'recepcionista', 'pretester', 'host',
+    'promotor',
+    'presentador', 'enrutador',
+    'asesor'
+  ];
+
   let html = '';
-  const orderedRoles = ['cajera', 'encargada', 'reponedora', 'limpieza', 'atencion', 'promotor'];
-  
   for (const role of orderedRoles) {
     if (!groups[role]) continue;
-    const emps = groups[role];
-    
+    const empsInRole = groups[role];
+
     html += `
       <div class="group-section">
         <div class="group-header">
-          <div class="group-title">${ROLES[role] || role}</div>
-          <div class="group-count">${emps.length} ${emps.length === 1 ? 'empleada' : 'empleadas'}</div>
+          <div class="group-title">${ROLE_LABELS[role] || role}</div>
+          <div class="group-count">${empsInRole.length} ${empsInRole.length === 1 ? 'persona' : 'personas'}</div>
         </div>
         <table class="summary-table">
           <thead>
@@ -906,18 +1077,19 @@ function renderSummary() {
           </thead>
           <tbody>
     `;
-    
-    for (const emp of emps) {
+
+    for (const emp of empsInRole) {
       const stats = getEmployeeStats(emp.id);
-      const initials = emp.full_name.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
-      
+      const initials = emp.full_name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
+      const isJefa = emp.is_manager;
+
       html += `
         <tr class="clickable" onclick="showDetail('${emp.id}')">
           <td>
             <div style="display:flex;align-items:center;gap:10px;">
-              <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#a78bfa,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;">${initials}</div>
+              <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,${isJefa ? '#a78bfa,#8b5cf6' : '#4ade80,#22d3ee'});display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;${isJefa ? 'color:#fff;' : 'color:#0f3460;'}">${initials}</div>
               <div>
-                <div class="cell-name">${emp.full_name}</div>
+                <div class="cell-name">${emp.full_name}${isJefa ? '<span class="badge-jefa">Jefa</span>' : ''}</div>
                 <div style="font-size:11px;color:rgba(255,255,255,0.4);">@${emp.username}</div>
               </div>
             </div>
@@ -929,11 +1101,11 @@ function renderSummary() {
         </tr>
       `;
     }
-    
+
     html += '</tbody></table></div>';
   }
 
-  container.innerHTML = html;
+  return html;
 }
 
 function formatHours(hours) {
@@ -946,15 +1118,11 @@ function formatHours(hours) {
 }
 
 function formatTime(iso) {
-  return new Date(iso).toLocaleTimeString('es-AR', { 
-    hour: '2-digit', minute: '2-digit', hour12: false 
-  });
+  return new Date(iso).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit', hour12: false });
 }
 
 function formatDate(date) {
-  return date.toLocaleDateString('es-AR', { 
-    weekday: 'short', day: 'numeric', month: 'short' 
-  });
+  return date.toLocaleDateString('es-AR', { weekday: 'short', day: 'numeric', month: 'short' });
 }
 
 // ============ DETAIL ============
@@ -967,7 +1135,7 @@ function showDetail(empId) {
 
   document.getElementById('detailName').textContent = emp.full_name;
   document.getElementById('detailSubtitle').textContent = 
-    `${ROLES[emp.default_role] || emp.default_role} · ${viewMonth.toLocaleDateString('es-AR', { month: 'long', year: 'numeric' })}`;
+    `${ROLE_LABELS[emp.default_role] || emp.default_role} · ${viewMonth.toLocaleDateString('es-AR', { month: 'long', year: 'numeric' })}`;
 
   document.getElementById('detailStats').innerHTML = `
     <div class="stat-box">
@@ -1009,7 +1177,7 @@ function showDetail(empId) {
           </div>
           <div class="day-detail">
             <span class="punch-pair">↓ ${d.entrada ? formatTime(d.entrada) : '?'} → ↑ ${d.salida ? formatTime(d.salida) : '?'}</span>
-            <span style="color:rgba(255,255,255,0.4);">${ROLES[d.role] || d.role || ''}</span>
+            <span style="color:rgba(255,255,255,0.4);">${ROLE_LABELS[d.role] || d.role || ''}</span>
           </div>
           ${breaksHtml}
         </div>
@@ -1024,7 +1192,7 @@ function closeDetail() {
   document.getElementById('detailOverlay').classList.remove('show');
 }
 
-// ============ INIT ============
+// INIT
 updateMonthDisplay();
 document.getElementById('usernameInput').focus();
 </script>
