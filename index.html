@@ -29,28 +29,18 @@ body {
 
 .screen.hidden { display: none; }
 
-/* ====== LOGIN ====== */
 .login-header { text-align: center; margin: 60px 0 40px; }
 
 .logo {
-  width: 72px;
-  height: 72px;
+  width: 72px; height: 72px;
   background: linear-gradient(135deg, #4ade80, #22d3ee);
   border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   margin: 0 auto 20px;
   font-size: 32px;
 }
 
-.login-title {
-  font-size: 28px;
-  font-weight: 700;
-  margin-bottom: 4px;
-  letter-spacing: -0.02em;
-}
-
+.login-title { font-size: 28px; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.02em; }
 .login-subtitle { font-size: 14px; color: rgba(255, 255, 255, 0.5); }
 
 .login-box {
@@ -120,28 +110,68 @@ input:focus { border-color: #4ade80; }
 
 .error-box.show { display: block; }
 
-/* ====== DASHBOARD ====== */
+.success-box {
+  background: rgba(74, 222, 128, 0.1);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  color: #4ade80;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-top: 12px;
+  display: none;
+}
+
+.success-box.show { display: block; }
+
+.warning-banner {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.15));
+  border: 1px solid rgba(251, 191, 36, 0.4);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: #fbbf24;
+  text-align: center;
+}
+
+/* CAMBIO CONTRASEÑA OBLIGATORIO */
+.force-change-header {
+  text-align: center;
+  margin: 40px 0 30px;
+}
+
+.warning-icon {
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 32px;
+  color: #0f3460;
+}
+
+/* DASHBOARD */
 .topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px 0;
+  gap: 8px;
 }
 
-.user-info { display: flex; align-items: center; gap: 12px; }
-.user-name { font-weight: 500; font-size: 15px; }
+.user-info { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
+.user-name { font-weight: 500; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .user-role { font-size: 12px; color: rgba(255, 255, 255, 0.5); }
 
 .emp-avatar {
-  width: 40px;
-  height: 40px;
+  width: 40px; height: 40px;
   border-radius: 12px;
   background: linear-gradient(135deg, #4ade80, #22d3ee);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 600; font-size: 14px;
   flex-shrink: 0;
   color: #0f3460;
 }
@@ -149,16 +179,21 @@ input:focus { border-color: #4ade80; }
 .emp-avatar.admin { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
 .emp-avatar.manager { background: linear-gradient(135deg, #a78bfa, #8b5cf6); color: #fff; }
 
-.logout-btn {
+.top-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+.topbar-btn {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
-  padding: 8px 14px;
+  padding: 8px 12px;
   color: rgba(255, 255, 255, 0.7);
   font-family: inherit;
-  font-size: 13px;
+  font-size: 12px;
   cursor: pointer;
+  white-space: nowrap;
 }
+
+.topbar-btn:hover { color: #fff; }
 
 .admin-banner {
   background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(139, 92, 246, 0.15));
@@ -223,12 +258,7 @@ input:focus { border-color: #4ade80; }
 .status-pill.out { background: rgba(255, 255, 255, 0.08); color: rgba(255, 255, 255, 0.7); }
 .status-pill.break { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
 
-.status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: currentColor;
-}
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
 
 .status-pill.in .status-dot,
 .status-pill.break .status-dot { animation: pulse 2s infinite; }
@@ -239,10 +269,7 @@ input:focus { border-color: #4ade80; }
 }
 
 .live-counter {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
   margin-top: 14px;
   font-size: 14px;
   color: rgba(255, 255, 255, 0.7);
@@ -289,11 +316,7 @@ input:focus { border-color: #4ade80; }
   box-shadow: 0 10px 30px rgba(34, 211, 238, 0.3);
 }
 
-.action-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  box-shadow: none;
-}
+.action-btn:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
 
 .day-summary {
   background: rgba(255, 255, 255, 0.05);
@@ -313,45 +336,22 @@ input:focus { border-color: #4ade80; }
   font-family: 'JetBrains Mono', monospace;
 }
 
-.summary-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 4px 0;
-  color: rgba(255, 255, 255, 0.8);
-}
-
+.summary-row { display: flex; justify-content: space-between; padding: 4px 0; color: rgba(255, 255, 255, 0.8); }
 .summary-row .label { color: rgba(255, 255, 255, 0.5); }
 
-.admin-msg-box {
-  text-align: center;
-  padding: 40px 20px;
-  margin-top: 40px;
-}
+.admin-msg-box { text-align: center; padding: 40px 20px; margin-top: 40px; }
 
 .admin-msg-icon {
-  width: 80px;
-  height: 80px;
+  width: 80px; height: 80px;
   border-radius: 24px;
   background: linear-gradient(135deg, #fbbf24, #f59e0b);
   margin: 0 auto 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   font-size: 36px;
 }
 
-.admin-msg-title {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.admin-msg-text {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 24px;
-  line-height: 1.5;
-}
+.admin-msg-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+.admin-msg-text { font-size: 14px; color: rgba(255, 255, 255, 0.6); margin-bottom: 24px; line-height: 1.5; }
 
 .scanner-screen {
   position: fixed;
@@ -385,25 +385,14 @@ input:focus { border-color: #4ade80; }
   height: 32px;
 }
 
-.video-wrap {
-  flex: 1;
-  position: relative;
-  overflow: hidden;
-}
-
-#scanner-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+.video-wrap { flex: 1; position: relative; overflow: hidden; }
+#scanner-video { width: 100%; height: 100%; object-fit: cover; }
 
 .scan-frame {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: 250px;
-  height: 250px;
+  width: 250px; height: 250px;
   border: 3px solid #4ade80;
   border-radius: 20px;
   box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
@@ -412,8 +401,7 @@ input:focus { border-color: #4ade80; }
 .scanner-hint {
   position: absolute;
   bottom: 100px;
-  left: 0;
-  right: 0;
+  left: 0; right: 0;
   text-align: center;
   color: #fff;
   font-size: 14px;
@@ -448,19 +436,9 @@ input:focus { border-color: #4ade80; }
 
 .result-card.success { border-color: rgba(74, 222, 128, 0.4); }
 .result-card.error { border-color: rgba(255, 107, 107, 0.4); }
-.result-card.warning { border-color: rgba(251, 191, 36, 0.4); }
 
-.result-title {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.result-message {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 24px;
-}
+.result-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+.result-message { font-size: 14px; color: rgba(255, 255, 255, 0.7); margin-bottom: 24px; }
 
 .result-time {
   font-family: 'JetBrains Mono', monospace;
@@ -483,17 +461,66 @@ input:focus { border-color: #4ade80; }
 .loading-overlay.show { display: flex; }
 
 .spinner {
-  width: 40px;
-  height: 40px;
+  width: 40px; height: 40px;
   border: 3px solid rgba(255, 255, 255, 0.1);
   border-top-color: #4ade80;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* MODAL CAMBIO CONTRASEÑA */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 250;
+  padding: 20px;
+  backdrop-filter: blur(8px);
 }
+
+.modal-overlay.show { display: flex; }
+
+.modal-card {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 28px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.modal-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+.modal-subtitle { font-size: 13px; color: rgba(255, 255, 255, 0.5); }
+
+.close-x {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  width: 32px; height: 32px;
+  font-size: 18px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.modal-actions button { flex: 1; }
 </style>
 </head>
 <body>
@@ -521,25 +548,56 @@ input:focus { border-color: #4ade80; }
   </div>
 </div>
 
+<!-- CAMBIO OBLIGATORIO DE CONTRASEÑA -->
+<div class="screen hidden" id="forceChangeScreen">
+  <div class="force-change-header">
+    <div class="warning-icon">🔒</div>
+    <div class="login-title">Cambiá tu contraseña</div>
+    <div class="login-subtitle">Es tu primera vez, tenés que crear una nueva</div>
+  </div>
+
+  <div class="login-box">
+    <div class="warning-banner">
+      ⚠ Por seguridad, no podés seguir usando la contraseña inicial (123456).
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">NUEVA CONTRASEÑA</label>
+      <input type="password" id="forceNewPassword" placeholder="Mínimo 6 caracteres">
+    </div>
+    <div class="field-group">
+      <label class="field-label">REPETIR CONTRASEÑA</label>
+      <input type="password" id="forceRepeatPassword" placeholder="Escribila de nuevo"
+             onkeydown="if(event.key==='Enter')submitForceChange()">
+    </div>
+
+    <div class="error-box" id="forceError"></div>
+    <div class="success-box" id="forceSuccess"></div>
+
+    <button class="btn" onclick="submitForceChange()">Guardar y continuar</button>
+  </div>
+</div>
+
 <!-- DASHBOARD -->
 <div class="screen hidden" id="dashboardScreen">
   <div class="topbar">
     <div class="user-info">
       <div class="emp-avatar" id="userAvatar">--</div>
-      <div>
+      <div style="min-width:0;">
         <div class="user-name" id="userName">--</div>
         <div class="user-role" id="userRole">--</div>
       </div>
     </div>
-    <button class="logout-btn" onclick="logout()">Salir</button>
+    <div class="top-actions">
+      <button class="topbar-btn" onclick="openChangePassword()" title="Cambiar contraseña">🔒</button>
+      <button class="topbar-btn" onclick="logout()">Salir</button>
+    </div>
   </div>
 
   <div class="admin-banner" id="adminBanner" style="display:none;">
     <div class="admin-text">
       <strong id="adminBannerTitle">Acceso de Jefa</strong>
-      <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;" id="adminBannerSubtitle">
-        Podés gestionar al equipo
-      </div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;">Podés gestionar al equipo</div>
     </div>
     <a class="admin-link" href="admin.html">Panel →</a>
   </div>
@@ -583,14 +641,47 @@ input:focus { border-color: #4ade80; }
     </div>
 
     <div id="actionsContainer">
-      <button class="action-btn in" onclick="startFichaje('in')">
-        FICHAR ENTRADA
-      </button>
+      <button class="action-btn in" onclick="startFichaje('in')">FICHAR ENTRADA</button>
     </div>
 
     <div class="day-summary" id="daySummary" style="display:none;">
       <h4>RESUMEN DEL DÍA</h4>
       <div id="summaryContent"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CAMBIO CONTRASEÑA VOLUNTARIO -->
+<div class="modal-overlay" id="changePasswordOverlay">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">🔒 Cambiar contraseña</div>
+        <div class="modal-subtitle">Actualizá tu contraseña</div>
+      </div>
+      <button class="close-x" onclick="closeChangePassword()">×</button>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">CONTRASEÑA ACTUAL</label>
+      <input type="password" id="currentPassword" placeholder="Tu contraseña actual">
+    </div>
+    <div class="field-group">
+      <label class="field-label">NUEVA CONTRASEÑA</label>
+      <input type="password" id="newPassword" placeholder="Mínimo 6 caracteres">
+    </div>
+    <div class="field-group">
+      <label class="field-label">REPETIR NUEVA CONTRASEÑA</label>
+      <input type="password" id="repeatPassword" placeholder="Escribila de nuevo"
+             onkeydown="if(event.key==='Enter')submitChangePassword()">
+    </div>
+
+    <div class="error-box" id="changePasswordError"></div>
+    <div class="success-box" id="changePasswordSuccess"></div>
+
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeChangePassword()">Cancelar</button>
+      <button class="btn" onclick="submitChangePassword()">Guardar</button>
     </div>
   </div>
 </div>
@@ -629,22 +720,15 @@ input:focus { border-color: #4ade80; }
 const SUPABASE_URL = 'https://raykzuncciaaouleezmx.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJheWt6dW5jY2lhYW91bGVlem14Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NjQ2MzIsImV4cCI6MjA5NDI0MDYzMn0.w50r_YXzMPZjM8BqJYkP1yA5i_sl4yz3i7io_Fx6dX8';
 const BRANCH_ID = '11111111-1111-1111-1111-111111111111';
-
-// EL CÓDIGO FIJO DEL QR
 const QR_CODE_VALID = 'FICHAJE-SUCURSAL-2026';
+const MIN_PASSWORD_LENGTH = 6;
 
 const ROLE_LABELS = {
-  recepcionista: 'Recepcionista',
-  pretester: 'Pretester',
-  host: 'Host',
-  promotor: 'Promotor',
-  presentador: 'Presentador',
-  enrutador: 'Enrutador',
+  recepcionista: 'Recepcionista', pretester: 'Pretester', host: 'Host',
+  promotor: 'Promotor', presentador: 'Presentador', enrutador: 'Enrutador',
   asesor: 'Asesor PAI',
-  jefa_promotoras: 'Jefa de Promotoras',
-  jefa_salon: 'Jefa de Salón',
-  jefe_presentacion: 'Jefe de Presentación',
-  jefe_ventas: 'Jefe de Ventas',
+  jefa_promotoras: 'Jefa de Promotoras', jefa_salon: 'Jefa de Salón',
+  jefe_presentacion: 'Jefe de Presentación', jefe_ventas: 'Jefe de Ventas',
   admin: 'Administrador'
 };
 
@@ -665,14 +749,13 @@ function updateClock() {
   const el2 = document.getElementById('clockDate');
   if (el1 && el2) {
     el1.textContent = now.toLocaleTimeString('es-AR', { hour12: false });
-    el2.textContent = now.toLocaleDateString('es-AR', {
-      weekday: 'long', day: 'numeric', month: 'long'
-    });
+    el2.textContent = now.toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' });
   }
 }
 setInterval(updateClock, 1000);
 updateClock();
 
+// ============ LOGIN ============
 async function doLogin() {
   const username = document.getElementById('usernameInput').value.trim().toLowerCase();
   const password = document.getElementById('passwordInput').value;
@@ -702,6 +785,12 @@ async function doLogin() {
     errBox.classList.remove('show');
     document.getElementById('passwordInput').value = '';
 
+    // Si tiene la contraseña inicial (123456 y password_changed = false), forzar cambio
+    if (data.password === '123456' && !data.password_changed) {
+      showForceChangeScreen();
+      return;
+    }
+
     await loadTodayPunches();
     showDashboard();
   } catch (err) {
@@ -718,11 +807,165 @@ function logout() {
   if (liveCounterInterval) { clearInterval(liveCounterInterval); liveCounterInterval = null; }
   document.getElementById('loginScreen').classList.remove('hidden');
   document.getElementById('dashboardScreen').classList.add('hidden');
+  document.getElementById('forceChangeScreen').classList.add('hidden');
   document.getElementById('usernameInput').value = '';
 }
 
+// ============ CAMBIO OBLIGATORIO DE CONTRASEÑA ============
+function showForceChangeScreen() {
+  document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('forceChangeScreen').classList.remove('hidden');
+  document.getElementById('forceNewPassword').value = '';
+  document.getElementById('forceRepeatPassword').value = '';
+  document.getElementById('forceError').classList.remove('show');
+  document.getElementById('forceSuccess').classList.remove('show');
+  document.getElementById('forceNewPassword').focus();
+}
+
+async function submitForceChange() {
+  const newPass = document.getElementById('forceNewPassword').value;
+  const repeat = document.getElementById('forceRepeatPassword').value;
+  const errBox = document.getElementById('forceError');
+  const okBox = document.getElementById('forceSuccess');
+  errBox.classList.remove('show');
+  okBox.classList.remove('show');
+
+  if (!newPass || !repeat) {
+    errBox.textContent = 'Completá los dos campos';
+    errBox.classList.add('show');
+    return;
+  }
+
+  if (newPass.length < MIN_PASSWORD_LENGTH) {
+    errBox.textContent = `La contraseña debe tener al menos ${MIN_PASSWORD_LENGTH} caracteres`;
+    errBox.classList.add('show');
+    return;
+  }
+
+  if (newPass !== repeat) {
+    errBox.textContent = 'Las contraseñas no coinciden';
+    errBox.classList.add('show');
+    return;
+  }
+
+  if (newPass === '123456') {
+    errBox.textContent = 'No podés usar la contraseña inicial';
+    errBox.classList.add('show');
+    return;
+  }
+
+  try {
+    const { error } = await db
+      .from('employees')
+      .update({ password: newPass, password_changed: true })
+      .eq('id', currentUser.id);
+
+    if (error) throw error;
+
+    currentUser.password = newPass;
+    currentUser.password_changed = true;
+    okBox.textContent = '✓ Contraseña guardada. Continuando...';
+    okBox.classList.add('show');
+
+    setTimeout(async () => {
+      document.getElementById('forceChangeScreen').classList.add('hidden');
+      await loadTodayPunches();
+      showDashboard();
+    }, 1200);
+
+  } catch (err) {
+    console.error('Error al cambiar contraseña:', err);
+    errBox.textContent = 'Error al guardar. Reintentá.';
+    errBox.classList.add('show');
+  }
+}
+
+// ============ CAMBIO VOLUNTARIO DE CONTRASEÑA ============
+function openChangePassword() {
+  document.getElementById('currentPassword').value = '';
+  document.getElementById('newPassword').value = '';
+  document.getElementById('repeatPassword').value = '';
+  document.getElementById('changePasswordError').classList.remove('show');
+  document.getElementById('changePasswordSuccess').classList.remove('show');
+  document.getElementById('changePasswordOverlay').classList.add('show');
+  document.getElementById('currentPassword').focus();
+}
+
+function closeChangePassword() {
+  document.getElementById('changePasswordOverlay').classList.remove('show');
+}
+
+async function submitChangePassword() {
+  const currentPass = document.getElementById('currentPassword').value;
+  const newPass = document.getElementById('newPassword').value;
+  const repeat = document.getElementById('repeatPassword').value;
+  const errBox = document.getElementById('changePasswordError');
+  const okBox = document.getElementById('changePasswordSuccess');
+  errBox.classList.remove('show');
+  okBox.classList.remove('show');
+
+  if (!currentPass || !newPass || !repeat) {
+    errBox.textContent = 'Completá todos los campos';
+    errBox.classList.add('show');
+    return;
+  }
+
+  if (currentPass !== currentUser.password) {
+    errBox.textContent = 'La contraseña actual es incorrecta';
+    errBox.classList.add('show');
+    return;
+  }
+
+  if (newPass.length < MIN_PASSWORD_LENGTH) {
+    errBox.textContent = `La nueva contraseña debe tener al menos ${MIN_PASSWORD_LENGTH} caracteres`;
+    errBox.classList.add('show');
+    return;
+  }
+
+  if (newPass !== repeat) {
+    errBox.textContent = 'Las contraseñas nuevas no coinciden';
+    errBox.classList.add('show');
+    return;
+  }
+
+  if (newPass === currentPass) {
+    errBox.textContent = 'La nueva contraseña debe ser diferente a la actual';
+    errBox.classList.add('show');
+    return;
+  }
+
+  if (newPass === '123456') {
+    errBox.textContent = 'No podés usar la contraseña inicial';
+    errBox.classList.add('show');
+    return;
+  }
+
+  try {
+    const { error } = await db
+      .from('employees')
+      .update({ password: newPass, password_changed: true })
+      .eq('id', currentUser.id);
+
+    if (error) throw error;
+
+    currentUser.password = newPass;
+    currentUser.password_changed = true;
+    okBox.textContent = '✓ Contraseña actualizada';
+    okBox.classList.add('show');
+
+    setTimeout(closeChangePassword, 1500);
+
+  } catch (err) {
+    console.error('Error:', err);
+    errBox.textContent = 'Error al guardar. Reintentá.';
+    errBox.classList.add('show');
+  }
+}
+
+// ============ DASHBOARD ============
 function showDashboard() {
   document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('forceChangeScreen').classList.add('hidden');
   document.getElementById('dashboardScreen').classList.remove('hidden');
 
   const avatar = document.getElementById('userAvatar');
@@ -767,6 +1010,7 @@ function getInitials(name) {
   return name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
 }
 
+// ============ PUNCHES ============
 async function loadTodayPunches() {
   try {
     const today = new Date();
@@ -926,7 +1170,7 @@ function formatTime(iso) {
   return new Date(iso).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit', hour12: false });
 }
 
-// FICHAJE
+// ============ FICHAJE ============
 function startFichaje(actionType) {
   pendingAction = actionType;
   if (actionType === 'break_start' || actionType === 'break_end') {
@@ -1008,16 +1252,12 @@ async function processCode(code) {
   closeScanner();
   showLoading(true);
   try {
-    // Verificar que el QR sea el correcto
     if (code.trim().toUpperCase() !== QR_CODE_VALID.toUpperCase()) {
       throw new Error('Este QR no es válido. Verificá que estés escaneando el QR del local.');
     }
-
-    // Verificar y actualizar IP
     const ipValid = await verifyAndUpdateIP();
     if (!ipValid) throw new Error('No estás en la red WiFi del local.');
 
-    // Registrar fichaje
     const { error } = await db.from('punches').insert({
       employee_id: currentUser.id,
       branch_id: BRANCH_ID,
@@ -1040,16 +1280,12 @@ async function processCode(code) {
   }
 }
 
-// LÓGICA NUEVA DE IP DINÁMICA
 async function verifyAndUpdateIP() {
   try {
-    // 1. Obtener mi IP actual
     const ipResp = await fetch('https://api.ipify.org?format=json');
     const ipData = await ipResp.json();
     clientIP = ipData.ip;
-    console.log('Mi IP actual:', clientIP);
 
-    // 2. Obtener IP guardada de la sucursal
     const { data: branch } = await db
       .from('branches')
       .select('public_ip')
@@ -1057,11 +1293,8 @@ async function verifyAndUpdateIP() {
       .single();
 
     const branchIP = branch?.public_ip;
-    console.log('IP guardada de la sucursal:', branchIP);
 
-    // CASO A: No hay IP guardada (primera vez)
     if (!branchIP) {
-      console.log('Sin IP guardada - actualizando con la actual');
       await db.from('branches').update({
         public_ip: clientIP,
         ip_last_updated: new Date().toISOString()
@@ -1069,17 +1302,10 @@ async function verifyAndUpdateIP() {
       return true;
     }
 
-    // CASO B: La IP coincide
-    if (clientIP === branchIP) {
-      console.log('IP coincide ✓');
-      return true;
-    }
+    if (clientIP === branchIP) return true;
 
-    // CASO C: La IP NO coincide - verificar si hay gente fichada hoy
-    console.log('IP NO coincide - verificando si hay gente fichada hoy');
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    
     const { data: todayPunchesData } = await db
       .from('punches')
       .select('client_ip')
@@ -1087,8 +1313,6 @@ async function verifyAndUpdateIP() {
       .not('client_ip', 'is', null);
 
     if (!todayPunchesData || todayPunchesData.length === 0) {
-      // No hay nadie fichado hoy - aceptar nueva IP
-      console.log('Nadie fichó hoy - aceptando nueva IP');
       await db.from('branches').update({
         public_ip: clientIP,
         ip_last_updated: new Date().toISOString()
@@ -1096,13 +1320,8 @@ async function verifyAndUpdateIP() {
       return true;
     }
 
-    // Hay gente fichada hoy - verificar si mi IP coincide con la de ellos
     const ipsHoy = [...new Set(todayPunchesData.map(p => p.client_ip))];
-    console.log('IPs usadas hoy:', ipsHoy);
-    
     if (ipsHoy.includes(clientIP)) {
-      // Mi IP coincide con la de alguien que ya fichó hoy - todo OK
-      console.log('Mi IP coincide con alguien fichado hoy - actualizando branches');
       await db.from('branches').update({
         public_ip: clientIP,
         ip_last_updated: new Date().toISOString()
@@ -1110,10 +1329,7 @@ async function verifyAndUpdateIP() {
       return true;
     }
 
-    // Mi IP no coincide con NADIE de hoy - posible trampa
-    console.log('Mi IP no coincide con nadie de hoy - RECHAZAR');
     return false;
-
   } catch (err) {
     console.error('Error verificando IP:', err);
     return false;
