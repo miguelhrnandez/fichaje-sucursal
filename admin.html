@@ -93,13 +93,11 @@ select option { background: #1a1a2e; }
 .badge-admin { display: inline-block; padding: 2px 6px; background: rgba(251, 191, 36, 0.2); color: #fbbf24; border-radius: 4px; font-size: 9px; text-transform: uppercase; letter-spacing: 0.05em; margin-left: 6px; vertical-align: middle; font-family: 'JetBrains Mono', monospace; }
 .empty-state { text-align: center; padding: 40px 20px; color: rgba(255, 255, 255, 0.4); font-size: 14px; }
 
-/* EMPLEADAS - acciones */
+/* EMPLEADAS acciones */
 .actions-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
 .btn-add-emp { background: linear-gradient(135deg, #4ade80, #22d3ee); color: #0f3460; border: none; border-radius: 10px; padding: 10px 18px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
 .btn-action { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 6px 12px; border-radius: 8px; font-family: inherit; font-size: 12px; cursor: pointer; margin-left: 4px; }
 .btn-action:hover { background: rgba(167, 139, 250, 0.15); border-color: rgba(167, 139, 250, 0.3); }
-.btn-action.danger { color: #ff6b6b; }
-.btn-action.danger:hover { background: rgba(255, 107, 107, 0.1); border-color: rgba(255, 107, 107, 0.3); }
 .cell-actions { text-align: right; white-space: nowrap; }
 
 /* INACTIVAS */
@@ -108,7 +106,45 @@ select option { background: #1a1a2e; }
 .inactive-toggle h3 { font-size: 13px; font-weight: 500; color: rgba(255, 255, 255, 0.5); }
 .inactive-content { display: none; padding-top: 20px; }
 .inactive-content.show { display: block; }
-.inactive-row { opacity: 0.6; }
+
+/* HORARIOS - TABLA SEMANAL */
+.week-nav { display: flex; align-items: center; gap: 10px; }
+.week-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 8px 14px; border-radius: 8px; font-family: inherit; font-size: 13px; cursor: pointer; }
+.week-btn:hover { background: rgba(255, 255, 255, 0.1); }
+.week-display { font-size: 14px; font-weight: 600; padding: 8px 16px; min-width: 220px; text-align: center; }
+
+.btn-copy-week { background: linear-gradient(135deg, #4ade80, #22d3ee); color: #0f3460; border: none; border-radius: 8px; padding: 8px 14px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+
+.shifts-table { width: 100%; border-collapse: collapse; font-size: 12px; background: rgba(255, 255, 255, 0.02); border-radius: 10px; overflow: hidden; }
+.shifts-table th { text-align: center; padding: 10px 6px; background: rgba(167, 139, 250, 0.1); color: rgba(255, 255, 255, 0.7); font-weight: 600; font-size: 11px; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+.shifts-table th:first-child { text-align: left; padding-left: 14px; width: 160px; }
+.shifts-table th.today { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
+.shifts-table td { padding: 6px; border-bottom: 1px solid rgba(255, 255, 255, 0.04); text-align: center; }
+.shifts-table td:first-child { text-align: left; padding-left: 14px; }
+.shifts-table td.today-col { background: rgba(74, 222, 128, 0.03); }
+
+.shift-cell {
+  display: inline-block;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 65px;
+  transition: transform 0.1s;
+  font-family: 'JetBrains Mono', monospace;
+}
+.shift-cell:hover { transform: scale(1.05); }
+.shift-cell.empty { background: rgba(255, 255, 255, 0.04); color: rgba(255, 255, 255, 0.3); border: 1px dashed rgba(255, 255, 255, 0.15); }
+.shift-cell.part_time_manana { background: rgba(134, 239, 172, 0.2); color: #86efac; border: 1px solid rgba(134, 239, 172, 0.4); }
+.shift-cell.part_time_tarde { background: rgba(74, 222, 128, 0.2); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.4); }
+.shift-cell.full_time { background: rgba(96, 165, 250, 0.2); color: #60a5fa; border: 1px solid rgba(96, 165, 250, 0.4); }
+.shift-cell.academia { background: rgba(251, 146, 60, 0.2); color: #fb923c; border: 1px solid rgba(251, 146, 60, 0.4); }
+.shift-cell.libre { background: rgba(255, 255, 255, 0.04); color: rgba(255, 255, 255, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); }
+
+.jornada-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; padding: 14px; background: rgba(255, 255, 255, 0.03); border-radius: 10px; font-size: 11px; }
+.legend-item { display: flex; align-items: center; gap: 6px; }
+.legend-color { width: 14px; height: 14px; border-radius: 4px; }
 
 /* MODAL */
 .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7); display: none; align-items: flex-start; justify-content: center; z-index: 200; padding: 20px; overflow-y: auto; backdrop-filter: blur(8px); }
@@ -119,15 +155,25 @@ select option { background: #1a1a2e; }
 .modal-subtitle { font-size: 13px; color: rgba(255, 255, 255, 0.5); }
 .close-x { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; width: 32px; height: 32px; font-size: 18px; color: #fff; cursor: pointer; }
 
+.jornada-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px; }
+.jornada-option { padding: 12px; border-radius: 10px; cursor: pointer; text-align: center; border: 2px solid transparent; background: rgba(255, 255, 255, 0.03); font-size: 12px; font-weight: 600; }
+.jornada-option:hover { background: rgba(255, 255, 255, 0.06); }
+.jornada-option.selected { background: rgba(167, 139, 250, 0.15); border-color: #a78bfa; }
+.jornada-option.libre.selected { border-color: rgba(255, 255, 255, 0.4); }
+
+.time-row { display: flex; gap: 10px; }
+.time-row .field-group { flex: 1; }
+
+.hint { font-size: 11px; color: rgba(255, 255, 255, 0.4); margin-top: 6px; }
+
+.modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+.modal-actions button { flex: 1; padding: 12px; border-radius: 10px; font-family: inherit; font-size: 13px; cursor: pointer; font-weight: 600; }
+
 .advanced-toggle { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 12px 14px; margin: 14px 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: rgba(255, 255, 255, 0.7); }
 .advanced-content { display: none; padding-top: 10px; }
 .advanced-content.show { display: block; }
-.hint { font-size: 11px; color: rgba(255, 255, 255, 0.4); margin-top: 6px; font-family: 'JetBrains Mono', monospace; }
 
-.modal-actions { display: flex; gap: 10px; margin-top: 24px; }
-.modal-actions button { flex: 1; }
-
-/* DETAIL MODAL (vista de resumen) */
+/* DETAIL MODAL (resumen) */
 .detail-card { background: linear-gradient(135deg, #1a1a2e, #16213e); border: 1px solid rgba(167, 139, 250, 0.3); border-radius: 20px; padding: 28px; max-width: 700px; width: 100%; margin: auto; }
 .detail-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
 .detail-title { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
@@ -153,13 +199,12 @@ select option { background: #1a1a2e; }
 .toast.error { background: linear-gradient(135deg, #ff6b6b, #ee5a52); color: #fff; }
 @keyframes slideUp { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .admin-wrap { padding: 14px; }
-  .detail-stats { grid-template-columns: repeat(2, 1fr); }
-  .summary-table { font-size: 12px; }
-  .summary-table th, .summary-table td { padding: 10px 8px; }
-  .cell-actions { display: flex; flex-direction: column; gap: 4px; }
-  .btn-action { margin: 0; }
+  .shifts-table { font-size: 10px; }
+  .shifts-table th, .shifts-table td { padding: 4px 2px; }
+  .shift-cell { min-width: 45px; font-size: 9px; padding: 4px 6px; }
+  .shifts-table th:first-child { width: 100px; }
 }
 </style>
 </head>
@@ -193,7 +238,7 @@ select option { background: #1a1a2e; }
     <div class="no-permission-box">
       <div class="no-permission-icon">🚫</div>
       <div style="font-size:22px;font-weight:700;margin-bottom:8px;">No tenés permisos</div>
-      <div style="font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:24px;">Este panel es solo para jefas y administradores.<br>Si crees que es un error, contactá con tu jefa.</div>
+      <div style="font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:24px;">Este panel es solo para jefas y administradores.</div>
       <button class="btn-admin" onclick="goToApp()">← Volver a la app</button>
     </div>
   </div>
@@ -219,7 +264,7 @@ select option { background: #1a1a2e; }
 
     <div class="tabs">
       <button class="tab active" data-tab="summary" onclick="switchTab('summary', event)">📊 Resumen</button>
-      <button class="tab disabled" title="Próxima sesión">📅 Horarios</button>
+      <button class="tab" data-tab="schedules" onclick="switchTab('schedules', event)">📅 Horarios</button>
       <button class="tab disabled" title="Próxima sesión">⚠ Alertas</button>
       <button class="tab" data-tab="employees" onclick="switchTab('employees', event)">👥 Empleadas</button>
       <button class="tab disabled" title="Próxima sesión">📝 Fichaje manual</button>
@@ -252,13 +297,42 @@ select option { background: #1a1a2e; }
       </div>
     </div>
 
+    <!-- TAB HORARIOS -->
+    <div class="tab-content" id="tab-schedules">
+      <div class="filters-bar">
+        <div class="filter-group" id="schedTeamFilterGroup" style="display:none;">
+          <span class="filter-label">Equipo:</span>
+          <select class="filter-select" id="schedFilterTeam" onchange="renderSchedules()">
+            <option value="all">Todos los equipos</option>
+          </select>
+        </div>
+        <div class="week-nav">
+          <button class="week-btn" onclick="changeWeek(-1)">◀</button>
+          <div class="week-display" id="weekDisplay">--</div>
+          <button class="week-btn" onclick="changeWeek(1)">▶</button>
+        </div>
+        <button class="btn-copy-week" onclick="copyPreviousWeek()">📋 Copiar semana anterior</button>
+      </div>
+
+      <div id="schedulesContent">
+        <div class="empty-state">Cargando horarios...</div>
+      </div>
+
+      <div class="jornada-legend">
+        <div class="legend-item"><div class="legend-color" style="background:rgba(134,239,172,0.4);"></div>Part-time Mañana (10-15)</div>
+        <div class="legend-item"><div class="legend-color" style="background:rgba(74,222,128,0.4);"></div>Part-time Tarde (15-20)</div>
+        <div class="legend-item"><div class="legend-color" style="background:rgba(96,165,250,0.4);"></div>Full-time (9h)</div>
+        <div class="legend-item"><div class="legend-color" style="background:rgba(251,146,60,0.4);"></div>Academia (10-18)</div>
+        <div class="legend-item"><div class="legend-color" style="background:rgba(255,255,255,0.1);"></div>Libre</div>
+      </div>
+    </div>
+
     <!-- TAB EMPLEADAS -->
     <div class="tab-content" id="tab-employees">
       <div class="actions-bar">
         <div style="font-size:14px;color:rgba(255,255,255,0.6);">Gestioná las empleadas de <span id="empContextText">tu equipo</span></div>
         <button class="btn-add-emp" onclick="openAddModal()">+ Agregar empleada</button>
       </div>
-
       <div class="filters-bar" id="empFiltersBar" style="display:none;">
         <div class="filter-group">
           <span class="filter-label">Equipo:</span>
@@ -267,11 +341,9 @@ select option { background: #1a1a2e; }
           </select>
         </div>
       </div>
-
       <div id="employeesContent">
         <div class="empty-state">Cargando empleadas...</div>
       </div>
-
       <div class="inactive-toggle" id="inactiveToggle" onclick="toggleInactive()" style="display:none;">
         <h3>📁 Empleadas inactivas (<span id="inactiveCount">0</span>)</h3>
         <span id="inactiveArrow">▼ Mostrar</span>
@@ -296,7 +368,7 @@ select option { background: #1a1a2e; }
   </div>
 </div>
 
-<!-- ADD MODAL -->
+<!-- ADD EMPLEADA -->
 <div class="modal-overlay" id="addOverlay">
   <div class="modal-card">
     <div class="modal-header">
@@ -312,41 +384,33 @@ select option { background: #1a1a2e; }
     </div>
     <div class="field-group">
       <label class="field-label">PUESTO *</label>
-      <select id="addRole">
-        <option value="">Seleccionar...</option>
-      </select>
+      <select id="addRole"><option value="">Seleccionar...</option></select>
     </div>
     <div class="field-group" id="addTeamGroup" style="display:none;">
       <label class="field-label">EQUIPO *</label>
-      <select id="addTeam" onchange="updateAddRoleOptions()">
-        <option value="">Seleccionar...</option>
-      </select>
+      <select id="addTeam" onchange="updateAddRoleOptions()"><option value="">Seleccionar...</option></select>
     </div>
-
     <div class="advanced-toggle" onclick="toggleAdvanced('add')">
       <span>⚙️ Opciones avanzadas</span>
       <span id="addAdvancedArrow">▼</span>
     </div>
     <div class="advanced-content" id="addAdvancedContent">
       <div class="field-group">
-        <label class="field-label">USUARIO (autogenera si está vacío)</label>
+        <label class="field-label">USUARIO</label>
         <input type="text" id="addUsername" placeholder="jperez">
-        <div class="hint" id="addUsernameSuggest">El sistema sugiere: —</div>
+        <div class="hint" id="addUsernameSuggest">Sugerencia: —</div>
       </div>
       <div class="field-group">
-        <label class="field-label">CONTRASEÑA (por defecto: 123456)</label>
+        <label class="field-label">CONTRASEÑA</label>
         <input type="text" id="addPassword" placeholder="123456">
       </div>
       <div class="field-group">
         <label class="field-label">MAX BREAKS POR TURNO</label>
         <input type="number" id="addMaxBreaks" placeholder="1" min="1">
-        <div class="hint">999 = ilimitado · Default: 1, o 999 para promotores</div>
       </div>
     </div>
-
     <div class="error-box" id="addError"></div>
     <div class="success-box" id="addSuccess"></div>
-
     <div class="modal-actions">
       <button class="btn-ghost" onclick="closeAddModal()">Cancelar</button>
       <button class="btn-admin" onclick="submitAdd()">Crear empleada</button>
@@ -354,7 +418,7 @@ select option { background: #1a1a2e; }
   </div>
 </div>
 
-<!-- EDIT MODAL -->
+<!-- EDIT EMPLEADA -->
 <div class="modal-overlay" id="editOverlay">
   <div class="modal-card">
     <div class="modal-header">
@@ -364,41 +428,86 @@ select option { background: #1a1a2e; }
       </div>
       <button class="close-x" onclick="closeEditModal()">×</button>
     </div>
-
     <div class="field-group">
       <label class="field-label">NOMBRE COMPLETO</label>
       <input type="text" id="editFullName">
-      <div class="hint" id="editNameHint" style="display:none;">⚠ Solo el admin puede cambiar nombres de jefas</div>
+      <div class="hint" id="editNameHint" style="display:none;">⚠ Solo admin puede cambiar nombres de jefas</div>
     </div>
-
     <div class="field-group">
-      <label class="field-label">USUARIO (no se puede cambiar)</label>
+      <label class="field-label">USUARIO</label>
       <input type="text" id="editUsername" disabled>
     </div>
-
     <div class="field-group">
       <label class="field-label">PUESTO</label>
       <select id="editRole"></select>
     </div>
-
     <div class="field-group">
-      <label class="field-label">MAX BREAKS POR TURNO</label>
+      <label class="field-label">MAX BREAKS</label>
       <input type="number" id="editMaxBreaks" min="1">
-      <div class="hint">999 = ilimitado</div>
     </div>
-
     <div class="field-group">
       <label class="field-label">CONTRASEÑA</label>
       <button class="btn-secondary" onclick="resetPassword()" style="width:100%;padding:12px;border-radius:10px;font-family:inherit;font-size:13px;cursor:pointer;">🔄 Resetear a 123456</button>
-      <div class="hint">La persona deberá cambiarla en su próximo ingreso</div>
     </div>
-
     <div class="error-box" id="editError"></div>
     <div class="success-box" id="editSuccess"></div>
+    <div class="modal-actions">
+      <button class="btn-danger" onclick="deactivateEmployee()" style="border-radius:12px;padding:12px;font-family:inherit;font-size:13px;cursor:pointer;font-weight:600;">Desactivar</button>
+      <button class="btn-admin" onclick="submitEdit()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL EDITAR HORARIO -->
+<div class="modal-overlay" id="shiftOverlay">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">Editar horario</div>
+        <div class="modal-subtitle" id="shiftModalSubtitle">--</div>
+      </div>
+      <button class="close-x" onclick="closeShiftModal()">×</button>
+    </div>
+
+    <label class="field-label">TIPO DE JORNADA</label>
+    <div class="jornada-options">
+      <div class="jornada-option part_time_manana" data-jornada="part_time_manana" onclick="selectJornada('part_time_manana')">
+        📗 Part-time<br>Mañana
+      </div>
+      <div class="jornada-option part_time_tarde" data-jornada="part_time_tarde" onclick="selectJornada('part_time_tarde')">
+        📗 Part-time<br>Tarde
+      </div>
+      <div class="jornada-option full_time" data-jornada="full_time" onclick="selectJornada('full_time')">
+        📘 Full-time<br>(9h)
+      </div>
+      <div class="jornada-option academia" data-jornada="academia" onclick="selectJornada('academia')">
+        📙 Academia<br>(10-18)
+      </div>
+      <div class="jornada-option libre" data-jornada="libre" onclick="selectJornada('libre')" style="grid-column:1/-1;">
+        ⚫ Libre / Franco
+      </div>
+    </div>
+
+    <div id="shiftTimeFields">
+      <div class="time-row">
+        <div class="field-group">
+          <label class="field-label">ENTRADA</label>
+          <input type="time" id="shiftStart" value="10:00">
+        </div>
+        <div class="field-group">
+          <label class="field-label">SALIDA</label>
+          <input type="time" id="shiftEnd" value="19:00">
+        </div>
+      </div>
+      <div class="hint" id="shiftHint"></div>
+    </div>
+
+    <div class="error-box" id="shiftError"></div>
 
     <div class="modal-actions">
-      <button class="btn-danger" onclick="deactivateEmployee()" id="deactivateBtn" style="border-radius:12px;padding:12px;font-family:inherit;font-size:13px;cursor:pointer;font-weight:600;">Desactivar</button>
-      <button class="btn-admin" onclick="submitEdit()">Guardar cambios</button>
+      <button class="btn-ghost" onclick="closeShiftModal()">Cancelar</button>
+      <button class="btn-danger" onclick="deleteShift()" id="deleteShiftBtn" style="display:none;border-radius:12px;padding:12px;font-family:inherit;font-size:13px;cursor:pointer;font-weight:600;">Borrar</button>
+      <button class="btn-admin" onclick="submitShift()">Guardar</button>
     </div>
   </div>
 </div>
@@ -435,6 +544,16 @@ const TEAM_ROLES = {
   'Ventas': ['asesor', 'jefe_ventas']
 };
 
+const JORNADA_DEFAULTS = {
+  'part_time_manana': { start: '10:00', end: '15:00', break: 0, label: 'PT Mañana' },
+  'part_time_tarde':  { start: '15:00', end: '20:00', break: 0, label: 'PT Tarde' },
+  'full_time':        { start: '10:00', end: '19:00', break: 60, label: 'Full-time' },
+  'academia':         { start: '10:00', end: '18:00', break: 0, label: 'Academia' },
+  'libre':            { start: null, end: null, break: 0, label: 'Libre' }
+};
+
+const DAY_NAMES = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 let currentUser = null;
@@ -442,9 +561,28 @@ let teams = [];
 let employees = [];
 let inactiveEmployees = [];
 let allPunches = [];
+let allShifts = [];
 let viewMonth = new Date();
 viewMonth.setDate(1);
+let viewWeekStart = getMondayOfWeek(new Date());
 let editingEmployeeId = null;
+let editingShift = { employeeId: null, date: null, existing: null, selectedJornada: null };
+
+function getMondayOfWeek(date) {
+  const d = new Date(date);
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  d.setHours(0, 0, 0, 0);
+  d.setDate(diff);
+  return d;
+}
+
+function toDateStr(d) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
 
 // ============ LOGIN ============
 async function doLogin() {
@@ -453,19 +591,11 @@ async function doLogin() {
   const errBox = document.getElementById('loginError');
   errBox.classList.remove('show');
 
-  if (!username || !password) {
-    errBox.textContent = 'Completá usuario y contraseña';
-    errBox.classList.add('show');
-    return;
-  }
+  if (!username || !password) { errBox.textContent = 'Completá los campos'; errBox.classList.add('show'); return; }
 
   try {
     const { data } = await db.from('employees').select('*, teams(name)').eq('username', username).eq('active', true).single();
-    if (!data || data.password !== password) {
-      errBox.textContent = 'Usuario o contraseña incorrectos';
-      errBox.classList.add('show');
-      return;
-    }
+    if (!data || data.password !== password) { errBox.textContent = 'Usuario o contraseña incorrectos'; errBox.classList.add('show'); return; }
     if (!data.is_manager && !data.is_admin) {
       document.getElementById('loginScreen').classList.remove('show');
       document.getElementById('noPermissionScreen').classList.add('show');
@@ -517,10 +647,8 @@ function switchTab(name, evt) {
   if (evt && evt.target) evt.target.classList.add('active');
   document.getElementById('tab-' + name).classList.add('active');
 
-  if (name === 'employees') {
-    setupEmployeesView();
-    renderEmployees();
-  }
+  if (name === 'employees') { setupEmployeesView(); renderEmployees(); }
+  if (name === 'schedules') { setupSchedulesView(); loadShifts().then(renderSchedules); }
 }
 
 // ============ DATA LOAD ============
@@ -530,11 +658,8 @@ async function loadAllData() {
     teams = teamsData || [];
 
     let empQuery = db.from('employees').select('*, teams(name)');
-    if (!currentUser.is_admin && currentUser.team_id) {
-      empQuery = empQuery.eq('team_id', currentUser.team_id);
-    }
+    if (!currentUser.is_admin && currentUser.team_id) empQuery = empQuery.eq('team_id', currentUser.team_id);
     const { data: emps } = await empQuery.order('full_name');
-    
     employees = (emps || []).filter(e => e.active);
     inactiveEmployees = (emps || []).filter(e => !e.active);
 
@@ -543,16 +668,22 @@ async function loadAllData() {
     end.setMonth(end.getMonth() + 1);
     const { data: punches } = await db.from('punches').select('*').gte('timestamp', start.toISOString()).lt('timestamp', end.toISOString()).order('timestamp', { ascending: true });
     allPunches = punches || [];
-  } catch (err) {
-    console.error('Error data:', err);
-  }
+  } catch (err) { console.error('Error data:', err); }
 }
 
-// ============ FILTERS RESUMEN ============
+async function loadShifts() {
+  try {
+    const weekEnd = new Date(viewWeekStart);
+    weekEnd.setDate(weekEnd.getDate() + 6);
+    const { data } = await db.from('shifts').select('*').gte('shift_date', toDateStr(viewWeekStart)).lte('shift_date', toDateStr(weekEnd));
+    allShifts = data || [];
+  } catch (err) { console.error('Error shifts:', err); allShifts = []; }
+}
+
+// ============ FILTROS ============
 function setupFilters() {
   const teamFilter = document.getElementById('teamFilterGroup');
   const teamSelect = document.getElementById('filterTeam');
-
   if (currentUser.is_admin) {
     teamFilter.style.display = 'flex';
     teamSelect.innerHTML = '<option value="all">Todos los equipos</option>';
@@ -565,23 +696,17 @@ function setupFilters() {
 
 function updateRoleFilter() {
   const roleSelect = document.getElementById('filterRole');
-  let availableRoles = [];
-
+  let roles = [];
   if (currentUser.is_admin) {
-    const selectedTeam = document.getElementById('filterTeam').value;
-    if (selectedTeam === 'all') {
-      availableRoles = ['recepcionista', 'pretester', 'host', 'promotor', 'presentador', 'enrutador', 'asesor', 'jefa_salon', 'jefa_promotoras', 'jefe_presentacion', 'jefe_ventas'];
-    } else {
-      const team = teams.find(t => t.id === selectedTeam);
-      if (team) availableRoles = TEAM_ROLES[team.name] || [];
-    }
+    const t = document.getElementById('filterTeam').value;
+    if (t === 'all') roles = ['recepcionista','pretester','host','promotor','presentador','enrutador','asesor','jefa_salon','jefa_promotoras','jefe_presentacion','jefe_ventas'];
+    else { const team = teams.find(x => x.id === t); if (team) roles = TEAM_ROLES[team.name] || []; }
   } else {
-    const team = teams.find(t => t.id === currentUser.team_id);
-    if (team) availableRoles = TEAM_ROLES[team.name] || [];
+    const team = teams.find(x => x.id === currentUser.team_id);
+    if (team) roles = TEAM_ROLES[team.name] || [];
   }
-
   roleSelect.innerHTML = '<option value="all">Todos los puestos</option>';
-  availableRoles.forEach(role => { roleSelect.innerHTML += `<option value="${role}">${ROLE_LABELS[role] || role}</option>`; });
+  roles.forEach(r => { roleSelect.innerHTML += `<option value="${r}">${ROLE_LABELS[r] || r}</option>`; });
 }
 
 async function changeMonth(delta) {
@@ -599,135 +724,121 @@ function updateMonthDisplay() {
   document.getElementById('nextMonthBtn').disabled = viewMonth.getFullYear() === now.getFullYear() && viewMonth.getMonth() === now.getMonth();
 }
 
-// ============ CÁLCULOS ============
+// ============ CÁLCULOS RESUMEN ============
 function getEmployeeStats(empId) {
-  const empPunches = allPunches.filter(p => p.employee_id === empId);
-  let totalMin = 0, breakMin = 0, breakCount = 0;
-  const daysWorked = new Set();
+  const p = allPunches.filter(x => x.employee_id === empId);
+  let tot = 0, br = 0, brc = 0;
+  const days = new Set();
   const byDay = {};
-  empPunches.forEach(p => { const d = new Date(p.timestamp).toDateString(); if (!byDay[d]) byDay[d] = []; byDay[d].push(p); });
-
-  for (const day in byDay) {
-    const dp = byDay[day].sort((a,b) => new Date(a.timestamp) - new Date(b.timestamp));
-    let dayWork = 0, dayBreak = 0, cIn = null, cBS = null, hasIn = false;
-    for (const p of dp) {
-      const t = new Date(p.timestamp).getTime();
-      if (p.punch_type === 'in') { cIn = t; hasIn = true; }
-      else if (p.punch_type === 'out' && cIn) { dayWork += (t - cIn) / 60000; cIn = null; }
-      else if (p.punch_type === 'break_start') { cBS = t; breakCount++; }
-      else if (p.punch_type === 'break_end' && cBS) { dayBreak += (t - cBS) / 60000; cBS = null; }
+  p.forEach(pu => { const d = new Date(pu.timestamp).toDateString(); if (!byDay[d]) byDay[d] = []; byDay[d].push(pu); });
+  for (const d in byDay) {
+    const dp = byDay[d].sort((a,b) => new Date(a.timestamp) - new Date(b.timestamp));
+    let w = 0, b = 0, cIn = null, cBS = null, hasIn = false;
+    for (const x of dp) {
+      const t = new Date(x.timestamp).getTime();
+      if (x.punch_type === 'in') { cIn = t; hasIn = true; }
+      else if (x.punch_type === 'out' && cIn) { w += (t-cIn)/60000; cIn = null; }
+      else if (x.punch_type === 'break_start') { cBS = t; brc++; }
+      else if (x.punch_type === 'break_end' && cBS) { b += (t-cBS)/60000; cBS = null; }
     }
-    if (hasIn) daysWorked.add(day);
-    totalMin += dayWork; breakMin += dayBreak;
+    if (hasIn) days.add(d);
+    tot += w; br += b;
   }
-  return { totalHours: totalMin/60, productiveHours: (totalMin-breakMin)/60, daysWorked: daysWorked.size, breakCount, breakHours: breakMin/60 };
+  return { totalHours: tot/60, productiveHours: (tot-br)/60, daysWorked: days.size, breakCount: brc, breakHours: br/60 };
 }
 
 function getDayDetails(empId) {
-  const empPunches = allPunches.filter(p => p.employee_id === empId);
+  const p = allPunches.filter(x => x.employee_id === empId);
   const byDay = {};
-  empPunches.forEach(p => { const d = new Date(p.timestamp).toDateString(); if (!byDay[d]) byDay[d] = []; byDay[d].push(p); });
-  const result = [];
-  for (const day in byDay) {
-    const dp = byDay[day].sort((a,b) => new Date(a.timestamp) - new Date(b.timestamp));
-    let dayWork = 0, dayBreak = 0, entrada = null, salida = null;
-    const breaks = []; let cIn = null, cBS = null;
-    for (const p of dp) {
-      const t = new Date(p.timestamp).getTime();
-      if (p.punch_type === 'in') { cIn = t; if (!entrada) entrada = p.timestamp; }
-      else if (p.punch_type === 'out' && cIn) { dayWork += (t-cIn)/60000; salida = p.timestamp; cIn = null; }
-      else if (p.punch_type === 'break_start') { cBS = { time: t, ts: p.timestamp }; }
-      else if (p.punch_type === 'break_end' && cBS) { const dur = (t-cBS.time)/60000; dayBreak += dur; breaks.push({ start: cBS.ts, end: p.timestamp, duration: dur }); cBS = null; }
+  p.forEach(pu => { const d = new Date(pu.timestamp).toDateString(); if (!byDay[d]) byDay[d] = []; byDay[d].push(pu); });
+  const r = [];
+  for (const d in byDay) {
+    const dp = byDay[d].sort((a,b) => new Date(a.timestamp) - new Date(b.timestamp));
+    let w = 0, br = 0, ent = null, sal = null;
+    const bks = []; let cIn = null, cBS = null;
+    for (const x of dp) {
+      const t = new Date(x.timestamp).getTime();
+      if (x.punch_type === 'in') { cIn = t; if (!ent) ent = x.timestamp; }
+      else if (x.punch_type === 'out' && cIn) { w += (t-cIn)/60000; sal = x.timestamp; cIn = null; }
+      else if (x.punch_type === 'break_start') cBS = { time: t, ts: x.timestamp };
+      else if (x.punch_type === 'break_end' && cBS) { const du = (t-cBS.time)/60000; br += du; bks.push({ start: cBS.ts, end: x.timestamp, duration: du }); cBS = null; }
     }
-    result.push({ date: new Date(day), entrada, salida, totalMin: dayWork, breakMin: dayBreak, productiveMin: dayWork-dayBreak, breaks, role: dp[0]?.role });
+    r.push({ date: new Date(d), entrada: ent, salida: sal, totalMin: w, breakMin: br, productiveMin: w-br, breaks: bks, role: dp[0]?.role });
   }
-  return result.sort((a,b) => b.date - a.date);
+  return r.sort((a,b) => b.date - a.date);
 }
 
 // ============ RENDER RESUMEN ============
 function renderSummary() {
-  const teamFilter = document.getElementById('filterTeam')?.value || 'all';
-  const roleFilter = document.getElementById('filterRole')?.value || 'all';
-  const container = document.getElementById('summaryContent');
-  let filtered = employees;
-  if (currentUser.is_admin && teamFilter !== 'all') filtered = filtered.filter(e => e.team_id === teamFilter);
-  if (roleFilter !== 'all') filtered = filtered.filter(e => e.default_role === roleFilter);
+  const tf = document.getElementById('filterTeam')?.value || 'all';
+  const rf = document.getElementById('filterRole')?.value || 'all';
+  const c = document.getElementById('summaryContent');
+  let f = employees;
+  if (currentUser.is_admin && tf !== 'all') f = f.filter(e => e.team_id === tf);
+  if (rf !== 'all') f = f.filter(e => e.default_role === rf);
   if (currentUser.is_admin) updateRoleFilter();
-
-  if (filtered.length === 0) { container.innerHTML = '<div class="empty-state">No hay empleadas con este filtro</div>'; return; }
-
-  let html = '';
-  if (currentUser.is_admin && teamFilter === 'all') {
-    const byTeam = {};
-    filtered.forEach(e => { const tn = e.teams?.name || 'Sin equipo'; if (!byTeam[tn]) byTeam[tn] = []; byTeam[tn].push(e); });
-    const orderedTeams = ['Salón', 'Promotoras', 'Presentación', 'Ventas', 'Sin equipo'];
-    for (const tn of orderedTeams) {
-      if (!byTeam[tn]) continue;
-      const emps = byTeam[tn];
-      html += `<div class="team-section"><div class="team-header"><div class="team-name">🏢 ${tn}</div><div class="team-meta">${emps.length} ${emps.length===1?'persona':'personas'}</div></div>${renderEmployeesGroupedByRole(emps)}</div>`;
+  if (f.length === 0) { c.innerHTML = '<div class="empty-state">Sin datos</div>'; return; }
+  let h = '';
+  if (currentUser.is_admin && tf === 'all') {
+    const bt = {};
+    f.forEach(e => { const n = e.teams?.name || 'Sin equipo'; if (!bt[n]) bt[n] = []; bt[n].push(e); });
+    const ord = ['Salón','Promotoras','Presentación','Ventas','Sin equipo'];
+    for (const n of ord) {
+      if (!bt[n]) continue;
+      h += `<div class="team-section"><div class="team-header"><div class="team-name">🏢 ${n}</div><div class="team-meta">${bt[n].length}</div></div>${renderByRole(bt[n])}</div>`;
     }
-  } else {
-    html = renderEmployeesGroupedByRole(filtered);
-  }
-  container.innerHTML = html;
+  } else h = renderByRole(f);
+  c.innerHTML = h;
 }
 
-function renderEmployeesGroupedByRole(emps) {
-  const groups = {};
-  emps.forEach(e => { if (!groups[e.default_role]) groups[e.default_role] = []; groups[e.default_role].push(e); });
-  const orderedRoles = ['jefa_salon','jefa_promotoras','jefe_presentacion','jefe_ventas','recepcionista','pretester','host','promotor','presentador','enrutador','asesor'];
-  let html = '';
-  for (const role of orderedRoles) {
-    if (!groups[role]) continue;
-    const empsInRole = groups[role];
-    html += `<div class="group-section"><div class="group-header"><div class="group-title">${ROLE_LABELS[role] || role}</div><div class="group-count">${empsInRole.length} ${empsInRole.length===1?'persona':'personas'}</div></div><table class="summary-table"><thead><tr><th style="width:35%">Empleada</th><th>Días</th><th>Total</th><th>Productivas</th><th>Breaks</th></tr></thead><tbody>`;
-    for (const emp of empsInRole) {
+function renderByRole(emps) {
+  const g = {}; emps.forEach(e => { if (!g[e.default_role]) g[e.default_role] = []; g[e.default_role].push(e); });
+  const ord = ['jefa_salon','jefa_promotoras','jefe_presentacion','jefe_ventas','recepcionista','pretester','host','promotor','presentador','enrutador','asesor'];
+  let h = '';
+  for (const r of ord) {
+    if (!g[r]) continue;
+    const list = g[r];
+    h += `<div class="group-section"><div class="group-header"><div class="group-title">${ROLE_LABELS[r] || r}</div><div class="group-count">${list.length}</div></div><table class="summary-table"><thead><tr><th style="width:35%">Empleada</th><th>Días</th><th>Total</th><th>Productivas</th><th>Breaks</th></tr></thead><tbody>`;
+    for (const emp of list) {
       const s = getEmployeeStats(emp.id);
-      const initials = emp.full_name.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
-      const isJefa = emp.is_manager;
-      html += `<tr class="clickable" onclick="showDetail('${emp.id}')"><td><div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,${isJefa?'#a78bfa,#8b5cf6':'#4ade80,#22d3ee'});display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;${isJefa?'color:#fff;':'color:#0f3460;'}">${initials}</div><div><div class="cell-name">${emp.full_name}${isJefa?'<span class="badge-jefa">Jefa</span>':''}</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">@${emp.username}</div></div></div></td><td class="cell-num">${s.daysWorked}</td><td class="cell-num">${formatHours(s.totalHours)}</td><td class="cell-num green">${formatHours(s.productiveHours)}</td><td class="cell-num muted">${s.breakCount} · ${formatHours(s.breakHours)}</td></tr>`;
+      const ini = emp.full_name.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
+      const isJ = emp.is_manager;
+      h += `<tr class="clickable" onclick="showDetail('${emp.id}')"><td><div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,${isJ?'#a78bfa,#8b5cf6':'#4ade80,#22d3ee'});display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;${isJ?'color:#fff;':'color:#0f3460;'}">${ini}</div><div><div class="cell-name">${emp.full_name}${isJ?'<span class="badge-jefa">Jefa</span>':''}</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">@${emp.username}</div></div></div></td><td class="cell-num">${s.daysWorked}</td><td class="cell-num">${fH(s.totalHours)}</td><td class="cell-num green">${fH(s.productiveHours)}</td><td class="cell-num muted">${s.breakCount} · ${fH(s.breakHours)}</td></tr>`;
     }
-    html += '</tbody></table></div>';
+    h += '</tbody></table></div>';
   }
-  return html;
+  return h;
 }
 
-function formatHours(h) {
-  if (h < 0.01) return '—';
-  const hr = Math.floor(h), m = Math.round((h-hr)*60);
-  if (hr === 0) return `${m}min`;
-  if (m === 0) return `${hr}h`;
-  return `${hr}h ${m}min`;
-}
-function formatTime(iso) { return new Date(iso).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit', hour12: false }); }
-function formatDate(d) { return d.toLocaleDateString('es-AR', { weekday: 'short', day: 'numeric', month: 'short' }); }
+function fH(h) { if (h < 0.01) return '—'; const hr = Math.floor(h), m = Math.round((h-hr)*60); if (hr===0) return `${m}min`; if (m===0) return `${hr}h`; return `${hr}h ${m}min`; }
+function fT(iso) { return new Date(iso).toLocaleTimeString('es-AR', { hour:'2-digit', minute:'2-digit', hour12:false }); }
+function fD(d) { return d.toLocaleDateString('es-AR', { weekday:'short', day:'numeric', month:'short' }); }
 
 function showDetail(empId) {
   const emp = [...employees, ...inactiveEmployees].find(e => e.id === empId);
   if (!emp) return;
-  const stats = getEmployeeStats(empId), days = getDayDetails(empId);
+  const s = getEmployeeStats(empId), days = getDayDetails(empId);
   document.getElementById('detailName').textContent = emp.full_name;
-  document.getElementById('detailSubtitle').textContent = `${ROLE_LABELS[emp.default_role] || emp.default_role} · ${viewMonth.toLocaleDateString('es-AR', { month: 'long', year: 'numeric' })}`;
-  document.getElementById('detailStats').innerHTML = `<div class="stat-box"><div class="stat-value">${stats.daysWorked}</div><div class="stat-label">Días</div></div><div class="stat-box"><div class="stat-value">${formatHours(stats.totalHours)}</div><div class="stat-label">Total</div></div><div class="stat-box"><div class="stat-value" style="color:#4ade80;">${formatHours(stats.productiveHours)}</div><div class="stat-label">Productivas</div></div><div class="stat-box"><div class="stat-value">${stats.breakCount}</div><div class="stat-label">Breaks (${formatHours(stats.breakHours)})</div></div>`;
+  document.getElementById('detailSubtitle').textContent = `${ROLE_LABELS[emp.default_role] || emp.default_role} · ${viewMonth.toLocaleDateString('es-AR', { month:'long', year:'numeric' })}`;
+  document.getElementById('detailStats').innerHTML = `<div class="stat-box"><div class="stat-value">${s.daysWorked}</div><div class="stat-label">Días</div></div><div class="stat-box"><div class="stat-value">${fH(s.totalHours)}</div><div class="stat-label">Total</div></div><div class="stat-box"><div class="stat-value" style="color:#4ade80;">${fH(s.productiveHours)}</div><div class="stat-label">Productivas</div></div><div class="stat-box"><div class="stat-value">${s.breakCount}</div><div class="stat-label">Breaks (${fH(s.breakHours)})</div></div>`;
   const dc = document.getElementById('detailDays');
-  if (days.length === 0) { dc.innerHTML = '<div class="empty-state">Sin fichajes este mes</div>'; }
+  if (days.length === 0) dc.innerHTML = '<div class="empty-state">Sin fichajes este mes</div>';
   else {
     dc.innerHTML = days.map(d => {
       let bh = '';
-      if (d.breaks.length > 0) bh = `<div style="margin-top:6px;font-size:11px;color:rgba(255,255,255,0.5);">Breaks: ${d.breaks.map(b => `${formatTime(b.start)}-${b.end?formatTime(b.end):'?'} (${Math.round(b.duration)}m)`).join(', ')}</div>`;
-      return `<div class="day-row"><div class="day-row-header"><div class="day-date">${formatDate(d.date)}</div><div class="day-prod">${formatHours(d.productiveMin/60)}</div></div><div class="day-detail"><span style="margin-right:10px;">↓ ${d.entrada?formatTime(d.entrada):'?'} → ↑ ${d.salida?formatTime(d.salida):'?'}</span><span style="color:rgba(255,255,255,0.4);">${ROLE_LABELS[d.role] || d.role || ''}</span></div>${bh}</div>`;
+      if (d.breaks.length > 0) bh = `<div style="margin-top:6px;font-size:11px;color:rgba(255,255,255,0.5);">Breaks: ${d.breaks.map(b => `${fT(b.start)}-${b.end?fT(b.end):'?'} (${Math.round(b.duration)}m)`).join(', ')}</div>`;
+      return `<div class="day-row"><div class="day-row-header"><div class="day-date">${fD(d.date)}</div><div class="day-prod">${fH(d.productiveMin/60)}</div></div><div class="day-detail"><span style="margin-right:10px;">↓ ${d.entrada?fT(d.entrada):'?'} → ↑ ${d.salida?fT(d.salida):'?'}</span><span style="color:rgba(255,255,255,0.4);">${ROLE_LABELS[d.role] || d.role || ''}</span></div>${bh}</div>`;
     }).join('');
   }
   document.getElementById('detailOverlay').classList.add('show');
 }
 function closeDetail() { document.getElementById('detailOverlay').classList.remove('show'); }
 
-// ============ EMPLEADAS - SETUP ============
+// ============ EMPLEADAS ============
 function setupEmployeesView() {
   const filterBar = document.getElementById('empFiltersBar');
   const teamSel = document.getElementById('empFilterTeam');
   const ctxText = document.getElementById('empContextText');
-
   if (currentUser.is_admin) {
     filterBar.style.display = 'flex';
     teamSel.innerHTML = '<option value="all">Todos los equipos</option>';
@@ -741,365 +852,585 @@ function setupEmployeesView() {
 }
 
 function renderEmployees() {
-  const teamFilter = document.getElementById('empFilterTeam')?.value || 'all';
-  let filtered = employees;
-  let filteredInactive = inactiveEmployees;
-  if (currentUser.is_admin && teamFilter !== 'all') {
-    filtered = filtered.filter(e => e.team_id === teamFilter);
-    filteredInactive = filteredInactive.filter(e => e.team_id === teamFilter);
+  const tf = document.getElementById('empFilterTeam')?.value || 'all';
+  let f = employees, fi = inactiveEmployees;
+  if (currentUser.is_admin && tf !== 'all') {
+    f = f.filter(e => e.team_id === tf);
+    fi = fi.filter(e => e.team_id === tf);
   }
-
-  const container = document.getElementById('employeesContent');
-  if (filtered.length === 0 && filteredInactive.length === 0) {
-    container.innerHTML = '<div class="empty-state">No hay empleadas todavía. Apretá "+ Agregar empleada"</div>';
-  } else if (filtered.length === 0) {
-    container.innerHTML = '<div class="empty-state">No hay empleadas activas. Mirá las inactivas abajo.</div>';
-  } else {
-    let html = '';
-    if (currentUser.is_admin && teamFilter === 'all') {
-      const byTeam = {};
-      filtered.forEach(e => { const tn = e.teams?.name || 'Sin equipo'; if (!byTeam[tn]) byTeam[tn] = []; byTeam[tn].push(e); });
-      const orderedTeams = ['Salón', 'Promotoras', 'Presentación', 'Ventas', 'Sin equipo'];
-      for (const tn of orderedTeams) {
-        if (!byTeam[tn]) continue;
-        const emps = byTeam[tn];
-        html += `<div class="team-section"><div class="team-header"><div class="team-name">🏢 ${tn}</div><div class="team-meta">${emps.length} ${emps.length===1?'persona':'personas'}</div></div>${renderEmployeesListByRole(emps)}</div>`;
-      }
-    } else {
-      html = renderEmployeesListByRole(filtered);
-    }
-    container.innerHTML = html;
+  const c = document.getElementById('employeesContent');
+  if (f.length === 0 && fi.length === 0) c.innerHTML = '<div class="empty-state">Sin empleadas. Apretá "+ Agregar"</div>';
+  else if (f.length === 0) c.innerHTML = '<div class="empty-state">Sin activas. Mirá las inactivas abajo.</div>';
+  else {
+    let h = '';
+    if (currentUser.is_admin && tf === 'all') {
+      const bt = {}; f.forEach(e => { const n = e.teams?.name || 'Sin equipo'; if (!bt[n]) bt[n] = []; bt[n].push(e); });
+      const ord = ['Salón','Promotoras','Presentación','Ventas','Sin equipo'];
+      for (const n of ord) { if (!bt[n]) continue; h += `<div class="team-section"><div class="team-header"><div class="team-name">🏢 ${n}</div><div class="team-meta">${bt[n].length}</div></div>${renderEmpsByRole(bt[n])}</div>`; }
+    } else h = renderEmpsByRole(f);
+    c.innerHTML = h;
   }
-
-  // Inactivas
-  const toggle = document.getElementById('inactiveToggle');
-  if (filteredInactive.length > 0) {
-    toggle.style.display = 'flex';
-    document.getElementById('inactiveCount').textContent = filteredInactive.length;
-    
-    let html = '';
-    if (currentUser.is_admin && teamFilter === 'all') {
-      const byTeam = {};
-      filteredInactive.forEach(e => { const tn = e.teams?.name || 'Sin equipo'; if (!byTeam[tn]) byTeam[tn] = []; byTeam[tn].push(e); });
-      const orderedTeams = ['Salón', 'Promotoras', 'Presentación', 'Ventas', 'Sin equipo'];
-      for (const tn of orderedTeams) {
-        if (!byTeam[tn]) continue;
-        const emps = byTeam[tn];
-        html += `<div class="team-section" style="opacity:0.7;"><div class="team-header"><div class="team-name">🏢 ${tn}</div><div class="team-meta">${emps.length}</div></div>${renderEmployeesListByRole(emps, true)}</div>`;
-      }
-    } else {
-      html = renderEmployeesListByRole(filteredInactive, true);
-    }
-    document.getElementById('inactiveContent').innerHTML = html;
-  } else {
-    toggle.style.display = 'none';
-  }
+  const tog = document.getElementById('inactiveToggle');
+  if (fi.length > 0) {
+    tog.style.display = 'flex';
+    document.getElementById('inactiveCount').textContent = fi.length;
+    let h = '';
+    if (currentUser.is_admin && tf === 'all') {
+      const bt = {}; fi.forEach(e => { const n = e.teams?.name || 'Sin equipo'; if (!bt[n]) bt[n] = []; bt[n].push(e); });
+      const ord = ['Salón','Promotoras','Presentación','Ventas','Sin equipo'];
+      for (const n of ord) { if (!bt[n]) continue; h += `<div class="team-section" style="opacity:0.7;"><div class="team-header"><div class="team-name">🏢 ${n}</div><div class="team-meta">${bt[n].length}</div></div>${renderEmpsByRole(bt[n], true)}</div>`; }
+    } else h = renderEmpsByRole(fi, true);
+    document.getElementById('inactiveContent').innerHTML = h;
+  } else tog.style.display = 'none';
 }
 
-function renderEmployeesListByRole(emps, isInactive = false) {
-  const groups = {};
-  emps.forEach(e => { if (!groups[e.default_role]) groups[e.default_role] = []; groups[e.default_role].push(e); });
-  const orderedRoles = ['jefa_salon','jefa_promotoras','jefe_presentacion','jefe_ventas','recepcionista','pretester','host','promotor','presentador','enrutador','asesor'];
-  let html = '';
-  for (const role of orderedRoles) {
-    if (!groups[role]) continue;
-    const empsInRole = groups[role];
-    html += `<div class="group-section"><div class="group-header"><div class="group-title">${ROLE_LABELS[role] || role}</div><div class="group-count">${empsInRole.length} ${empsInRole.length===1?'persona':'personas'}</div></div><table class="summary-table"><tbody>`;
-    for (const emp of empsInRole) {
-      const initials = emp.full_name.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
-      const isJefa = emp.is_manager;
-      const isAdminPerson = emp.is_admin;
-      let actions = '';
-      if (isInactive) {
-        actions = `<button class="btn-action" onclick="reactivateEmployee('${emp.id}')">Reactivar</button>`;
-      } else {
-        actions = `<button class="btn-action" onclick="openEditModal('${emp.id}')">Editar</button>`;
-      }
-      const maxBreaks = emp.max_breaks_per_shift === 999 ? '∞' : emp.max_breaks_per_shift;
-      html += `<tr><td><div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,${isAdminPerson?'#fbbf24,#f59e0b':isJefa?'#a78bfa,#8b5cf6':'#4ade80,#22d3ee'});display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;${isJefa||isAdminPerson?'color:#fff;':'color:#0f3460;'}">${initials}</div><div><div class="cell-name">${emp.full_name}${isJefa?'<span class="badge-jefa">Jefa</span>':''}${isAdminPerson?'<span class="badge-admin">Admin</span>':''}</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">@${emp.username} · Breaks: ${maxBreaks}</div></div></div></td><td class="cell-actions">${actions}</td></tr>`;
+function renderEmpsByRole(emps, isInactive = false) {
+  const g = {}; emps.forEach(e => { if (!g[e.default_role]) g[e.default_role] = []; g[e.default_role].push(e); });
+  const ord = ['jefa_salon','jefa_promotoras','jefe_presentacion','jefe_ventas','recepcionista','pretester','host','promotor','presentador','enrutador','asesor'];
+  let h = '';
+  for (const r of ord) {
+    if (!g[r]) continue;
+    h += `<div class="group-section"><div class="group-header"><div class="group-title">${ROLE_LABELS[r] || r}</div><div class="group-count">${g[r].length}</div></div><table class="summary-table"><tbody>`;
+    for (const emp of g[r]) {
+      const ini = emp.full_name.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
+      const isJ = emp.is_manager, isA = emp.is_admin;
+      let act = isInactive ? `<button class="btn-action" onclick="reactivateEmployee('${emp.id}')">Reactivar</button>` : `<button class="btn-action" onclick="openEditModal('${emp.id}')">Editar</button>`;
+      const mb = emp.max_breaks_per_shift === 999 ? '∞' : emp.max_breaks_per_shift;
+      h += `<tr><td><div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,${isA?'#fbbf24,#f59e0b':isJ?'#a78bfa,#8b5cf6':'#4ade80,#22d3ee'});display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;${isJ||isA?'color:#fff;':'color:#0f3460;'}">${ini}</div><div><div class="cell-name">${emp.full_name}${isJ?'<span class="badge-jefa">Jefa</span>':''}${isA?'<span class="badge-admin">Admin</span>':''}</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">@${emp.username} · Breaks: ${mb}</div></div></div></td><td class="cell-actions">${act}</td></tr>`;
     }
-    html += '</tbody></table></div>';
+    h += '</tbody></table></div>';
   }
-  return html;
+  return h;
 }
 
 function toggleInactive() {
-  const content = document.getElementById('inactiveContent');
-  const arrow = document.getElementById('inactiveArrow');
-  content.classList.toggle('show');
-  arrow.textContent = content.classList.contains('show') ? '▲ Ocultar' : '▼ Mostrar';
+  const c = document.getElementById('inactiveContent'), a = document.getElementById('inactiveArrow');
+  c.classList.toggle('show');
+  a.textContent = c.classList.contains('show') ? '▲ Ocultar' : '▼ Mostrar';
 }
 
-// ============ ADD MODAL ============
+// ============ ADD/EDIT EMPLEADA ============
 function openAddModal() {
   document.getElementById('addFullName').value = '';
   document.getElementById('addUsername').value = '';
   document.getElementById('addPassword').value = '';
   document.getElementById('addMaxBreaks').value = '';
-  document.getElementById('addUsernameSuggest').textContent = 'El sistema sugiere: —';
+  document.getElementById('addUsernameSuggest').textContent = 'Sugerencia: —';
   document.getElementById('addError').classList.remove('show');
   document.getElementById('addSuccess').classList.remove('show');
   document.getElementById('addAdvancedContent').classList.remove('show');
   document.getElementById('addAdvancedArrow').textContent = '▼';
-
-  // Si es admin: mostrar selector de equipo + roles según equipo
-  // Si es jefa: equipo automático + roles de su equipo
-  const teamGroup = document.getElementById('addTeamGroup');
-  const roleSel = document.getElementById('addRole');
-  const subtitle = document.getElementById('addModalSubtitle');
-
+  const tg = document.getElementById('addTeamGroup'), rs = document.getElementById('addRole'), st = document.getElementById('addModalSubtitle');
   if (currentUser.is_admin) {
-    teamGroup.style.display = 'block';
-    const teamSel = document.getElementById('addTeam');
-    teamSel.innerHTML = '<option value="">Seleccionar...</option>';
-    teams.forEach(t => { teamSel.innerHTML += `<option value="${t.id}">${t.name}</option>`; });
-    roleSel.innerHTML = '<option value="">Primero seleccioná un equipo</option>';
-    subtitle.textContent = 'Vas a agregar a alguien a un equipo';
+    tg.style.display = 'block';
+    const ts = document.getElementById('addTeam');
+    ts.innerHTML = '<option value="">Seleccionar...</option>';
+    teams.forEach(t => { ts.innerHTML += `<option value="${t.id}">${t.name}</option>`; });
+    rs.innerHTML = '<option value="">Primero seleccioná equipo</option>';
+    st.textContent = 'Agregar a un equipo';
   } else {
-    teamGroup.style.display = 'none';
-    const teamName = teams.find(t => t.id === currentUser.team_id)?.name || 'tu equipo';
-    subtitle.textContent = `Equipo: ${teamName} (automático)`;
-    // Llenar puestos del equipo de la jefa
-    const roles = TEAM_ROLES[teamName] || [];
-    roleSel.innerHTML = '<option value="">Seleccionar...</option>';
-    roles.forEach(r => { 
-      // No mostrar el rol de jefa (no se agregan jefas desde acá)
-      if (!r.startsWith('jef')) roleSel.innerHTML += `<option value="${r}">${ROLE_LABELS_SINGLE[r]}</option>`;
-    });
+    tg.style.display = 'none';
+    const tn = teams.find(t => t.id === currentUser.team_id)?.name || 'tu equipo';
+    st.textContent = `Equipo: ${tn}`;
+    const roles = TEAM_ROLES[tn] || [];
+    rs.innerHTML = '<option value="">Seleccionar...</option>';
+    roles.forEach(r => { if (!r.startsWith('jef')) rs.innerHTML += `<option value="${r}">${ROLE_LABELS_SINGLE[r]}</option>`; });
   }
-
-  // Sugerencia de username en vivo
   document.getElementById('addFullName').oninput = updateUsernameSuggestion;
   document.getElementById('addOverlay').classList.add('show');
   document.getElementById('addFullName').focus();
 }
 
 function updateAddRoleOptions() {
-  const teamId = document.getElementById('addTeam').value;
-  const roleSel = document.getElementById('addRole');
-  if (!teamId) {
-    roleSel.innerHTML = '<option value="">Primero seleccioná un equipo</option>';
-    return;
-  }
-  const team = teams.find(t => t.id === teamId);
-  const roles = TEAM_ROLES[team.name] || [];
-  roleSel.innerHTML = '<option value="">Seleccionar...</option>';
-  roles.forEach(r => { roleSel.innerHTML += `<option value="${r}">${ROLE_LABELS_SINGLE[r]}</option>`; });
+  const tid = document.getElementById('addTeam').value;
+  const rs = document.getElementById('addRole');
+  if (!tid) { rs.innerHTML = '<option value="">Primero seleccioná equipo</option>'; return; }
+  const t = teams.find(x => x.id === tid);
+  const roles = TEAM_ROLES[t.name] || [];
+  rs.innerHTML = '<option value="">Seleccionar...</option>';
+  roles.forEach(r => { rs.innerHTML += `<option value="${r}">${ROLE_LABELS_SINGLE[r]}</option>`; });
 }
 
 function updateUsernameSuggestion() {
-  const name = document.getElementById('addFullName').value.trim();
-  if (!name) { document.getElementById('addUsernameSuggest').textContent = 'El sistema sugiere: —'; return; }
-  const suggestion = generateUsername(name);
-  document.getElementById('addUsernameSuggest').textContent = `El sistema sugiere: ${suggestion}`;
+  const n = document.getElementById('addFullName').value.trim();
+  document.getElementById('addUsernameSuggest').textContent = n ? `Sugerencia: ${generateUsername(n)}` : 'Sugerencia: —';
 }
 
-function generateUsername(fullName) {
-  const parts = fullName.trim().toLowerCase().split(/\s+/);
+function generateUsername(name) {
+  const parts = name.trim().toLowerCase().split(/\s+/);
   if (parts.length < 2) return '';
-  const firstName = parts[0];
-  const lastName = parts.slice(1).join('');
-  const username = firstName.charAt(0) + lastName;
-  return removeTildes(username);
+  return removeTildes(parts[0].charAt(0) + parts.slice(1).join(''));
 }
 
-function removeTildes(text) {
-  return text
-    .replace(/á/g, 'a').replace(/é/g, 'e').replace(/í/g, 'i').replace(/ó/g, 'o').replace(/ú/g, 'u')
-    .replace(/Á/g, 'a').replace(/É/g, 'e').replace(/Í/g, 'i').replace(/Ó/g, 'o').replace(/Ú/g, 'u')
-    .replace(/ñ/g, 'n').replace(/Ñ/g, 'n');
+function removeTildes(t) {
+  return t.replace(/á/g,'a').replace(/é/g,'e').replace(/í/g,'i').replace(/ó/g,'o').replace(/ú/g,'u').replace(/Á/g,'a').replace(/É/g,'e').replace(/Í/g,'i').replace(/Ó/g,'o').replace(/Ú/g,'u').replace(/ñ/g,'n').replace(/Ñ/g,'n');
 }
 
 function closeAddModal() { document.getElementById('addOverlay').classList.remove('show'); }
-
-function toggleAdvanced(prefix) {
-  const content = document.getElementById(prefix + 'AdvancedContent');
-  const arrow = document.getElementById(prefix + 'AdvancedArrow');
-  content.classList.toggle('show');
-  arrow.textContent = content.classList.contains('show') ? '▲' : '▼';
-}
+function toggleAdvanced(p) { const c = document.getElementById(p+'AdvancedContent'), a = document.getElementById(p+'AdvancedArrow'); c.classList.toggle('show'); a.textContent = c.classList.contains('show') ? '▲' : '▼'; }
 
 async function submitAdd() {
-  const errBox = document.getElementById('addError');
-  const okBox = document.getElementById('addSuccess');
-  errBox.classList.remove('show'); okBox.classList.remove('show');
-
-  const fullName = document.getElementById('addFullName').value.trim();
-  const role = document.getElementById('addRole').value;
-  let teamId;
-  if (currentUser.is_admin) teamId = document.getElementById('addTeam').value;
-  else teamId = currentUser.team_id;
-
-  if (!fullName) { errBox.textContent = 'Falta el nombre completo'; errBox.classList.add('show'); return; }
-  if (!role) { errBox.textContent = 'Falta el puesto'; errBox.classList.add('show'); return; }
-  if (!teamId) { errBox.textContent = 'Falta el equipo'; errBox.classList.add('show'); return; }
-
-  let username = document.getElementById('addUsername').value.trim().toLowerCase();
-  if (!username) username = generateUsername(fullName);
-  username = removeTildes(username);
-  if (username.length < 3) { errBox.textContent = 'El usuario debe tener al menos 3 caracteres'; errBox.classList.add('show'); return; }
-
-  // Verificar que no exista ya
-  const { data: existing } = await db.from('employees').select('username').eq('username', username);
-  if (existing && existing.length > 0) {
-    errBox.textContent = `El usuario "${username}" ya existe. Probá con otro (ej: 2 letras del nombre).`;
-    errBox.classList.add('show'); return;
-  }
-
-  let password = document.getElementById('addPassword').value || '123456';
-  let maxBreaks = parseInt(document.getElementById('addMaxBreaks').value);
-  if (!maxBreaks || maxBreaks < 1) {
-    maxBreaks = role === 'promotor' ? 999 : 1;
-  }
-
+  const eB = document.getElementById('addError'), oB = document.getElementById('addSuccess');
+  eB.classList.remove('show'); oB.classList.remove('show');
+  const fn = document.getElementById('addFullName').value.trim();
+  const r = document.getElementById('addRole').value;
+  const tid = currentUser.is_admin ? document.getElementById('addTeam').value : currentUser.team_id;
+  if (!fn) { eB.textContent = 'Falta nombre'; eB.classList.add('show'); return; }
+  if (!r) { eB.textContent = 'Falta puesto'; eB.classList.add('show'); return; }
+  if (!tid) { eB.textContent = 'Falta equipo'; eB.classList.add('show'); return; }
+  let un = document.getElementById('addUsername').value.trim().toLowerCase();
+  if (!un) un = generateUsername(fn);
+  un = removeTildes(un);
+  if (un.length < 3) { eB.textContent = 'Usuario mínimo 3 caracteres'; eB.classList.add('show'); return; }
+  const { data: ex } = await db.from('employees').select('username').eq('username', un);
+  if (ex && ex.length > 0) { eB.textContent = `Usuario "${un}" ya existe`; eB.classList.add('show'); return; }
+  const pw = document.getElementById('addPassword').value || '123456';
+  let mb = parseInt(document.getElementById('addMaxBreaks').value);
+  if (!mb || mb < 1) mb = r === 'promotor' ? 999 : 1;
   try {
     const { error } = await db.from('employees').insert({
-      username, password, full_name: fullName, default_role: role,
-      branch_id: BRANCH_ID, team_id: teamId,
+      username: un, password: pw, full_name: fn, default_role: r,
+      branch_id: BRANCH_ID, team_id: tid,
       is_manager: false, is_admin: false,
-      max_breaks_per_shift: maxBreaks, active: true,
-      password_changed: password !== '123456'
+      max_breaks_per_shift: mb, active: true,
+      password_changed: pw !== '123456'
     });
     if (error) throw error;
-
-    okBox.textContent = `✓ ${fullName} fue agregada como ${ROLE_LABELS_SINGLE[role]}`;
-    okBox.classList.add('show');
-    showToast(`✓ ${fullName} agregada al equipo`);
-
+    oB.textContent = `✓ ${fn} agregada`;
+    oB.classList.add('show');
+    showToast(`✓ ${fn} agregada`);
     await loadAllData();
     renderEmployees();
     renderSummary();
     setTimeout(closeAddModal, 1500);
-  } catch (err) {
-    console.error(err);
-    errBox.textContent = 'Error al guardar: ' + (err.message || 'verificá los datos');
-    errBox.classList.add('show');
-  }
+  } catch (err) { eB.textContent = 'Error: ' + (err.message || ''); eB.classList.add('show'); }
 }
 
-// ============ EDIT MODAL ============
 function openEditModal(empId) {
   const emp = employees.find(e => e.id === empId);
   if (!emp) return;
   editingEmployeeId = empId;
-
   document.getElementById('editFullName').value = emp.full_name;
   document.getElementById('editUsername').value = emp.username;
   document.getElementById('editMaxBreaks').value = emp.max_breaks_per_shift;
   document.getElementById('editError').classList.remove('show');
   document.getElementById('editSuccess').classList.remove('show');
-
-  // Permitir cambiar nombre: solo admin para jefas; cualquier jefa para empleadas
-  const nameInput = document.getElementById('editFullName');
-  const nameHint = document.getElementById('editNameHint');
-  if (emp.is_manager && !currentUser.is_admin) {
-    nameInput.disabled = true;
-    nameHint.style.display = 'block';
-  } else {
-    nameInput.disabled = false;
-    nameHint.style.display = 'none';
-  }
-
-  // Llenar puestos disponibles según el equipo del empleado
-  const team = teams.find(t => t.id === emp.team_id);
-  const roleSel = document.getElementById('editRole');
-  const roles = team ? (TEAM_ROLES[team.name] || []) : [];
-  roleSel.innerHTML = '';
-  roles.forEach(r => { 
-    const opt = document.createElement('option');
-    opt.value = r;
-    opt.textContent = ROLE_LABELS_SINGLE[r];
-    if (r === emp.default_role) opt.selected = true;
-    roleSel.appendChild(opt);
-  });
-
+  const nI = document.getElementById('editFullName'), nH = document.getElementById('editNameHint');
+  if (emp.is_manager && !currentUser.is_admin) { nI.disabled = true; nH.style.display = 'block'; }
+  else { nI.disabled = false; nH.style.display = 'none'; }
+  const t = teams.find(x => x.id === emp.team_id);
+  const rS = document.getElementById('editRole');
+  const roles = t ? (TEAM_ROLES[t.name] || []) : [];
+  rS.innerHTML = '';
+  roles.forEach(r => { const o = document.createElement('option'); o.value = r; o.textContent = ROLE_LABELS_SINGLE[r]; if (r === emp.default_role) o.selected = true; rS.appendChild(o); });
   document.getElementById('editModalSubtitle').textContent = `${emp.full_name} · @${emp.username}`;
   document.getElementById('editOverlay').classList.add('show');
 }
 
-function closeEditModal() {
-  document.getElementById('editOverlay').classList.remove('show');
-  editingEmployeeId = null;
-}
+function closeEditModal() { document.getElementById('editOverlay').classList.remove('show'); editingEmployeeId = null; }
 
 async function submitEdit() {
   if (!editingEmployeeId) return;
   const emp = employees.find(e => e.id === editingEmployeeId);
   if (!emp) return;
-
-  const errBox = document.getElementById('editError');
-  const okBox = document.getElementById('editSuccess');
-  errBox.classList.remove('show'); okBox.classList.remove('show');
-
-  const updates = {
-    default_role: document.getElementById('editRole').value,
-    max_breaks_per_shift: parseInt(document.getElementById('editMaxBreaks').value) || 1
-  };
-
-  // Si puede cambiar nombre
-  const nameInput = document.getElementById('editFullName');
-  if (!nameInput.disabled) {
-    const newName = nameInput.value.trim();
-    if (!newName) { errBox.textContent = 'El nombre no puede quedar vacío'; errBox.classList.add('show'); return; }
-    updates.full_name = newName;
-  }
-
+  const eB = document.getElementById('editError'), oB = document.getElementById('editSuccess');
+  eB.classList.remove('show'); oB.classList.remove('show');
+  const u = { default_role: document.getElementById('editRole').value, max_breaks_per_shift: parseInt(document.getElementById('editMaxBreaks').value) || 1 };
+  const nI = document.getElementById('editFullName');
+  if (!nI.disabled) { const nn = nI.value.trim(); if (!nn) { eB.textContent = 'Nombre vacío'; eB.classList.add('show'); return; } u.full_name = nn; }
   try {
-    const { error } = await db.from('employees').update(updates).eq('id', editingEmployeeId);
+    const { error } = await db.from('employees').update(u).eq('id', editingEmployeeId);
     if (error) throw error;
-    okBox.textContent = '✓ Cambios guardados';
-    okBox.classList.add('show');
-    showToast('✓ Empleada actualizada');
-    await loadAllData();
-    renderEmployees();
-    renderSummary();
+    oB.textContent = '✓ Guardado'; oB.classList.add('show');
+    showToast('✓ Actualizado');
+    await loadAllData(); renderEmployees(); renderSummary();
     setTimeout(closeEditModal, 1200);
-  } catch (err) {
-    errBox.textContent = 'Error al guardar: ' + (err.message || 'reintentá');
-    errBox.classList.add('show');
-  }
+  } catch (err) { eB.textContent = 'Error: ' + (err.message || ''); eB.classList.add('show'); }
 }
 
 async function resetPassword() {
   if (!editingEmployeeId) return;
-  if (!confirm('¿Resetear contraseña a "123456"? La persona deberá cambiarla la próxima vez que entre.')) return;
-  try {
-    const { error } = await db.from('employees').update({ password: '123456', password_changed: false }).eq('id', editingEmployeeId);
-    if (error) throw error;
-    showToast('✓ Contraseña reseteada a 123456');
-  } catch (err) { showToast('✗ Error al resetear', true); }
+  if (!confirm('¿Resetear contraseña a "123456"?')) return;
+  try { await db.from('employees').update({ password: '123456', password_changed: false }).eq('id', editingEmployeeId); showToast('✓ Contraseña reseteada'); } catch { showToast('✗ Error', true); }
 }
 
 async function deactivateEmployee() {
   if (!editingEmployeeId) return;
   const emp = employees.find(e => e.id === editingEmployeeId);
   if (!emp) return;
-  if (!confirm(`¿Desactivar a ${emp.full_name}? Sus fichajes se conservarán pero no podrá ingresar al sistema.`)) return;
-  try {
-    const { error } = await db.from('employees').update({ active: false }).eq('id', editingEmployeeId);
-    if (error) throw error;
-    showToast(`✓ ${emp.full_name} desactivada`);
-    await loadAllData();
-    renderEmployees();
-    renderSummary();
-    closeEditModal();
-  } catch (err) { showToast('✗ Error al desactivar', true); }
+  if (!confirm(`¿Desactivar a ${emp.full_name}?`)) return;
+  try { await db.from('employees').update({ active: false }).eq('id', editingEmployeeId); showToast(`✓ ${emp.full_name} desactivada`); await loadAllData(); renderEmployees(); renderSummary(); closeEditModal(); } catch { showToast('✗ Error', true); }
 }
 
 async function reactivateEmployee(empId) {
   const emp = inactiveEmployees.find(e => e.id === empId);
   if (!emp) return;
   if (!confirm(`¿Reactivar a ${emp.full_name}?`)) return;
-  try {
-    const { error } = await db.from('employees').update({ active: true }).eq('id', empId);
-    if (error) throw error;
-    showToast(`✓ ${emp.full_name} reactivada`);
-    await loadAllData();
-    renderEmployees();
-    renderSummary();
-  } catch (err) { showToast('✗ Error al reactivar', true); }
+  try { await db.from('employees').update({ active: true }).eq('id', empId); showToast(`✓ ${emp.full_name} reactivada`); await loadAllData(); renderEmployees(); renderSummary(); } catch { showToast('✗ Error', true); }
 }
 
+// ============ HORARIOS ============
+function setupSchedulesView() {
+  const fB = document.getElementById('schedTeamFilterGroup');
+  const tS = document.getElementById('schedFilterTeam');
+  if (currentUser.is_admin) {
+    fB.style.display = 'flex';
+    tS.innerHTML = '<option value="all">Todos los equipos</option>';
+    teams.forEach(t => { tS.innerHTML += `<option value="${t.id}">${t.name}</option>`; });
+  } else {
+    fB.style.display = 'none';
+  }
+  updateWeekDisplay();
+}
+
+function updateWeekDisplay() {
+  const end = new Date(viewWeekStart);
+  end.setDate(end.getDate() + 6);
+  const d1 = viewWeekStart.getDate();
+  const d2 = end.getDate();
+  const m1 = viewWeekStart.toLocaleDateString('es-AR', { month: 'short' });
+  const m2 = end.toLocaleDateString('es-AR', { month: 'short' });
+  const y = viewWeekStart.getFullYear();
+  const s = (m1 === m2) ? `${d1}-${d2} ${m1} ${y}` : `${d1} ${m1} - ${d2} ${m2} ${y}`;
+  document.getElementById('weekDisplay').textContent = s;
+}
+
+async function changeWeek(delta) {
+  viewWeekStart.setDate(viewWeekStart.getDate() + (delta * 7));
+  updateWeekDisplay();
+  await loadShifts();
+  renderSchedules();
+}
+
+function renderSchedules() {
+  const tf = document.getElementById('schedFilterTeam')?.value || 'all';
+  let f = employees;
+  if (currentUser.is_admin && tf !== 'all') f = f.filter(e => e.team_id === tf);
+  
+  const c = document.getElementById('schedulesContent');
+  if (f.length === 0) { c.innerHTML = '<div class="empty-state">Sin empleadas</div>'; return; }
+
+  // Fechas de la semana
+  const dates = [];
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(viewWeekStart);
+    d.setDate(d.getDate() + i);
+    dates.push(d);
+  }
+  const todayStr = toDateStr(new Date());
+
+  let html = '';
+
+  if (currentUser.is_admin && tf === 'all') {
+    // Agrupar por equipo
+    const byTeam = {};
+    f.forEach(e => { const n = e.teams?.name || 'Sin equipo'; if (!byTeam[n]) byTeam[n] = []; byTeam[n].push(e); });
+    const ord = ['Salón', 'Promotoras', 'Presentación', 'Ventas', 'Sin equipo'];
+    for (const n of ord) {
+      if (!byTeam[n]) continue;
+      html += `<div class="team-section">
+        <div class="team-header">
+          <div class="team-name">🏢 ${n}</div>
+          <div class="team-meta">${byTeam[n].length} personas</div>
+        </div>
+        ${renderShiftsTable(byTeam[n], dates, todayStr)}
+      </div>`;
+    }
+  } else {
+    html = renderShiftsTable(f, dates, todayStr);
+  }
+
+  c.innerHTML = html;
+}
+
+function renderShiftsTable(emps, dates, todayStr) {
+  // Header
+  let h = '<table class="shifts-table"><thead><tr><th>Empleada</th>';
+  for (const d of dates) {
+    const ds = toDateStr(d);
+    const isToday = ds === todayStr;
+    const dayName = DAY_NAMES[d.getDay()];
+    const dayNum = d.getDate();
+    h += `<th class="${isToday ? 'today' : ''}">${dayName}<br>${dayNum}</th>`;
+  }
+  h += '</tr></thead><tbody>';
+
+  // Ordenar empleadas: jefas primero, después por puesto
+  const roleOrder = ['jefa_salon','jefa_promotoras','jefe_presentacion','jefe_ventas','recepcionista','pretester','host','promotor','presentador','enrutador','asesor'];
+  const sorted = [...emps].sort((a, b) => {
+    const ra = roleOrder.indexOf(a.default_role);
+    const rb = roleOrder.indexOf(b.default_role);
+    if (ra !== rb) return ra - rb;
+    return a.full_name.localeCompare(b.full_name);
+  });
+
+  for (const emp of sorted) {
+    const isJ = emp.is_manager;
+    const ini = emp.full_name.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
+    h += `<tr>
+      <td>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,${isJ?'#a78bfa,#8b5cf6':'#4ade80,#22d3ee'});display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;flex-shrink:0;${isJ?'color:#fff;':'color:#0f3460;'}">${ini}</div>
+          <div style="min-width:0;">
+            <div style="font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${emp.full_name}</div>
+            <div style="font-size:9px;color:rgba(255,255,255,0.4);font-family:'JetBrains Mono',monospace;">${ROLE_LABELS_SINGLE[emp.default_role] || emp.default_role}</div>
+          </div>
+        </div>
+      </td>`;
+    
+    for (const d of dates) {
+      const ds = toDateStr(d);
+      const isToday = ds === todayStr;
+      const shift = allShifts.find(s => s.employee_id === emp.id && s.shift_date === ds);
+      h += `<td class="${isToday ? 'today-col' : ''}">${renderShiftCell(emp.id, ds, shift)}</td>`;
+    }
+    h += '</tr>';
+  }
+
+  h += '</tbody></table>';
+  return h;
+}
+
+function renderShiftCell(empId, dateStr, shift) {
+  if (!shift) {
+    return `<div class="shift-cell empty" onclick="openShiftModal('${empId}', '${dateStr}', null)">+</div>`;
+  }
+  const j = shift.jornada_type;
+  const def = JORNADA_DEFAULTS[j];
+  let label = def ? def.label : j;
+  if (j !== 'libre' && shift.start_time && shift.end_time) {
+    label = `${shift.start_time.substring(0,5)}<br>${shift.end_time.substring(0,5)}`;
+  }
+  return `<div class="shift-cell ${j}" onclick="openShiftModal('${empId}', '${dateStr}', '${shift.id}')">${label}</div>`;
+}
+
+// ============ MODAL EDITAR HORARIO ============
+function openShiftModal(empId, dateStr, shiftId) {
+  const emp = employees.find(e => e.id === empId);
+  if (!emp) return;
+  
+  const shift = shiftId ? allShifts.find(s => s.id === shiftId) : null;
+  editingShift = { employeeId: empId, date: dateStr, existing: shift, selectedJornada: null };
+
+  // Título
+  const d = new Date(dateStr + 'T00:00:00');
+  const dayName = d.toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' });
+  document.getElementById('shiftModalSubtitle').textContent = `${emp.full_name} · ${dayName}`;
+
+  // Mostrar botón eliminar solo si ya existe el horario
+  document.getElementById('deleteShiftBtn').style.display = shift ? 'block' : 'none';
+
+  // Marcar jornada actual (o dejar sin selección)
+  document.querySelectorAll('.jornada-option').forEach(o => o.classList.remove('selected'));
+  document.getElementById('shiftError').classList.remove('show');
+
+  if (shift) {
+    selectJornada(shift.jornada_type);
+    if (shift.start_time) document.getElementById('shiftStart').value = shift.start_time.substring(0,5);
+    if (shift.end_time) document.getElementById('shiftEnd').value = shift.end_time.substring(0,5);
+  } else {
+    // Sin selección inicial
+    document.getElementById('shiftTimeFields').style.display = 'none';
+  }
+
+  document.getElementById('shiftOverlay').classList.add('show');
+}
+
+function selectJornada(j) {
+  editingShift.selectedJornada = j;
+  document.querySelectorAll('.jornada-option').forEach(o => {
+    o.classList.toggle('selected', o.dataset.jornada === j);
+  });
+
+  const def = JORNADA_DEFAULTS[j];
+  const timeFields = document.getElementById('shiftTimeFields');
+  const hint = document.getElementById('shiftHint');
+
+  if (j === 'libre') {
+    timeFields.style.display = 'none';
+  } else {
+    timeFields.style.display = 'block';
+    // Poner defaults según el tipo
+    if (j === 'part_time_manana' || j === 'part_time_tarde' || j === 'academia') {
+      document.getElementById('shiftStart').value = def.start;
+      document.getElementById('shiftEnd').value = def.end;
+      document.getElementById('shiftStart').disabled = true;
+      document.getElementById('shiftEnd').disabled = true;
+      hint.textContent = `Horario fijo: ${def.start} - ${def.end}`;
+    } else if (j === 'full_time') {
+      // Full-time: entrada libre, salida = entrada + 9h
+      document.getElementById('shiftStart').disabled = false;
+      document.getElementById('shiftEnd').disabled = false;
+      if (!document.getElementById('shiftStart').value || !editingShift.existing) {
+        document.getElementById('shiftStart').value = '10:00';
+        document.getElementById('shiftEnd').value = '19:00';
+      }
+      hint.textContent = 'Full-time: 9 horas de trabajo + 1 hora de break';
+      // Actualizar salida al cambiar entrada
+      document.getElementById('shiftStart').oninput = () => {
+        const start = document.getElementById('shiftStart').value;
+        if (start) {
+          const [h, m] = start.split(':').map(Number);
+          const endH = (h + 9) % 24;
+          document.getElementById('shiftEnd').value = `${String(endH).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+        }
+      };
+    }
+  }
+}
+
+function closeShiftModal() {
+  document.getElementById('shiftOverlay').classList.remove('show');
+  editingShift = { employeeId: null, date: null, existing: null, selectedJornada: null };
+}
+
+async function submitShift() {
+  const eB = document.getElementById('shiftError');
+  eB.classList.remove('show');
+  
+  if (!editingShift.selectedJornada) {
+    eB.textContent = 'Elegí un tipo de jornada';
+    eB.classList.add('show');
+    return;
+  }
+
+  const j = editingShift.selectedJornada;
+  const def = JORNADA_DEFAULTS[j];
+  
+  let startTime = null, endTime = null, breakMin = 0;
+  if (j !== 'libre') {
+    startTime = document.getElementById('shiftStart').value;
+    endTime = document.getElementById('shiftEnd').value;
+    breakMin = def.break;
+    if (!startTime || !endTime) {
+      eB.textContent = 'Falta la hora de entrada o salida';
+      eB.classList.add('show');
+      return;
+    }
+  }
+
+  const data = {
+    employee_id: editingShift.employeeId,
+    branch_id: BRANCH_ID,
+    shift_date: editingShift.date,
+    jornada_type: j,
+    start_time: startTime,
+    end_time: endTime,
+    break_duration_minutes: breakMin,
+    created_by: currentUser.id,
+    updated_at: new Date().toISOString()
+  };
+
+  try {
+    if (editingShift.existing) {
+      // Update
+      const { error } = await db.from('shifts').update(data).eq('id', editingShift.existing.id);
+      if (error) throw error;
+      showToast('✓ Horario actualizado');
+    } else {
+      // Insert
+      const { error } = await db.from('shifts').insert(data);
+      if (error) throw error;
+      showToast('✓ Horario guardado');
+    }
+
+    await loadShifts();
+    renderSchedules();
+    closeShiftModal();
+  } catch (err) {
+    console.error(err);
+    eB.textContent = 'Error: ' + (err.message || 'reintentá');
+    eB.classList.add('show');
+  }
+}
+
+async function deleteShift() {
+  if (!editingShift.existing) return;
+  if (!confirm('¿Borrar este horario?')) return;
+  try {
+    const { error } = await db.from('shifts').delete().eq('id', editingShift.existing.id);
+    if (error) throw error;
+    showToast('✓ Horario borrado');
+    await loadShifts();
+    renderSchedules();
+    closeShiftModal();
+  } catch (err) {
+    showToast('✗ Error al borrar', true);
+  }
+}
+
+// ============ COPIAR SEMANA ANTERIOR ============
+async function copyPreviousWeek() {
+  if (!confirm('¿Copiar los horarios de la semana anterior a esta semana?\n\n(Los horarios actuales de esta semana serán reemplazados)')) return;
+
+  showToast('Copiando...');
+  
+  try {
+    // Fechas semana anterior
+    const prevStart = new Date(viewWeekStart);
+    prevStart.setDate(prevStart.getDate() - 7);
+    const prevEnd = new Date(prevStart);
+    prevEnd.setDate(prevEnd.getDate() + 6);
+
+    // Fechas semana actual
+    const currentEnd = new Date(viewWeekStart);
+    currentEnd.setDate(currentEnd.getDate() + 6);
+
+    // Obtener empleadas relevantes
+    const tf = document.getElementById('schedFilterTeam')?.value || 'all';
+    let empIds = employees.map(e => e.id);
+    if (currentUser.is_admin && tf !== 'all') empIds = employees.filter(e => e.team_id === tf).map(e => e.id);
+
+    // Cargar horarios de la semana anterior
+    const { data: prevShifts } = await db.from('shifts')
+      .select('*')
+      .gte('shift_date', toDateStr(prevStart))
+      .lte('shift_date', toDateStr(prevEnd))
+      .in('employee_id', empIds);
+
+    if (!prevShifts || prevShifts.length === 0) {
+      showToast('✗ No hay horarios en la semana anterior', true);
+      return;
+    }
+
+    // Borrar horarios de la semana actual
+    await db.from('shifts')
+      .delete()
+      .gte('shift_date', toDateStr(viewWeekStart))
+      .lte('shift_date', toDateStr(currentEnd))
+      .in('employee_id', empIds);
+
+    // Copiar cada horario a la semana actual
+    const newShifts = prevShifts.map(s => {
+      const oldDate = new Date(s.shift_date + 'T00:00:00');
+      const newDate = new Date(oldDate);
+      newDate.setDate(newDate.getDate() + 7);
+      return {
+        employee_id: s.employee_id,
+        branch_id: s.branch_id,
+        shift_date: toDateStr(newDate),
+        jornada_type: s.jornada_type,
+        start_time: s.start_time,
+        end_time: s.end_time,
+        break_duration_minutes: s.break_duration_minutes,
+        notes: s.notes,
+        created_by: currentUser.id
+      };
+    });
+
+    const { error } = await db.from('shifts').insert(newShifts);
+    if (error) throw error;
+
+    showToast(`✓ ${newShifts.length} horarios copiados`);
+    await loadShifts();
+    renderSchedules();
+  } catch (err) {
+    console.error(err);
+    showToast('✗ Error al copiar: ' + (err.message || ''), true);
+  }
+}
+
+// ============ TOAST ============
 function showToast(msg, isError = false) {
   const toast = document.getElementById('toast');
   toast.textContent = msg;
@@ -1109,6 +1440,7 @@ function showToast(msg, isError = false) {
 
 // INIT
 updateMonthDisplay();
+updateWeekDisplay();
 document.getElementById('usernameInput').focus();
 </script>
 
