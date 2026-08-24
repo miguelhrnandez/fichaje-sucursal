@@ -19,14 +19,7 @@ body {
   padding: 16px;
 }
 
-.screen {
-  max-width: 440px;
-  margin: 0 auto;
-  min-height: calc(100vh - 32px);
-  display: flex;
-  flex-direction: column;
-}
-
+.screen { max-width: 440px; margin: 0 auto; min-height: calc(100vh - 32px); display: flex; flex-direction: column; }
 .screen.hidden { display: none; }
 
 .login-header { text-align: center; margin: 60px 0 40px; }
@@ -36,491 +29,314 @@ body {
   background: linear-gradient(135deg, #4ade80, #22d3ee);
   border-radius: 20px;
   display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 20px;
-  font-size: 32px;
+  margin: 0 auto 20px; font-size: 32px;
 }
 
 .login-title { font-size: 28px; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.02em; }
 .login-subtitle { font-size: 14px; color: rgba(255, 255, 255, 0.5); }
 
-.login-box {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 24px;
-}
+.login-box { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 24px; }
 
 .field-group { margin-bottom: 14px; }
 
 .field-label {
-  display: block;
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.4);
-  margin-bottom: 8px;
-  font-family: 'JetBrains Mono', monospace;
+  display: block; font-size: 11px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 8px; font-family: 'JetBrains Mono', monospace;
 }
 
 input {
-  width: 100%;
-  padding: 14px 16px;
+  width: 100%; padding: 14px 16px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  color: #fff;
-  font-family: inherit;
-  font-size: 15px;
-  outline: none;
+  border-radius: 12px; color: #fff;
+  font-family: inherit; font-size: 15px; outline: none;
 }
 
 input:focus { border-color: #4ade80; }
 
 .btn {
-  width: 100%;
-  padding: 16px;
+  width: 100%; padding: 16px;
   background: linear-gradient(135deg, #4ade80, #22d3ee);
-  color: #0f3460;
-  border: none;
-  border-radius: 14px;
-  font-family: inherit;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  margin-top: 14px;
+  color: #0f3460; border: none; border-radius: 14px;
+  font-family: inherit; font-size: 16px; font-weight: 700;
+  cursor: pointer; margin-top: 14px;
 }
 
-.btn-ghost {
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #fff;
-  font-weight: 500;
-}
+.btn-ghost { background: transparent; border: 1px solid rgba(255, 255, 255, 0.15); color: #fff; font-weight: 500; }
 
 .error-box {
-  background: rgba(255, 107, 107, 0.1);
-  border: 1px solid rgba(255, 107, 107, 0.3);
-  color: #ff6b6b;
-  padding: 12px;
-  border-radius: 10px;
-  font-size: 13px;
-  margin-top: 12px;
-  display: none;
+  background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.3);
+  color: #ff6b6b; padding: 12px; border-radius: 10px;
+  font-size: 13px; margin-top: 12px; display: none;
 }
-
 .error-box.show { display: block; }
 
 .success-box {
-  background: rgba(74, 222, 128, 0.1);
-  border: 1px solid rgba(74, 222, 128, 0.3);
-  color: #4ade80;
-  padding: 12px;
-  border-radius: 10px;
-  font-size: 13px;
-  margin-top: 12px;
-  display: none;
+  background: rgba(74, 222, 128, 0.1); border: 1px solid rgba(74, 222, 128, 0.3);
+  color: #4ade80; padding: 12px; border-radius: 10px;
+  font-size: 13px; margin-top: 12px; display: none;
 }
-
 .success-box.show { display: block; }
 
 .warning-banner {
   background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.15));
   border: 1px solid rgba(251, 191, 36, 0.4);
-  border-radius: 12px;
-  padding: 12px 14px;
-  margin-bottom: 16px;
-  font-size: 13px;
-  color: #fbbf24;
-  text-align: center;
+  border-radius: 12px; padding: 12px 14px; margin-bottom: 16px;
+  font-size: 13px; color: #fbbf24; text-align: center;
 }
 
-/* CAMBIO CONTRASEÑA OBLIGATORIO */
-.force-change-header {
-  text-align: center;
-  margin: 40px 0 30px;
-}
-
+.force-change-header { text-align: center; margin: 40px 0 30px; }
 .warning-icon {
-  width: 72px;
-  height: 72px;
+  width: 72px; height: 72px;
   background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 20px;
-  font-size: 32px;
-  color: #0f3460;
+  border-radius: 20px; display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px; font-size: 32px; color: #0f3460;
 }
 
 /* DASHBOARD */
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 0;
-  gap: 8px;
-}
-
+.topbar { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; gap: 8px; }
 .user-info { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
 .user-name { font-weight: 500; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .user-role { font-size: 12px; color: rgba(255, 255, 255, 0.5); }
 
 .emp-avatar {
-  width: 40px; height: 40px;
-  border-radius: 12px;
+  width: 40px; height: 40px; border-radius: 12px;
   background: linear-gradient(135deg, #4ade80, #22d3ee);
   display: flex; align-items: center; justify-content: center;
-  font-weight: 600; font-size: 14px;
-  flex-shrink: 0;
-  color: #0f3460;
+  font-weight: 600; font-size: 14px; flex-shrink: 0; color: #0f3460;
 }
-
 .emp-avatar.admin { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
 .emp-avatar.manager { background: linear-gradient(135deg, #a78bfa, #8b5cf6); color: #fff; }
 
 .top-actions { display: flex; gap: 6px; flex-shrink: 0; }
-
 .topbar-btn {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  padding: 8px 12px;
-  color: rgba(255, 255, 255, 0.7);
-  font-family: inherit;
-  font-size: 12px;
-  cursor: pointer;
-  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px; padding: 8px 12px; color: rgba(255, 255, 255, 0.7);
+  font-family: inherit; font-size: 12px; cursor: pointer; white-space: nowrap;
 }
-
 .topbar-btn:hover { color: #fff; }
 
 .admin-banner {
   background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(139, 92, 246, 0.15));
-  border: 1px solid rgba(167, 139, 250, 0.4);
-  border-radius: 14px;
-  padding: 14px 16px;
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  border: 1px solid rgba(167, 139, 250, 0.4); border-radius: 14px;
+  padding: 14px 16px; margin-bottom: 16px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
 }
-
 .admin-text { font-size: 13px; }
 .admin-text strong { color: #a78bfa; }
-
 .admin-link {
-  background: linear-gradient(135deg, #a78bfa, #8b5cf6);
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 16px;
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
+  background: linear-gradient(135deg, #a78bfa, #8b5cf6); color: #fff;
+  border: none; border-radius: 10px; padding: 10px 16px;
+  font-family: inherit; font-size: 13px; font-weight: 600;
+  cursor: pointer; text-decoration: none;
 }
 
 .clock-display { text-align: center; padding: 20px 0; }
-
 .clock-time {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 56px;
-  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace; font-size: 56px; font-weight: 700;
   background: linear-gradient(135deg, #fff, #a0a0ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
-
-.clock-date {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.6);
-  text-transform: capitalize;
-  margin-top: 4px;
-}
+.clock-date { font-size: 14px; color: rgba(255, 255, 255, 0.6); text-transform: capitalize; margin-top: 4px; }
 
 .status-pill {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 10px 18px;
-  border-radius: 999px;
-  font-size: 14px;
-  font-weight: 500;
-  margin: 0 auto;
-  width: fit-content;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px 18px; border-radius: 999px; font-size: 14px; font-weight: 500;
+  margin: 0 auto; width: fit-content;
 }
-
 .status-pill.in { background: rgba(74, 222, 128, 0.2); color: #4ade80; }
 .status-pill.out { background: rgba(255, 255, 255, 0.08); color: rgba(255, 255, 255, 0.7); }
 .status-pill.break { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
-
 .status-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
-
-.status-pill.in .status-dot,
-.status-pill.break .status-dot { animation: pulse 2s infinite; }
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
+.status-pill.in .status-dot, .status-pill.break .status-dot { animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
 
 .live-counter {
   display: flex; align-items: center; justify-content: center; gap: 8px;
-  margin-top: 14px;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.7);
+  margin-top: 14px; font-size: 14px; color: rgba(255, 255, 255, 0.7);
   font-family: 'JetBrains Mono', monospace;
 }
 
 .action-btn {
-  width: 100%;
-  padding: 26px;
-  border: none;
-  border-radius: 20px;
-  font-family: inherit;
-  font-size: 17px;
-  font-weight: 600;
-  cursor: pointer;
-  margin: 12px 0;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
+  width: 100%; padding: 26px; border: none; border-radius: 20px;
+  font-family: inherit; font-size: 17px; font-weight: 600;
+  cursor: pointer; margin: 12px 0; color: #fff;
+  display: flex; align-items: center; justify-content: center; gap: 12px;
 }
-
-.action-btn.in {
-  background: linear-gradient(135deg, #4ade80, #22d3ee);
-  color: #0f3460;
-  box-shadow: 0 10px 30px rgba(74, 222, 128, 0.3);
-}
-
-.action-btn.out {
-  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
-  box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
-}
-
-.action-btn.break-start {
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  color: #0f3460;
-  box-shadow: 0 10px 30px rgba(251, 191, 36, 0.3);
-}
-
-.action-btn.break-end {
-  background: linear-gradient(135deg, #22d3ee, #06b6d4);
-  color: #0f3460;
-  box-shadow: 0 10px 30px rgba(34, 211, 238, 0.3);
-}
-
+.action-btn.in { background: linear-gradient(135deg, #4ade80, #22d3ee); color: #0f3460; box-shadow: 0 10px 30px rgba(74, 222, 128, 0.3); }
+.action-btn.out { background: linear-gradient(135deg, #ff6b6b, #ee5a52); box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3); }
+.action-btn.break-start { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #0f3460; box-shadow: 0 10px 30px rgba(251, 191, 36, 0.3); }
+.action-btn.break-end { background: linear-gradient(135deg, #22d3ee, #06b6d4); color: #0f3460; box-shadow: 0 10px 30px rgba(34, 211, 238, 0.3); }
 .action-btn:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
 
 .day-summary {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 14px;
-  padding: 14px 16px;
-  margin-top: 14px;
-  font-size: 13px;
+  background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px; padding: 14px 16px; margin-top: 14px; font-size: 13px;
 }
-
-.day-summary h4 {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: rgba(255, 255, 255, 0.5);
-  margin-bottom: 10px;
-  font-family: 'JetBrains Mono', monospace;
-}
-
+.day-summary h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255, 255, 255, 0.5); margin-bottom: 10px; font-family: 'JetBrains Mono', monospace; }
 .summary-row { display: flex; justify-content: space-between; padding: 4px 0; color: rgba(255, 255, 255, 0.8); }
 .summary-row .label { color: rgba(255, 255, 255, 0.5); }
 
-.admin-msg-box { text-align: center; padding: 40px 20px; margin-top: 40px; }
+/* HORARIO PROPIO */
+.my-schedule {
+  background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px; padding: 14px 16px; margin-top: 14px; font-size: 13px;
+}
+.my-schedule h4 {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.5); margin-bottom: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.week-nav-mini { display: flex; gap: 4px; align-items: center; }
+.week-nav-mini button { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); border-radius: 6px; padding: 3px 8px; cursor: pointer; font-family: inherit; font-size: 11px; }
+.week-nav-mini button:hover { color: #fff; }
 
+.day-schedule-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 10px; border-radius: 8px; margin-bottom: 4px;
+  background: rgba(255, 255, 255, 0.02);
+  font-family: 'JetBrains Mono', monospace; font-size: 12px;
+}
+.day-schedule-row.today { background: rgba(74, 222, 128, 0.08); border: 1px solid rgba(74, 222, 128, 0.3); }
+.day-schedule-day { color: rgba(255, 255, 255, 0.6); text-transform: capitalize; min-width: 90px; }
+.day-schedule-info { display: flex; align-items: center; gap: 8px; }
+
+.jornada-badge { padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 600; }
+.jornada-badge.part_time_manana { background: rgba(134, 239, 172, 0.2); color: #86efac; }
+.jornada-badge.part_time_tarde { background: rgba(74, 222, 128, 0.2); color: #4ade80; }
+.jornada-badge.full_time { background: rgba(96, 165, 250, 0.2); color: #60a5fa; }
+.jornada-badge.academia { background: rgba(251, 146, 60, 0.2); color: #fb923c; }
+.jornada-badge.libre { background: rgba(255, 255, 255, 0.08); color: rgba(255, 255, 255, 0.5); }
+.jornada-badge.empty { background: rgba(255, 255, 255, 0.04); color: rgba(255, 255, 255, 0.3); border: 1px dashed rgba(255, 255, 255, 0.15); }
+
+.day-schedule-hours { color: rgba(255, 255, 255, 0.7); }
+
+.btn-view-team {
+  width: 100%; padding: 12px;
+  background: rgba(167, 139, 250, 0.15); border: 1px solid rgba(167, 139, 250, 0.4);
+  color: #a78bfa; border-radius: 10px;
+  font-family: inherit; font-size: 13px; font-weight: 600;
+  cursor: pointer; margin-top: 10px;
+}
+.btn-view-team:hover { background: rgba(167, 139, 250, 0.25); }
+
+.admin-msg-box { text-align: center; padding: 40px 20px; margin-top: 40px; }
 .admin-msg-icon {
-  width: 80px; height: 80px;
-  border-radius: 24px;
+  width: 80px; height: 80px; border-radius: 24px;
   background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  margin: 0 auto 20px;
-  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;
   font-size: 36px;
 }
-
 .admin-msg-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
 .admin-msg-text { font-size: 14px; color: rgba(255, 255, 255, 0.6); margin-bottom: 24px; line-height: 1.5; }
 
-.scanner-screen {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  z-index: 100;
-  display: none;
-  flex-direction: column;
-}
-
+.scanner-screen { position: fixed; inset: 0; background: #000; z-index: 100; display: none; flex-direction: column; }
 .scanner-screen.show { display: flex; }
-
-.scanner-header {
-  padding: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.7);
-}
-
+.scanner-header { padding: 16px; display: flex; justify-content: space-between; align-items: center; background: rgba(0, 0, 0, 0.7); }
 .scanner-title { font-size: 16px; font-weight: 600; }
-
-.close-btn {
-  background: transparent;
-  border: none;
-  color: #fff;
-  font-size: 28px;
-  cursor: pointer;
-  padding: 0;
-  width: 32px;
-  height: 32px;
-}
-
+.close-btn { background: transparent; border: none; color: #fff; font-size: 28px; cursor: pointer; padding: 0; width: 32px; height: 32px; }
 .video-wrap { flex: 1; position: relative; overflow: hidden; }
 #scanner-video { width: 100%; height: 100%; object-fit: cover; }
-
 .scan-frame {
-  position: absolute;
-  top: 50%; left: 50%;
+  position: absolute; top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   width: 250px; height: 250px;
-  border: 3px solid #4ade80;
-  border-radius: 20px;
+  border: 3px solid #4ade80; border-radius: 20px;
   box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
 }
+.scanner-hint { position: absolute; bottom: 100px; left: 0; right: 0; text-align: center; color: #fff; font-size: 14px; padding: 0 20px; }
 
-.scanner-hint {
-  position: absolute;
-  bottom: 100px;
-  left: 0; right: 0;
-  text-align: center;
-  color: #fff;
-  font-size: 14px;
-  padding: 0 20px;
-}
-
-.result-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.85);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 200;
-  padding: 20px;
-  backdrop-filter: blur(10px);
-}
-
+.result-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); display: none; align-items: center; justify-content: center; z-index: 200; padding: 20px; backdrop-filter: blur(10px); }
 .result-overlay.show { display: flex; }
-
-.result-card {
-  background: linear-gradient(135deg, #1a1a2e, #16213e);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 24px;
-  padding: 32px;
-  max-width: 360px;
-  width: 100%;
-  text-align: center;
-}
-
+.result-card { background: linear-gradient(135deg, #1a1a2e, #16213e); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 32px; max-width: 360px; width: 100%; text-align: center; }
 .result-icon { font-size: 64px; margin-bottom: 16px; }
-
 .result-card.success { border-color: rgba(74, 222, 128, 0.4); }
 .result-card.error { border-color: rgba(255, 107, 107, 0.4); }
-
 .result-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
 .result-message { font-size: 14px; color: rgba(255, 255, 255, 0.7); margin-bottom: 24px; }
+.result-time { font-family: 'JetBrains Mono', monospace; font-size: 18px; color: #4ade80; margin-bottom: 24px; }
 
-.result-time {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 18px;
-  color: #4ade80;
-  margin-bottom: 24px;
-}
-
-.loading-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.8);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 300;
-  backdrop-filter: blur(10px);
-}
-
+.loading-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); display: none; align-items: center; justify-content: center; z-index: 300; backdrop-filter: blur(10px); }
 .loading-overlay.show { display: flex; }
-
-.spinner {
-  width: 40px; height: 40px;
-  border: 3px solid rgba(255, 255, 255, 0.1);
-  border-top-color: #4ade80;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
+.spinner { width: 40px; height: 40px; border: 3px solid rgba(255, 255, 255, 0.1); border-top-color: #4ade80; border-radius: 50%; animation: spin 0.8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* MODAL CAMBIO CONTRASEÑA */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 250;
-  padding: 20px;
-  backdrop-filter: blur(8px);
-}
-
+.modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7); display: none; align-items: center; justify-content: center; z-index: 250; padding: 20px; backdrop-filter: blur(8px); overflow-y: auto; }
 .modal-overlay.show { display: flex; }
-
-.modal-card {
-  background: linear-gradient(135deg, #1a1a2e, #16213e);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 28px;
-  max-width: 400px;
-  width: 100%;
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 20px;
-}
-
+.modal-card { background: linear-gradient(135deg, #1a1a2e, #16213e); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 28px; max-width: 400px; width: 100%; margin: auto; }
+.modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
 .modal-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
 .modal-subtitle { font-size: 13px; color: rgba(255, 255, 255, 0.5); }
-
-.close-x {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  width: 32px; height: 32px;
-  font-size: 18px;
-  color: #fff;
-  cursor: pointer;
-}
-
-.modal-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
-}
-
+.close-x { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; width: 32px; height: 32px; font-size: 18px; color: #fff; cursor: pointer; }
+.modal-actions { display: flex; gap: 10px; margin-top: 20px; }
 .modal-actions button { flex: 1; }
+
+/* MODAL EQUIPO (más grande) */
+.modal-card-team {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  border-radius: 20px;
+  padding: 24px;
+  max-width: 480px;
+  width: 100%;
+  margin: auto;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.team-section-title {
+  font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.5); margin: 18px 0 10px;
+  font-family: 'JetBrains Mono', monospace;
+  padding-bottom: 6px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.team-today-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px; margin-bottom: 6px;
+  background: rgba(255, 255, 255, 0.03); border-radius: 8px;
+}
+.team-today-row .name { font-size: 13px; font-weight: 500; }
+.team-today-row .hours { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: rgba(255,255,255,0.7); }
+
+.team-week-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 11px; background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px; overflow: hidden; margin-top: 8px;
+}
+.team-week-table th {
+  padding: 6px 4px; text-align: center;
+  background: rgba(167, 139, 250, 0.1); color: rgba(255,255,255,0.6);
+  font-weight: 600; font-size: 10px; text-transform: uppercase;
+  font-family: 'JetBrains Mono', monospace;
+}
+.team-week-table th:first-child { text-align: left; padding-left: 10px; }
+.team-week-table td {
+  padding: 4px 2px; text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+.team-week-table td:first-child {
+  text-align: left; padding-left: 10px;
+  font-size: 11px; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis; max-width: 100px;
+}
+
+.mini-cell {
+  display: inline-block; width: 22px; height: 22px; border-radius: 5px;
+}
+.mini-cell.part_time_manana { background: rgba(134, 239, 172, 0.4); }
+.mini-cell.part_time_tarde { background: rgba(74, 222, 128, 0.4); }
+.mini-cell.full_time { background: rgba(96, 165, 250, 0.4); }
+.mini-cell.academia { background: rgba(251, 146, 60, 0.4); }
+.mini-cell.libre { background: rgba(255, 255, 255, 0.1); }
+.mini-cell.empty { background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(255,255,255,0.1); }
+
+.legend-mini { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; font-size: 10px; }
+.legend-mini-item { display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.6); }
+.legend-mini-color { width: 12px; height: 12px; border-radius: 3px; }
 </style>
 </head>
 <body>
@@ -532,7 +348,6 @@ input:focus { border-color: #4ade80; }
     <div class="login-title">Fichaje</div>
     <div class="login-subtitle">Ingresá con tu usuario</div>
   </div>
-
   <div class="login-box">
     <div class="field-group">
       <label class="field-label">USUARIO</label>
@@ -540,40 +355,32 @@ input:focus { border-color: #4ade80; }
     </div>
     <div class="field-group">
       <label class="field-label">CONTRASEÑA</label>
-      <input type="password" id="passwordInput" placeholder="••••••••" autocomplete="current-password"
-             onkeydown="if(event.key==='Enter')doLogin()">
+      <input type="password" id="passwordInput" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
     </div>
     <div class="error-box" id="loginError">Usuario o contraseña incorrectos</div>
     <button class="btn" onclick="doLogin()">Ingresar</button>
   </div>
 </div>
 
-<!-- CAMBIO OBLIGATORIO DE CONTRASEÑA -->
+<!-- CAMBIO OBLIGATORIO -->
 <div class="screen hidden" id="forceChangeScreen">
   <div class="force-change-header">
     <div class="warning-icon">🔒</div>
     <div class="login-title">Cambiá tu contraseña</div>
     <div class="login-subtitle">Es tu primera vez, tenés que crear una nueva</div>
   </div>
-
   <div class="login-box">
-    <div class="warning-banner">
-      ⚠ Por seguridad, no podés seguir usando la contraseña inicial (123456).
-    </div>
-
+    <div class="warning-banner">⚠ Por seguridad, no podés seguir usando la contraseña inicial.</div>
     <div class="field-group">
       <label class="field-label">NUEVA CONTRASEÑA</label>
       <input type="password" id="forceNewPassword" placeholder="Mínimo 6 caracteres">
     </div>
     <div class="field-group">
       <label class="field-label">REPETIR CONTRASEÑA</label>
-      <input type="password" id="forceRepeatPassword" placeholder="Escribila de nuevo"
-             onkeydown="if(event.key==='Enter')submitForceChange()">
+      <input type="password" id="forceRepeatPassword" placeholder="Escribila de nuevo" onkeydown="if(event.key==='Enter')submitForceChange()">
     </div>
-
     <div class="error-box" id="forceError"></div>
     <div class="success-box" id="forceSuccess"></div>
-
     <button class="btn" onclick="submitForceChange()">Guardar y continuar</button>
   </div>
 </div>
@@ -596,7 +403,7 @@ input:focus { border-color: #4ade80; }
 
   <div class="admin-banner" id="adminBanner" style="display:none;">
     <div class="admin-text">
-      <strong id="adminBannerTitle">Acceso de Jefa</strong>
+      <strong>Acceso de Jefa</strong>
       <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;">Podés gestionar al equipo</div>
     </div>
     <a class="admin-link" href="admin.html">Panel →</a>
@@ -606,10 +413,7 @@ input:focus { border-color: #4ade80; }
     <div class="admin-msg-box">
       <div class="admin-msg-icon">⚙️</div>
       <div class="admin-msg-title">Sos administrador</div>
-      <div class="admin-msg-text">
-        Vos no fichás como empleada operativa.<br>
-        Andá al panel para gestionar el sistema.
-      </div>
+      <div class="admin-msg-text">Vos no fichás como empleada.<br>Andá al panel.</div>
       <a class="admin-link" href="admin.html" style="display:inline-block;padding:14px 24px;">Ir al Panel →</a>
     </div>
   </div>
@@ -618,10 +422,7 @@ input:focus { border-color: #4ade80; }
     <div class="admin-msg-box">
       <div class="admin-msg-icon" style="background:linear-gradient(135deg,#ff6b6b,#ee5a52);">⚠</div>
       <div class="admin-msg-title">No tenés puesto asignado</div>
-      <div class="admin-msg-text">
-        Tu jefa todavía no te asignó un puesto.<br>
-        Hablá con ella para que pueda fichar.
-      </div>
+      <div class="admin-msg-text">Hablá con tu jefa para que pueda fichar.</div>
     </div>
   </div>
 
@@ -630,28 +431,37 @@ input:focus { border-color: #4ade80; }
       <div class="clock-time" id="clockTime">--:--:--</div>
       <div class="clock-date" id="clockDate">--</div>
     </div>
-
     <div class="status-pill out" id="statusPill">
       <div class="status-dot"></div>
       <span id="statusText">Fuera de turno</span>
     </div>
-
     <div class="live-counter" id="liveCounter" style="display:none;">
       <span id="liveCounterText">--</span>
     </div>
-
     <div id="actionsContainer">
       <button class="action-btn in" onclick="startFichaje('in')">FICHAR ENTRADA</button>
     </div>
-
     <div class="day-summary" id="daySummary" style="display:none;">
       <h4>RESUMEN DEL DÍA</h4>
       <div id="summaryContent"></div>
     </div>
+
+    <!-- HORARIO PROPIO -->
+    <div class="my-schedule" id="mySchedule" style="display:none;">
+      <h4>
+        <span>📅 TU HORARIO ESTA SEMANA</span>
+        <div class="week-nav-mini">
+          <button onclick="changeMySchedWeek(-1)">◀</button>
+          <button onclick="changeMySchedWeek(1)">▶</button>
+        </div>
+      </h4>
+      <div id="mySchedContent"></div>
+      <button class="btn-view-team" onclick="openTeamSchedule()">👥 Ver horario del equipo</button>
+    </div>
   </div>
 </div>
 
-<!-- MODAL CAMBIO CONTRASEÑA VOLUNTARIO -->
+<!-- MODAL CAMBIO CONTRASEÑA -->
 <div class="modal-overlay" id="changePasswordOverlay">
   <div class="modal-card">
     <div class="modal-header">
@@ -661,7 +471,6 @@ input:focus { border-color: #4ade80; }
       </div>
       <button class="close-x" onclick="closeChangePassword()">×</button>
     </div>
-
     <div class="field-group">
       <label class="field-label">CONTRASEÑA ACTUAL</label>
       <input type="password" id="currentPassword" placeholder="Tu contraseña actual">
@@ -672,16 +481,42 @@ input:focus { border-color: #4ade80; }
     </div>
     <div class="field-group">
       <label class="field-label">REPETIR NUEVA CONTRASEÑA</label>
-      <input type="password" id="repeatPassword" placeholder="Escribila de nuevo"
-             onkeydown="if(event.key==='Enter')submitChangePassword()">
+      <input type="password" id="repeatPassword" placeholder="Escribila de nuevo" onkeydown="if(event.key==='Enter')submitChangePassword()">
     </div>
-
     <div class="error-box" id="changePasswordError"></div>
     <div class="success-box" id="changePasswordSuccess"></div>
-
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeChangePassword()">Cancelar</button>
       <button class="btn" onclick="submitChangePassword()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL HORARIO DEL EQUIPO -->
+<div class="modal-overlay" id="teamScheduleOverlay">
+  <div class="modal-card-team">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="teamModalTitle">👥 Equipo</div>
+        <div class="modal-subtitle" id="teamModalSubtitle">--</div>
+      </div>
+      <button class="close-x" onclick="closeTeamSchedule()">×</button>
+    </div>
+
+    <div id="teamTodayContent">
+      <div class="team-section-title">🌟 HOY</div>
+      <div id="teamTodayList"></div>
+    </div>
+
+    <div class="team-section-title">📆 RESTO DE LA SEMANA</div>
+    <div id="teamWeekContent"></div>
+
+    <div class="legend-mini">
+      <div class="legend-mini-item"><div class="legend-mini-color" style="background:rgba(134,239,172,0.4);"></div>PT Mañana</div>
+      <div class="legend-mini-item"><div class="legend-mini-color" style="background:rgba(74,222,128,0.4);"></div>PT Tarde</div>
+      <div class="legend-mini-item"><div class="legend-mini-color" style="background:rgba(96,165,250,0.4);"></div>Full-time</div>
+      <div class="legend-mini-item"><div class="legend-mini-color" style="background:rgba(251,146,60,0.4);"></div>Academia</div>
+      <div class="legend-mini-item"><div class="legend-mini-color" style="background:rgba(255,255,255,0.1);"></div>Libre</div>
     </div>
   </div>
 </div>
@@ -696,7 +531,7 @@ input:focus { border-color: #4ade80; }
     <video id="scanner-video" autoplay playsinline muted></video>
     <canvas id="scanner-canvas" style="display:none;"></canvas>
     <div class="scan-frame"></div>
-    <div class="scanner-hint">Apuntá la cámara al QR que está en la pared</div>
+    <div class="scanner-hint">Apuntá la cámara al QR de la pared</div>
   </div>
 </div>
 
@@ -724,13 +559,24 @@ const QR_CODE_VALID = 'FICHAJE-SUCURSAL-2026';
 const MIN_PASSWORD_LENGTH = 6;
 
 const ROLE_LABELS = {
-  recepcionista: 'Recepcionista', pretester: 'Pretester', host: 'Host',
-  promotor: 'Promotor', presentador: 'Presentador', enrutador: 'Enrutador',
-  asesor: 'Asesor PAI',
-  jefa_promotoras: 'Jefa de Promotoras', jefa_salon: 'Jefa de Salón',
-  jefe_presentacion: 'Jefe de Presentación', jefe_ventas: 'Jefe de Ventas',
-  admin: 'Administrador'
+  recepcionista:'Recepcionista', pretester:'Pretester', host:'Host',
+  promotor:'Promotor', presentador:'Presentador', enrutador:'Enrutador',
+  asesor:'Asesor PAI',
+  jefa_promotoras:'Jefa de Promotoras', jefa_salon:'Jefa de Salón',
+  jefe_presentacion:'Jefe de Presentación', jefe_ventas:'Jefe de Ventas',
+  admin:'Administrador'
 };
+
+const JORNADA_LABELS = {
+  part_time_manana: 'PT Mañana',
+  part_time_tarde: 'PT Tarde',
+  full_time: 'Full-time',
+  academia: 'Academia',
+  libre: 'Libre'
+};
+
+const DAY_NAMES_SHORT = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+const DAY_NAMES_LONG = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -742,6 +588,23 @@ let scannerStream = null;
 let scannerLoop = null;
 let clientIP = null;
 let liveCounterInterval = null;
+let myWeekStart = getMondayOfWeek(new Date());
+let mySchedShifts = [];
+let teamShifts = [];
+let teamEmployees = [];
+
+function getMondayOfWeek(date) {
+  const d = new Date(date);
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  d.setHours(0, 0, 0, 0);
+  d.setDate(diff);
+  return d;
+}
+function toDateStr(d) {
+  const y = d.getFullYear(), m = String(d.getMonth() + 1).padStart(2, '0'), day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
 
 function updateClock() {
   const now = new Date();
@@ -755,49 +618,23 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-// ============ LOGIN ============
+// LOGIN
 async function doLogin() {
   const username = document.getElementById('usernameInput').value.trim().toLowerCase();
   const password = document.getElementById('passwordInput').value;
   const errBox = document.getElementById('loginError');
-
-  if (!username || !password) {
-    errBox.textContent = 'Completá usuario y contraseña';
-    errBox.classList.add('show');
-    return;
-  }
-
+  if (!username || !password) { errBox.textContent = 'Completá los campos'; errBox.classList.add('show'); return; }
   try {
-    const { data, error } = await db
-      .from('employees')
-      .select('*')
-      .eq('username', username)
-      .eq('active', true)
-      .single();
-
-    if (error || !data || data.password !== password) {
-      errBox.textContent = 'Usuario o contraseña incorrectos';
-      errBox.classList.add('show');
-      return;
-    }
-
+    const { data, error } = await db.from('employees').select('*').eq('username', username).eq('active', true).single();
+    if (error || !data || data.password !== password) { errBox.textContent = 'Usuario o contraseña incorrectos'; errBox.classList.add('show'); return; }
     currentUser = data;
     errBox.classList.remove('show');
     document.getElementById('passwordInput').value = '';
-
-    // Si tiene la contraseña inicial (123456 y password_changed = false), forzar cambio
-    if (data.password === '123456' && !data.password_changed) {
-      showForceChangeScreen();
-      return;
-    }
-
+    if (data.password === '123456' && !data.password_changed) { showForceChangeScreen(); return; }
     await loadTodayPunches();
+    await loadMySchedule();
     showDashboard();
-  } catch (err) {
-    console.error('Error en login:', err);
-    errBox.textContent = 'Error de conexión.';
-    errBox.classList.add('show');
-  }
+  } catch (err) { console.error(err); errBox.textContent = 'Error de conexión.'; errBox.classList.add('show'); }
 }
 
 function logout() {
@@ -811,7 +648,7 @@ function logout() {
   document.getElementById('usernameInput').value = '';
 }
 
-// ============ CAMBIO OBLIGATORIO DE CONTRASEÑA ============
+// FORCE CHANGE
 function showForceChangeScreen() {
   document.getElementById('loginScreen').classList.add('hidden');
   document.getElementById('forceChangeScreen').classList.remove('hidden');
@@ -823,64 +660,30 @@ function showForceChangeScreen() {
 }
 
 async function submitForceChange() {
-  const newPass = document.getElementById('forceNewPassword').value;
-  const repeat = document.getElementById('forceRepeatPassword').value;
-  const errBox = document.getElementById('forceError');
-  const okBox = document.getElementById('forceSuccess');
-  errBox.classList.remove('show');
-  okBox.classList.remove('show');
-
-  if (!newPass || !repeat) {
-    errBox.textContent = 'Completá los dos campos';
-    errBox.classList.add('show');
-    return;
-  }
-
-  if (newPass.length < MIN_PASSWORD_LENGTH) {
-    errBox.textContent = `La contraseña debe tener al menos ${MIN_PASSWORD_LENGTH} caracteres`;
-    errBox.classList.add('show');
-    return;
-  }
-
-  if (newPass !== repeat) {
-    errBox.textContent = 'Las contraseñas no coinciden';
-    errBox.classList.add('show');
-    return;
-  }
-
-  if (newPass === '123456') {
-    errBox.textContent = 'No podés usar la contraseña inicial';
-    errBox.classList.add('show');
-    return;
-  }
-
+  const np = document.getElementById('forceNewPassword').value;
+  const rp = document.getElementById('forceRepeatPassword').value;
+  const eB = document.getElementById('forceError'), oB = document.getElementById('forceSuccess');
+  eB.classList.remove('show'); oB.classList.remove('show');
+  if (!np || !rp) { eB.textContent = 'Completá los dos campos'; eB.classList.add('show'); return; }
+  if (np.length < MIN_PASSWORD_LENGTH) { eB.textContent = `Mínimo ${MIN_PASSWORD_LENGTH} caracteres`; eB.classList.add('show'); return; }
+  if (np !== rp) { eB.textContent = 'No coinciden'; eB.classList.add('show'); return; }
+  if (np === '123456') { eB.textContent = 'No podés usar la inicial'; eB.classList.add('show'); return; }
   try {
-    const { error } = await db
-      .from('employees')
-      .update({ password: newPass, password_changed: true })
-      .eq('id', currentUser.id);
-
+    const { error } = await db.from('employees').update({ password: np, password_changed: true }).eq('id', currentUser.id);
     if (error) throw error;
-
-    currentUser.password = newPass;
+    currentUser.password = np;
     currentUser.password_changed = true;
-    okBox.textContent = '✓ Contraseña guardada. Continuando...';
-    okBox.classList.add('show');
-
+    oB.textContent = '✓ Continuando...'; oB.classList.add('show');
     setTimeout(async () => {
       document.getElementById('forceChangeScreen').classList.add('hidden');
       await loadTodayPunches();
+      await loadMySchedule();
       showDashboard();
     }, 1200);
-
-  } catch (err) {
-    console.error('Error al cambiar contraseña:', err);
-    errBox.textContent = 'Error al guardar. Reintentá.';
-    errBox.classList.add('show');
-  }
+  } catch (err) { eB.textContent = 'Error al guardar'; eB.classList.add('show'); }
 }
 
-// ============ CAMBIO VOLUNTARIO DE CONTRASEÑA ============
+// CAMBIO VOLUNTARIO
 function openChangePassword() {
   document.getElementById('currentPassword').value = '';
   document.getElementById('newPassword').value = '';
@@ -890,93 +693,43 @@ function openChangePassword() {
   document.getElementById('changePasswordOverlay').classList.add('show');
   document.getElementById('currentPassword').focus();
 }
-
-function closeChangePassword() {
-  document.getElementById('changePasswordOverlay').classList.remove('show');
-}
+function closeChangePassword() { document.getElementById('changePasswordOverlay').classList.remove('show'); }
 
 async function submitChangePassword() {
-  const currentPass = document.getElementById('currentPassword').value;
-  const newPass = document.getElementById('newPassword').value;
-  const repeat = document.getElementById('repeatPassword').value;
-  const errBox = document.getElementById('changePasswordError');
-  const okBox = document.getElementById('changePasswordSuccess');
-  errBox.classList.remove('show');
-  okBox.classList.remove('show');
-
-  if (!currentPass || !newPass || !repeat) {
-    errBox.textContent = 'Completá todos los campos';
-    errBox.classList.add('show');
-    return;
-  }
-
-  if (currentPass !== currentUser.password) {
-    errBox.textContent = 'La contraseña actual es incorrecta';
-    errBox.classList.add('show');
-    return;
-  }
-
-  if (newPass.length < MIN_PASSWORD_LENGTH) {
-    errBox.textContent = `La nueva contraseña debe tener al menos ${MIN_PASSWORD_LENGTH} caracteres`;
-    errBox.classList.add('show');
-    return;
-  }
-
-  if (newPass !== repeat) {
-    errBox.textContent = 'Las contraseñas nuevas no coinciden';
-    errBox.classList.add('show');
-    return;
-  }
-
-  if (newPass === currentPass) {
-    errBox.textContent = 'La nueva contraseña debe ser diferente a la actual';
-    errBox.classList.add('show');
-    return;
-  }
-
-  if (newPass === '123456') {
-    errBox.textContent = 'No podés usar la contraseña inicial';
-    errBox.classList.add('show');
-    return;
-  }
-
+  const cp = document.getElementById('currentPassword').value;
+  const np = document.getElementById('newPassword').value;
+  const rp = document.getElementById('repeatPassword').value;
+  const eB = document.getElementById('changePasswordError'), oB = document.getElementById('changePasswordSuccess');
+  eB.classList.remove('show'); oB.classList.remove('show');
+  if (!cp || !np || !rp) { eB.textContent = 'Completá todos los campos'; eB.classList.add('show'); return; }
+  if (cp !== currentUser.password) { eB.textContent = 'Contraseña actual incorrecta'; eB.classList.add('show'); return; }
+  if (np.length < MIN_PASSWORD_LENGTH) { eB.textContent = `Mínimo ${MIN_PASSWORD_LENGTH} caracteres`; eB.classList.add('show'); return; }
+  if (np !== rp) { eB.textContent = 'No coinciden'; eB.classList.add('show'); return; }
+  if (np === cp) { eB.textContent = 'La nueva debe ser diferente'; eB.classList.add('show'); return; }
+  if (np === '123456') { eB.textContent = 'No podés usar la inicial'; eB.classList.add('show'); return; }
   try {
-    const { error } = await db
-      .from('employees')
-      .update({ password: newPass, password_changed: true })
-      .eq('id', currentUser.id);
-
+    const { error } = await db.from('employees').update({ password: np, password_changed: true }).eq('id', currentUser.id);
     if (error) throw error;
-
-    currentUser.password = newPass;
+    currentUser.password = np;
     currentUser.password_changed = true;
-    okBox.textContent = '✓ Contraseña actualizada';
-    okBox.classList.add('show');
-
+    oB.textContent = '✓ Actualizada'; oB.classList.add('show');
     setTimeout(closeChangePassword, 1500);
-
-  } catch (err) {
-    console.error('Error:', err);
-    errBox.textContent = 'Error al guardar. Reintentá.';
-    errBox.classList.add('show');
-  }
+  } catch (err) { eB.textContent = 'Error'; eB.classList.add('show'); }
 }
 
-// ============ DASHBOARD ============
+// DASHBOARD
 function showDashboard() {
   document.getElementById('loginScreen').classList.add('hidden');
   document.getElementById('forceChangeScreen').classList.add('hidden');
   document.getElementById('dashboardScreen').classList.remove('hidden');
-
   const avatar = document.getElementById('userAvatar');
   avatar.textContent = getInitials(currentUser.full_name);
   avatar.className = 'emp-avatar';
   if (currentUser.is_admin) avatar.classList.add('admin');
   else if (currentUser.is_manager) avatar.classList.add('manager');
-
   document.getElementById('userName').textContent = currentUser.full_name;
   document.getElementById('userRole').textContent = ROLE_LABELS[currentUser.default_role] || currentUser.default_role;
-
+  
   if (currentUser.is_admin && !currentUser.is_manager) {
     document.getElementById('adminBanner').style.display = 'none';
     document.getElementById('fichajeContent').style.display = 'none';
@@ -984,7 +737,6 @@ function showDashboard() {
     document.getElementById('adminMessage').style.display = 'block';
     return;
   }
-
   if (!currentUser.default_role) {
     document.getElementById('adminBanner').style.display = 'none';
     document.getElementById('fichajeContent').style.display = 'none';
@@ -992,41 +744,25 @@ function showDashboard() {
     document.getElementById('noRoleMessage').style.display = 'block';
     return;
   }
-
-  if (currentUser.is_manager) {
-    document.getElementById('adminBanner').style.display = 'flex';
-  } else {
-    document.getElementById('adminBanner').style.display = 'none';
-  }
-
+  if (currentUser.is_manager) document.getElementById('adminBanner').style.display = 'flex';
+  else document.getElementById('adminBanner').style.display = 'none';
   document.getElementById('adminMessage').style.display = 'none';
   document.getElementById('noRoleMessage').style.display = 'none';
   document.getElementById('fichajeContent').style.display = 'block';
-
   updateStatusAndButtons();
+  renderMySchedule();
 }
 
-function getInitials(name) {
-  return name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
-}
+function getInitials(name) { return name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase(); }
 
-// ============ PUNCHES ============
+// PUNCHES
 async function loadTodayPunches() {
   try {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const { data } = await db
-      .from('punches')
-      .select('*')
-      .eq('employee_id', currentUser.id)
-      .gte('timestamp', today.toISOString())
-      .order('timestamp', { ascending: true });
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const { data } = await db.from('punches').select('*').eq('employee_id', currentUser.id).gte('timestamp', today.toISOString()).order('timestamp', { ascending: true });
     todayPunches = data || [];
     determineState();
-  } catch (err) {
-    console.error(err);
-    todayPunches = [];
-  }
+  } catch (err) { todayPunches = []; }
 }
 
 function determineState() {
@@ -1043,44 +779,27 @@ function updateStatusAndButtons() {
   const counter = document.getElementById('liveCounter');
   const actions = document.getElementById('actionsContainer');
   const summary = document.getElementById('daySummary');
-
   if (liveCounterInterval) { clearInterval(liveCounterInterval); liveCounterInterval = null; }
-
   if (currentState === 'out') {
     pill.className = 'status-pill out';
     text.textContent = todayPunches.length > 0 ? 'Turno finalizado' : 'Fuera de turno';
     counter.style.display = 'none';
-    if (todayPunches.length === 0) {
-      actions.innerHTML = `<button class="action-btn in" onclick="startFichaje('in')">FICHAR ENTRADA</button>`;
-      summary.style.display = 'none';
-    } else {
-      actions.innerHTML = '';
-      showDaySummary();
-    }
+    if (todayPunches.length === 0) { actions.innerHTML = `<button class="action-btn in" onclick="startFichaje('in')">FICHAR ENTRADA</button>`; summary.style.display = 'none'; }
+    else { actions.innerHTML = ''; showDaySummary(); }
   } else if (currentState === 'in') {
     pill.className = 'status-pill in';
     text.textContent = `Trabajando · ${ROLE_LABELS[currentUser.default_role] || currentUser.default_role}`;
     counter.style.display = 'flex';
-    const breaksToday = todayPunches.filter(p => p.punch_type === 'break_start').length;
-    const canBreak = breaksToday < currentUser.max_breaks_per_shift;
-    actions.innerHTML = `
-      <button class="action-btn break-start" onclick="startFichaje('break_start')" ${canBreak ? '' : 'disabled'}>
-        ${canBreak ? '☕ INICIAR BREAK' : `☕ Sin breaks disponibles (${breaksToday}/${currentUser.max_breaks_per_shift})`}
-      </button>
-      <button class="action-btn out" onclick="startFichaje('out')">FICHAR SALIDA</button>
-    `;
+    const bt = todayPunches.filter(p => p.punch_type === 'break_start').length;
+    const cb = bt < currentUser.max_breaks_per_shift;
+    actions.innerHTML = `<button class="action-btn break-start" onclick="startFichaje('break_start')" ${cb?'':'disabled'}>${cb?'☕ INICIAR BREAK':`☕ Sin breaks (${bt}/${currentUser.max_breaks_per_shift})`}</button><button class="action-btn out" onclick="startFichaje('out')">FICHAR SALIDA</button>`;
     startLiveCounter('work');
     showDaySummary();
   } else if (currentState === 'break') {
     pill.className = 'status-pill break';
     text.textContent = '☕ En break';
     counter.style.display = 'flex';
-    actions.innerHTML = `
-      <button class="action-btn break-end" onclick="startFichaje('break_end')">TERMINAR BREAK</button>
-      <div style="text-align:center;color:rgba(255,255,255,0.5);font-size:12px;margin-top:8px;">
-        Terminá el break para poder fichar salida
-      </div>
-    `;
+    actions.innerHTML = `<button class="action-btn break-end" onclick="startFichaje('break_end')">TERMINAR BREAK</button><div style="text-align:center;color:rgba(255,255,255,0.5);font-size:12px;margin-top:8px;">Terminá el break para fichar salida</div>`;
     startLiveCounter('break');
     showDaySummary();
   }
@@ -1089,13 +808,13 @@ function updateStatusAndButtons() {
 function startLiveCounter(mode) {
   const update = () => {
     if (mode === 'work') {
-      const elapsed = calculateProductiveMinutesToday();
-      document.getElementById('liveCounterText').textContent = `${formatMinutes(elapsed)} productivas hoy`;
+      const el = calculateProductiveMinutesToday();
+      document.getElementById('liveCounterText').textContent = `${formatMinutes(el)} productivas hoy`;
     } else if (mode === 'break') {
-      const lastBreak = [...todayPunches].reverse().find(p => p.punch_type === 'break_start');
-      if (lastBreak) {
-        const elapsed = (Date.now() - new Date(lastBreak.timestamp).getTime()) / 60000;
-        document.getElementById('liveCounterText').textContent = `Break: ${formatMinutes(elapsed)}`;
+      const lb = [...todayPunches].reverse().find(p => p.punch_type === 'break_start');
+      if (lb) {
+        const el = (Date.now() - new Date(lb.timestamp).getTime()) / 60000;
+        document.getElementById('liveCounterText').textContent = `Break: ${formatMinutes(el)}`;
       }
     }
   };
@@ -1104,80 +823,220 @@ function startLiveCounter(mode) {
 }
 
 function calculateProductiveMinutesToday() {
-  let workMinutes = 0, breakMinutes = 0;
-  let currentIn = null, currentBreakStart = null;
+  let w = 0, b = 0, cIn = null, cBS = null;
   for (const p of todayPunches) {
     const t = new Date(p.timestamp).getTime();
-    if (p.punch_type === 'in') currentIn = t;
-    else if (p.punch_type === 'out' && currentIn) { workMinutes += (t - currentIn) / 60000; currentIn = null; }
-    else if (p.punch_type === 'break_start') currentBreakStart = t;
-    else if (p.punch_type === 'break_end' && currentBreakStart) { breakMinutes += (t - currentBreakStart) / 60000; currentBreakStart = null; }
+    if (p.punch_type === 'in') cIn = t;
+    else if (p.punch_type === 'out' && cIn) { w += (t-cIn)/60000; cIn = null; }
+    else if (p.punch_type === 'break_start') cBS = t;
+    else if (p.punch_type === 'break_end' && cBS) { b += (t-cBS)/60000; cBS = null; }
   }
-  if (currentIn && currentState === 'in') workMinutes += (Date.now() - currentIn) / 60000;
-  if (currentBreakStart && currentState === 'break') breakMinutes += (Date.now() - currentBreakStart) / 60000;
-  return Math.max(0, workMinutes - breakMinutes);
+  if (cIn && currentState === 'in') w += (Date.now()-cIn)/60000;
+  if (cBS && currentState === 'break') b += (Date.now()-cBS)/60000;
+  return Math.max(0, w - b);
 }
 
-function formatMinutes(mins) {
-  if (mins < 1) return `${Math.round(mins * 60)}s`;
-  const h = Math.floor(mins / 60), m = Math.floor(mins % 60);
-  if (h === 0) return `${m} min`;
-  return `${h}h ${m}min`;
+function formatMinutes(m) {
+  if (m < 1) return `${Math.round(m*60)}s`;
+  const h = Math.floor(m/60), mm = Math.floor(m%60);
+  if (h === 0) return `${mm} min`;
+  return `${h}h ${mm}min`;
 }
 
 function showDaySummary() {
-  const summary = document.getElementById('daySummary');
-  const content = document.getElementById('summaryContent');
-  const entrada = todayPunches.find(p => p.punch_type === 'in');
-  const salida = todayPunches.filter(p => p.punch_type === 'out').pop();
-  const prodMins = calculateProductiveMinutesToday();
-  const breaks = [];
-  let currentStart = null;
+  const s = document.getElementById('daySummary'), c = document.getElementById('summaryContent');
+  const ent = todayPunches.find(p => p.punch_type === 'in');
+  const sal = todayPunches.filter(p => p.punch_type === 'out').pop();
+  const pm = calculateProductiveMinutesToday();
+  const bks = [];
+  let cs = null;
   for (const p of todayPunches) {
-    if (p.punch_type === 'break_start') currentStart = p;
-    else if (p.punch_type === 'break_end' && currentStart) {
-      const startTime = new Date(currentStart.timestamp);
-      const endTime = new Date(p.timestamp);
-      const durationMin = (endTime - startTime) / 60000;
-      breaks.push({ startTime, endTime, durationMin, ongoing: false });
-      currentStart = null;
+    if (p.punch_type === 'break_start') cs = p;
+    else if (p.punch_type === 'break_end' && cs) {
+      const st = new Date(cs.timestamp), et = new Date(p.timestamp), dm = (et - st) / 60000;
+      bks.push({ st, et, dm, ongoing: false });
+      cs = null;
     }
   }
-  if (currentStart) {
-    const startTime = new Date(currentStart.timestamp);
-    const durationMin = (Date.now() - startTime.getTime()) / 60000;
-    breaks.push({ startTime, endTime: null, durationMin, ongoing: true });
-  }
-  const totalBreakMins = breaks.reduce((s, b) => s + b.durationMin, 0);
-  let html = '';
-  if (entrada) html += `<div class="summary-row"><span class="label">Entrada</span><span>${formatTime(entrada.timestamp)}</span></div>`;
-  if (salida) html += `<div class="summary-row"><span class="label">Salida</span><span>${formatTime(salida.timestamp)}</span></div>`;
-  if (breaks.length > 0) {
-    html += `<div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.1);">`;
-    html += `<div class="label" style="margin-bottom:6px;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;">BREAKS (${breaks.length})</div>`;
-    breaks.forEach((b, i) => {
-      const endStr = b.ongoing ? `<span style="color:#fbbf24;">en curso</span>` : formatTime(b.endTime);
-      html += `<div class="summary-row" style="font-size:12px;"><span class="label">Break ${i + 1}</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;">${formatTime(b.startTime)} → ${endStr} <span style="color:rgba(255,255,255,0.5);">(${formatMinutes(b.durationMin)})</span></span></div>`;
+  if (cs) { const st = new Date(cs.timestamp), dm = (Date.now() - st.getTime()) / 60000; bks.push({ st, et: null, dm, ongoing: true }); }
+  const tbm = bks.reduce((sum, b) => sum + b.dm, 0);
+  let h = '';
+  if (ent) h += `<div class="summary-row"><span class="label">Entrada</span><span>${formatTime(ent.timestamp)}</span></div>`;
+  if (sal) h += `<div class="summary-row"><span class="label">Salida</span><span>${formatTime(sal.timestamp)}</span></div>`;
+  if (bks.length > 0) {
+    h += `<div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.1);"><div class="label" style="margin-bottom:6px;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;">BREAKS (${bks.length})</div>`;
+    bks.forEach((b, i) => {
+      const es = b.ongoing ? `<span style="color:#fbbf24;">en curso</span>` : formatTime(b.et);
+      h += `<div class="summary-row" style="font-size:12px;"><span class="label">Break ${i+1}</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;">${formatTime(b.st)} → ${es} <span style="color:rgba(255,255,255,0.5);">(${formatMinutes(b.dm)})</span></span></div>`;
     });
-    html += `<div class="summary-row" style="font-size:12px;margin-top:4px;color:rgba(255,255,255,0.6);"><span class="label">Total breaks</span><span>${formatMinutes(totalBreakMins)}</span></div></div>`;
+    h += `<div class="summary-row" style="font-size:12px;margin-top:4px;color:rgba(255,255,255,0.6);"><span class="label">Total breaks</span><span>${formatMinutes(tbm)}</span></div></div>`;
   }
-  html += `<div class="summary-row" style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.1);"><span class="label">Productivas</span><span style="color:#4ade80;font-weight:600;">${formatMinutes(prodMins)}</span></div>`;
-  content.innerHTML = html;
-  summary.style.display = 'block';
+  h += `<div class="summary-row" style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.1);"><span class="label">Productivas</span><span style="color:#4ade80;font-weight:600;">${formatMinutes(pm)}</span></div>`;
+  c.innerHTML = h;
+  s.style.display = 'block';
 }
 
-function formatTime(iso) {
-  return new Date(iso).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit', hour12: false });
+function formatTime(iso) { return new Date(iso).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit', hour12: false }); }
+
+// ========== MI HORARIO ==========
+async function loadMySchedule() {
+  try {
+    const weekEnd = new Date(myWeekStart);
+    weekEnd.setDate(weekEnd.getDate() + 6);
+    const { data } = await db.from('shifts').select('*').eq('employee_id', currentUser.id).gte('shift_date', toDateStr(myWeekStart)).lte('shift_date', toDateStr(weekEnd));
+    mySchedShifts = data || [];
+  } catch (err) { mySchedShifts = []; }
 }
 
-// ============ FICHAJE ============
+async function changeMySchedWeek(delta) {
+  myWeekStart.setDate(myWeekStart.getDate() + (delta * 7));
+  await loadMySchedule();
+  renderMySchedule();
+}
+
+function renderMySchedule() {
+  if (!currentUser.default_role || currentUser.is_admin) {
+    document.getElementById('mySchedule').style.display = 'none';
+    return;
+  }
+  document.getElementById('mySchedule').style.display = 'block';
+  const c = document.getElementById('mySchedContent');
+  const todayStr = toDateStr(new Date());
+  let h = '';
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(myWeekStart);
+    d.setDate(d.getDate() + i);
+    const ds = toDateStr(d);
+    const isToday = ds === todayStr;
+    const dayName = DAY_NAMES_SHORT[d.getDay()];
+    const dayNum = d.getDate();
+    const shift = mySchedShifts.find(s => s.shift_date === ds);
+    let jorHtml = '<span class="jornada-badge empty">Sin cargar</span>';
+    let hoursHtml = '';
+    if (shift) {
+      const jt = shift.jornada_type;
+      jorHtml = `<span class="jornada-badge ${jt}">${JORNADA_LABELS[jt]}</span>`;
+      if (jt !== 'libre' && shift.start_time && shift.end_time) {
+        hoursHtml = `<span class="day-schedule-hours">${shift.start_time.substring(0,5)} - ${shift.end_time.substring(0,5)}</span>`;
+      }
+    }
+    h += `<div class="day-schedule-row ${isToday ? 'today' : ''}">
+      <span class="day-schedule-day">${dayName} ${dayNum}${isToday ? ' (hoy)' : ''}</span>
+      <div class="day-schedule-info">${jorHtml}${hoursHtml}</div>
+    </div>`;
+  }
+  c.innerHTML = h;
+}
+
+// ========== HORARIO DEL EQUIPO ==========
+async function openTeamSchedule() {
+  showLoading(true);
+  try {
+    // Cargar equipo
+    const { data: emps } = await db.from('employees').select('*, teams(name)').eq('team_id', currentUser.team_id).eq('active', true).order('full_name');
+    teamEmployees = emps || [];
+    // Cargar horarios
+    const weekEnd = new Date(myWeekStart);
+    weekEnd.setDate(weekEnd.getDate() + 6);
+    const empIds = teamEmployees.map(e => e.id);
+    const { data: shifts } = await db.from('shifts').select('*').in('employee_id', empIds).gte('shift_date', toDateStr(myWeekStart)).lte('shift_date', toDateStr(weekEnd));
+    teamShifts = shifts || [];
+    // Título
+    const teamName = teamEmployees[0]?.teams?.name || 'Equipo';
+    const wStart = myWeekStart.getDate(), wEnd = weekEnd.getDate();
+    const m1 = myWeekStart.toLocaleDateString('es-AR', { month: 'short' });
+    const m2 = weekEnd.toLocaleDateString('es-AR', { month: 'short' });
+    document.getElementById('teamModalTitle').textContent = `👥 Equipo ${teamName}`;
+    document.getElementById('teamModalSubtitle').textContent = m1 === m2 ? `Semana ${wStart}-${wEnd} ${m1}` : `${wStart} ${m1} - ${wEnd} ${m2}`;
+    renderTeamToday();
+    renderTeamWeek();
+    document.getElementById('teamScheduleOverlay').classList.add('show');
+  } catch (err) { console.error(err); }
+  showLoading(false);
+}
+
+function closeTeamSchedule() {
+  document.getElementById('teamScheduleOverlay').classList.remove('show');
+}
+
+function renderTeamToday() {
+  const todayStr = toDateStr(new Date());
+  const c = document.getElementById('teamTodayList');
+  const rows = [];
+  for (const emp of teamEmployees) {
+    const shift = teamShifts.find(s => s.employee_id === emp.id && s.shift_date === todayStr);
+    if (!shift) {
+      rows.push({ emp, shift: null, label: 'Sin cargar', hours: '', order: 4 });
+    } else if (shift.jornada_type === 'libre') {
+      rows.push({ emp, shift, label: 'Libre', hours: '', order: 3 });
+    } else {
+      const jt = shift.jornada_type;
+      const hours = shift.start_time && shift.end_time ? `${shift.start_time.substring(0,5)} - ${shift.end_time.substring(0,5)}` : '';
+      rows.push({ emp, shift, label: JORNADA_LABELS[jt], hours, order: 1, jt });
+    }
+  }
+  // Ordenar: trabajando primero, después libres, después sin cargar
+  rows.sort((a, b) => {
+    if (a.order !== b.order) return a.order - b.order;
+    return a.emp.full_name.localeCompare(b.emp.full_name);
+  });
+  let h = '';
+  for (const r of rows) {
+    let badgeClass = r.shift ? r.shift.jornada_type : 'empty';
+    if (!r.shift) badgeClass = 'empty';
+    h += `<div class="team-today-row">
+      <div>
+        <div class="name">${r.emp.full_name}</div>
+        <span class="jornada-badge ${badgeClass}" style="margin-top:4px;display:inline-block;">${r.label}</span>
+      </div>
+      <div class="hours">${r.hours}</div>
+    </div>`;
+  }
+  c.innerHTML = h || '<div style="text-align:center;color:rgba(255,255,255,0.4);padding:20px;">Sin datos del equipo</div>';
+}
+
+function renderTeamWeek() {
+  const c = document.getElementById('teamWeekContent');
+  const todayStr = toDateStr(new Date());
+  const dates = [];
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(myWeekStart);
+    d.setDate(d.getDate() + i);
+    dates.push(d);
+  }
+  let h = '<table class="team-week-table"><thead><tr><th>Empleada</th>';
+  for (const d of dates) {
+    h += `<th>${DAY_NAMES_SHORT[d.getDay()]}<br>${d.getDate()}</th>`;
+  }
+  h += '</tr></thead><tbody>';
+  // Ordenar: jefas primero
+  const sorted = [...teamEmployees].sort((a, b) => {
+    if (a.is_manager && !b.is_manager) return -1;
+    if (!a.is_manager && b.is_manager) return 1;
+    return a.full_name.localeCompare(b.full_name);
+  });
+  for (const emp of sorted) {
+    // Nombre corto para móvil
+    const parts = emp.full_name.split(' ');
+    const shortName = parts.length >= 2 ? `${parts[0]} ${parts[1].charAt(0)}.` : emp.full_name;
+    h += `<tr><td>${shortName}${emp.is_manager ? ' 👑' : ''}</td>`;
+    for (const d of dates) {
+      const ds = toDateStr(d);
+      const shift = teamShifts.find(s => s.employee_id === emp.id && s.shift_date === ds);
+      const cls = shift ? shift.jornada_type : 'empty';
+      h += `<td><span class="mini-cell ${cls}"></span></td>`;
+    }
+    h += '</tr>';
+  }
+  h += '</tbody></table>';
+  c.innerHTML = h;
+}
+
+// FICHAJE
 function startFichaje(actionType) {
   pendingAction = actionType;
-  if (actionType === 'break_start' || actionType === 'break_end') {
-    processBreak(actionType);
-  } else {
-    openScanner();
-  }
+  if (actionType === 'break_start' || actionType === 'break_end') processBreak(actionType);
+  else openScanner();
 }
 
 async function processBreak(actionType) {
@@ -1185,28 +1044,14 @@ async function processBreak(actionType) {
   try {
     const ipValid = await verifyAndUpdateIP();
     if (!ipValid) throw new Error('No estás en la red WiFi del local.');
-
-    const { error } = await db.from('punches').insert({
-      employee_id: currentUser.id,
-      branch_id: BRANCH_ID,
-      punch_type: actionType,
-      role: currentUser.default_role,
-      method: 'manual',
-      client_ip: clientIP,
-      ip_verified: true
-    });
+    const { error } = await db.from('punches').insert({ employee_id: currentUser.id, branch_id: BRANCH_ID, punch_type: actionType, role: currentUser.default_role, method: 'manual', client_ip: clientIP, ip_verified: true });
     if (error) throw error;
-
     showLoading(false);
     const isStart = actionType === 'break_start';
-    showResult('success', isStart ? '☕ Break iniciado' : '✓ Break terminado',
-      isStart ? 'Disfrutá tu descanso' : 'Volviste al trabajo');
+    showResult('success', isStart ? '☕ Break iniciado' : '✓ Break terminado', isStart ? 'Disfrutá tu descanso' : 'Volviste al trabajo');
     await loadTodayPunches();
     updateStatusAndButtons();
-  } catch (err) {
-    showLoading(false);
-    showResult('error', 'No se pudo registrar', err.message);
-  }
+  } catch (err) { showLoading(false); showResult('error', 'No se pudo registrar', err.message); }
 }
 
 async function openScanner() {
@@ -1216,11 +1061,7 @@ async function openScanner() {
     const video = document.getElementById('scanner-video');
     video.srcObject = scannerStream;
     video.onloadedmetadata = () => { video.play(); scanLoop(); };
-  } catch (err) {
-    console.error(err);
-    closeScanner();
-    showResult('error', 'No se pudo abrir la cámara', 'Verificá los permisos de cámara en tu navegador.');
-  }
+  } catch (err) { closeScanner(); showResult('error', 'No se pudo abrir la cámara', 'Verificá los permisos.'); }
 }
 
 function scanLoop() {
@@ -1229,16 +1070,11 @@ function scanLoop() {
   const ctx = canvas.getContext('2d', { willReadFrequently: true });
   scannerLoop = setInterval(() => {
     if (video.readyState !== video.HAVE_ENOUGH_DATA) return;
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
+    canvas.width = video.videoWidth; canvas.height = video.videoHeight;
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const code = jsQR(imageData.data, imageData.width, imageData.height);
-    if (code && code.data) {
-      clearInterval(scannerLoop);
-      scannerLoop = null;
-      processCode(code.data);
-    }
+    if (code && code.data) { clearInterval(scannerLoop); scannerLoop = null; processCode(code.data); }
   }, 200);
 }
 
@@ -1252,32 +1088,17 @@ async function processCode(code) {
   closeScanner();
   showLoading(true);
   try {
-    if (code.trim().toUpperCase() !== QR_CODE_VALID.toUpperCase()) {
-      throw new Error('Este QR no es válido. Verificá que estés escaneando el QR del local.');
-    }
+    if (code.trim().toUpperCase() !== QR_CODE_VALID.toUpperCase()) throw new Error('QR inválido. Escaneá el del local.');
     const ipValid = await verifyAndUpdateIP();
     if (!ipValid) throw new Error('No estás en la red WiFi del local.');
-
-    const { error } = await db.from('punches').insert({
-      employee_id: currentUser.id,
-      branch_id: BRANCH_ID,
-      punch_type: pendingAction,
-      role: currentUser.default_role,
-      method: 'qr',
-      client_ip: clientIP,
-      ip_verified: true
-    });
+    const { error } = await db.from('punches').insert({ employee_id: currentUser.id, branch_id: BRANCH_ID, punch_type: pendingAction, role: currentUser.default_role, method: 'qr', client_ip: clientIP, ip_verified: true });
     if (error) throw error;
-
     showLoading(false);
     const msg = pendingAction === 'in' ? '¡Entrada registrada!' : '¡Salida registrada!';
     showResult('success', msg, `${currentUser.full_name} · ${ROLE_LABELS[currentUser.default_role]}`);
     await loadTodayPunches();
     updateStatusAndButtons();
-  } catch (err) {
-    showLoading(false);
-    showResult('error', 'No se pudo fichar', err.message);
-  }
+  } catch (err) { showLoading(false); showResult('error', 'No se pudo fichar', err.message); }
 }
 
 async function verifyAndUpdateIP() {
@@ -1285,55 +1106,17 @@ async function verifyAndUpdateIP() {
     const ipResp = await fetch('https://api.ipify.org?format=json');
     const ipData = await ipResp.json();
     clientIP = ipData.ip;
-
-    const { data: branch } = await db
-      .from('branches')
-      .select('public_ip')
-      .eq('id', BRANCH_ID)
-      .single();
-
-    const branchIP = branch?.public_ip;
-
-    if (!branchIP) {
-      await db.from('branches').update({
-        public_ip: clientIP,
-        ip_last_updated: new Date().toISOString()
-      }).eq('id', BRANCH_ID);
-      return true;
-    }
-
-    if (clientIP === branchIP) return true;
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const { data: todayPunchesData } = await db
-      .from('punches')
-      .select('client_ip')
-      .gte('timestamp', today.toISOString())
-      .not('client_ip', 'is', null);
-
-    if (!todayPunchesData || todayPunchesData.length === 0) {
-      await db.from('branches').update({
-        public_ip: clientIP,
-        ip_last_updated: new Date().toISOString()
-      }).eq('id', BRANCH_ID);
-      return true;
-    }
-
-    const ipsHoy = [...new Set(todayPunchesData.map(p => p.client_ip))];
-    if (ipsHoy.includes(clientIP)) {
-      await db.from('branches').update({
-        public_ip: clientIP,
-        ip_last_updated: new Date().toISOString()
-      }).eq('id', BRANCH_ID);
-      return true;
-    }
-
+    const { data: branch } = await db.from('branches').select('public_ip').eq('id', BRANCH_ID).single();
+    const bIP = branch?.public_ip;
+    if (!bIP) { await db.from('branches').update({ public_ip: clientIP, ip_last_updated: new Date().toISOString() }).eq('id', BRANCH_ID); return true; }
+    if (clientIP === bIP) return true;
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const { data: tpd } = await db.from('punches').select('client_ip').gte('timestamp', today.toISOString()).not('client_ip', 'is', null);
+    if (!tpd || tpd.length === 0) { await db.from('branches').update({ public_ip: clientIP, ip_last_updated: new Date().toISOString() }).eq('id', BRANCH_ID); return true; }
+    const ipsHoy = [...new Set(tpd.map(p => p.client_ip))];
+    if (ipsHoy.includes(clientIP)) { await db.from('branches').update({ public_ip: clientIP, ip_last_updated: new Date().toISOString() }).eq('id', BRANCH_ID); return true; }
     return false;
-  } catch (err) {
-    console.error('Error verificando IP:', err);
-    return false;
-  }
+  } catch (err) { return false; }
 }
 
 function showResult(type, title, message) {
@@ -1346,13 +1129,8 @@ function showResult(type, title, message) {
   document.getElementById('resultOverlay').classList.add('show');
 }
 
-function closeResult() {
-  document.getElementById('resultOverlay').classList.remove('show');
-}
-
-function showLoading(show) {
-  document.getElementById('loadingOverlay').classList.toggle('show', show);
-}
+function closeResult() { document.getElementById('resultOverlay').classList.remove('show'); }
+function showLoading(show) { document.getElementById('loadingOverlay').classList.toggle('show', show); }
 
 document.getElementById('usernameInput').focus();
 </script>
