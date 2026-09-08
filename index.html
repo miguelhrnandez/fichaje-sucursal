@@ -7,278 +7,277 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,600,0,0&display=block');
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+.msi { font-family: 'Material Symbols Rounded'; font-variation-settings: 'wght' 600; line-height: 1; }
+
 body {
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-  color: #fff;
+  background: #F2F4F7;
+  color: #0A0A0B;
   min-height: 100vh;
   padding: 16px;
 }
 
-.screen { max-width: 440px; margin: 0 auto; min-height: calc(100vh - 32px); display: flex; flex-direction: column; }
+.screen { max-width: 440px; margin: 0 auto; min-height: calc(100vh - 32px); display: flex; flex-direction: column; background: #FFFFFF; border-radius: 18px; border: 1px solid #DDE1E6; overflow: hidden; padding: 28px 26px; }
 .screen.hidden { display: none; }
 
-.login-header { text-align: center; margin: 60px 0 40px; }
+.login-header { text-align: center; margin: 40px 0 34px; }
 
 .logo {
-  width: 72px; height: 72px;
-  background: linear-gradient(135deg, #4ade80, #22d3ee);
-  border-radius: 20px;
+  width: 62px; height: 62px;
+  background: #0A0A0B;
+  border-radius: 17px;
   display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 20px; font-size: 32px;
+  margin: 0 auto 20px; color: #fff; font-size: 30px;
 }
 
-.login-title { font-size: 28px; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.02em; }
-.login-subtitle { font-size: 14px; color: rgba(255, 255, 255, 0.5); }
+.login-title { font-size: 28px; font-weight: 800; margin-bottom: 4px; letter-spacing: -0.03em; }
+.login-subtitle { font-size: 14.5px; font-weight: 600; color: #5B616B; }
 
-.login-box { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 24px; }
+.login-box { background: transparent; border: none; padding: 0; }
 
-.field-group { margin-bottom: 14px; }
+.field-group { margin-bottom: 16px; }
 
 .field-label {
   display: block; font-size: 11px; letter-spacing: 0.1em;
-  text-transform: uppercase; color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase; color: #5B616B; font-weight: 700;
   margin-bottom: 8px; font-family: 'JetBrains Mono', monospace;
 }
 
 input {
-  width: 100%; padding: 14px 16px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px; color: #fff;
-  font-family: inherit; font-size: 15px; outline: none;
+  width: 100%; padding: 17px 16px;
+  background: #FFFFFF;
+  border: 1.5px solid #DDE1E6;
+  border-radius: 13px; color: #0A0A0B;
+  font-family: inherit; font-size: 16px; font-weight: 600; outline: none;
 }
 
-input:focus { border-color: #4ade80; }
+input:focus { border-color: #0A0A0B; border-width: 2px; }
 
 .btn {
-  width: 100%; padding: 16px;
-  background: linear-gradient(135deg, #4ade80, #22d3ee);
-  color: #0f3460; border: none; border-radius: 14px;
-  font-family: inherit; font-size: 16px; font-weight: 700;
-  cursor: pointer; margin-top: 14px;
+  width: 100%; height: 68px;
+  background: oklch(0.5 0.16 255);
+  color: #fff; border: none; border-radius: 15px;
+  font-family: inherit; font-size: 17px; font-weight: 800;
+  cursor: pointer; margin-top: 16px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
 }
 
-.btn-ghost { background: transparent; border: 1px solid rgba(255, 255, 255, 0.15); color: #fff; font-weight: 500; }
+.btn-ghost { background: transparent; border: 1.5px solid #DDE1E6; color: #0A0A0B; }
 
 .error-box {
-  background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.3);
-  color: #ff6b6b; padding: 12px; border-radius: 10px;
-  font-size: 13px; margin-top: 12px; display: none;
+  background: oklch(0.55 0.19 27 / 0.08); border: 1.5px solid oklch(0.55 0.19 27 / 0.35);
+  color: oklch(0.42 0.19 27); padding: 13px 14px; border-radius: 11px;
+  font-size: 13.5px; font-weight: 700; margin-top: 14px; display: none;
 }
 .error-box.show { display: block; }
 
 .success-box {
-  background: rgba(74, 222, 128, 0.1); border: 1px solid rgba(74, 222, 128, 0.3);
-  color: #4ade80; padding: 12px; border-radius: 10px;
-  font-size: 13px; margin-top: 12px; display: none;
+  background: oklch(0.42 0.13 150 / 0.08); border: 1.5px solid oklch(0.42 0.13 150 / 0.35);
+  color: oklch(0.35 0.13 150); padding: 13px 14px; border-radius: 11px;
+  font-size: 13.5px; font-weight: 700; margin-top: 14px; display: none;
 }
 .success-box.show { display: block; }
 
 .warning-banner {
-  background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.15));
-  border: 1px solid rgba(251, 191, 36, 0.4);
-  border-radius: 12px; padding: 12px 14px; margin-bottom: 16px;
-  font-size: 13px; color: #fbbf24; text-align: center;
+  background: oklch(0.55 0.14 60 / 0.1);
+  border: 1.5px solid oklch(0.55 0.14 60 / 0.35);
+  border-radius: 12px; padding: 13px 14px; margin-bottom: 16px;
+  font-size: 13.5px; font-weight: 700; color: oklch(0.4 0.14 60); text-align: center;
 }
 
-.force-change-header { text-align: center; margin: 40px 0 30px; }
+.force-change-header { text-align: center; margin: 30px 0 28px; }
 .warning-icon {
-  width: 72px; height: 72px;
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  border-radius: 20px; display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 20px; font-size: 32px; color: #0f3460;
+  width: 62px; height: 62px;
+  background: #F2F4F7; border: 1.5px solid #DDE1E6;
+  border-radius: 17px; display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px; color: #3A3F47; font-size: 30px;
 }
 
 /* DASHBOARD */
-.topbar { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; gap: 8px; }
+.topbar { display: flex; justify-content: space-between; align-items: center; padding: 0 0 18px; gap: 8px; border-bottom: 1px solid #E7EAEE; margin-bottom: 18px; }
 .user-info { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
-.user-name { font-weight: 500; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.user-role { font-size: 12px; color: rgba(255, 255, 255, 0.5); }
+.user-name { font-weight: 800; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.user-role { font-size: 12.5px; font-weight: 600; color: #5B616B; }
 
 .emp-avatar {
-  width: 40px; height: 40px; border-radius: 12px;
-  background: linear-gradient(135deg, #4ade80, #22d3ee);
+  width: 40px; height: 40px; border-radius: 11px;
+  background: #0A0A0B; color: #fff;
   display: flex; align-items: center; justify-content: center;
-  font-weight: 600; font-size: 14px; flex-shrink: 0; color: #0f3460;
+  font-weight: 800; font-size: 13px; flex-shrink: 0;
 }
-.emp-avatar.admin { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
-.emp-avatar.manager { background: linear-gradient(135deg, #a78bfa, #8b5cf6); color: #fff; }
+.emp-avatar.admin { background: oklch(0.55 0.14 60); }
+.emp-avatar.manager { background: oklch(0.5 0.16 255); }
 
 .top-actions { display: flex; gap: 6px; flex-shrink: 0; }
 .topbar-btn {
-  background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px; padding: 8px 12px; color: rgba(255, 255, 255, 0.7);
-  font-family: inherit; font-size: 12px; cursor: pointer; white-space: nowrap;
+  background: #FFFFFF; border: 1.5px solid #DDE1E6;
+  border-radius: 10px; padding: 9px 13px; color: #3A3F47;
+  font-family: inherit; font-size: 12.5px; font-weight: 700; cursor: pointer; white-space: nowrap;
+  display: flex; align-items: center; gap: 6px;
 }
-.topbar-btn:hover { color: #fff; }
 
 .admin-banner {
-  background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(139, 92, 246, 0.15));
-  border: 1px solid rgba(167, 139, 250, 0.4); border-radius: 14px;
-  padding: 14px 16px; margin-bottom: 16px;
+  background: oklch(0.5 0.16 255 / 0.06); border: 1.5px solid oklch(0.5 0.16 255 / 0.3); border-radius: 14px;
+  padding: 15px 16px; margin-bottom: 16px;
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
 }
-.admin-text { font-size: 13px; }
-.admin-text strong { color: #a78bfa; }
+.admin-text { font-size: 13.5px; font-weight: 600; }
+.admin-text strong { color: oklch(0.45 0.16 255); font-weight: 800; }
 .admin-link {
-  background: linear-gradient(135deg, #a78bfa, #8b5cf6); color: #fff;
-  border: none; border-radius: 10px; padding: 10px 16px;
-  font-family: inherit; font-size: 13px; font-weight: 600;
-  cursor: pointer; text-decoration: none;
+  background: oklch(0.5 0.16 255); color: #fff;
+  border: none; border-radius: 10px; padding: 11px 16px;
+  font-family: inherit; font-size: 13.5px; font-weight: 800;
+  cursor: pointer; text-decoration: none; white-space: nowrap;
 }
 
-.clock-display { text-align: center; padding: 20px 0; }
-.clock-time {
-  font-family: 'JetBrains Mono', monospace; font-size: 56px; font-weight: 700;
-  background: linear-gradient(135deg, #fff, #a0a0ff);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
-.clock-date { font-size: 14px; color: rgba(255, 255, 255, 0.6); text-transform: capitalize; margin-top: 4px; }
+.clock-display { text-align: center; padding: 18px 0; }
+.clock-time { font-family: 'JetBrains Mono', monospace; font-size: 54px; font-weight: 700; letter-spacing: -0.02em; color: #0A0A0B; }
+.clock-date { font-size: 14px; font-weight: 600; color: #5B616B; text-transform: capitalize; margin-top: 4px; }
 
 .status-pill {
   display: flex; align-items: center; justify-content: center; gap: 8px;
-  padding: 10px 18px; border-radius: 999px; font-size: 14px; font-weight: 500;
+  padding: 9px 18px; border-radius: 999px; font-size: 12.5px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase;
   margin: 0 auto; width: fit-content;
 }
-.status-pill.in { background: rgba(74, 222, 128, 0.2); color: #4ade80; }
-.status-pill.out { background: rgba(255, 255, 255, 0.08); color: rgba(255, 255, 255, 0.7); }
-.status-pill.break { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
-.status-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.status-pill.in { background: #0A0A0B; color: #fff; }
+.status-pill.out { background: #F2F4F7; color: #5B616B; border: 1.5px solid #DDE1E6; }
+.status-pill.break { background: oklch(0.55 0.14 60); color: #fff; }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
 .status-pill.in .status-dot, .status-pill.break .status-dot { animation: pulse 2s infinite; }
 @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
 
 .live-counter {
   display: flex; align-items: center; justify-content: center; gap: 8px;
-  margin-top: 14px; font-size: 14px; color: rgba(255, 255, 255, 0.7);
+  margin-top: 14px; font-size: 13.5px; font-weight: 600; color: #3A3F47;
   font-family: 'JetBrains Mono', monospace;
 }
 
 .action-btn {
-  width: 100%; padding: 26px; border: none; border-radius: 20px;
-  font-family: inherit; font-size: 17px; font-weight: 600;
-  cursor: pointer; margin: 12px 0; color: #fff;
+  width: 100%; height: 68px; border: none; border-radius: 15px;
+  font-family: inherit; font-size: 17px; font-weight: 800;
+  cursor: pointer; margin: 10px 0; color: #fff;
   display: flex; align-items: center; justify-content: center; gap: 12px;
 }
-.action-btn.in { background: linear-gradient(135deg, #4ade80, #22d3ee); color: #0f3460; box-shadow: 0 10px 30px rgba(74, 222, 128, 0.3); }
-.action-btn.out { background: linear-gradient(135deg, #ff6b6b, #ee5a52); box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3); }
-.action-btn.break-start { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #0f3460; box-shadow: 0 10px 30px rgba(251, 191, 36, 0.3); }
-.action-btn.break-end { background: linear-gradient(135deg, #22d3ee, #06b6d4); color: #0f3460; box-shadow: 0 10px 30px rgba(34, 211, 238, 0.3); }
-.action-btn:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+.action-btn.in { background: oklch(0.5 0.16 255); }
+.action-btn.out { background: #0A0A0B; }
+.action-btn.break-start { background: oklch(0.55 0.14 60); }
+.action-btn.break-end { background: #0A0A0B; }
+.action-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
 .day-summary {
-  background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 14px; padding: 14px 16px; margin-top: 14px; font-size: 13px;
+  background: #F2F4F7; border: 1.5px solid #DDE1E6;
+  border-radius: 14px; padding: 16px; margin-top: 14px; font-size: 13.5px;
 }
-.day-summary h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255, 255, 255, 0.5); margin-bottom: 10px; font-family: 'JetBrains Mono', monospace; }
-.summary-row { display: flex; justify-content: space-between; padding: 4px 0; color: rgba(255, 255, 255, 0.8); }
-.summary-row .label { color: rgba(255, 255, 255, 0.5); }
+.day-summary h4 { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #5B616B; margin-bottom: 10px; font-family: 'JetBrains Mono', monospace; }
+.summary-row { display: flex; justify-content: space-between; padding: 4px 0; color: #0A0A0B; font-weight: 600; }
+.summary-row .label { color: #5B616B; font-weight: 600; }
 
 /* HORARIO PROPIO */
 .my-schedule {
-  background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px; padding: 14px 16px; margin-top: 14px; font-size: 13px;
+  background: #FFFFFF; border: 1.5px solid #DDE1E6;
+  border-radius: 14px; padding: 16px; margin-top: 14px; font-size: 13.5px;
 }
 .my-schedule h4 {
-  font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;
-  color: rgba(255, 255, 255, 0.5); margin-bottom: 12px;
+  font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em;
+  color: #5B616B; margin-bottom: 12px;
   font-family: 'JetBrains Mono', monospace;
   display: flex; justify-content: space-between; align-items: center;
 }
+.my-schedule h4 span { display: flex; align-items: center; gap: 6px; }
 .week-nav-mini { display: flex; gap: 4px; align-items: center; }
-.week-nav-mini button { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); border-radius: 6px; padding: 3px 8px; cursor: pointer; font-family: inherit; font-size: 11px; }
-.week-nav-mini button:hover { color: #fff; }
+.week-nav-mini button { background: #F2F4F7; border: 1.5px solid #DDE1E6; color: #3A3F47; border-radius: 7px; padding: 4px 7px; cursor: pointer; font-family: inherit; display: flex; align-items: center; }
 
 .day-schedule-row {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 8px 10px; border-radius: 8px; margin-bottom: 4px;
-  background: rgba(255, 255, 255, 0.02);
+  padding: 9px 10px; border-radius: 9px; margin-bottom: 4px;
+  background: #F2F4F7;
   font-family: 'JetBrains Mono', monospace; font-size: 12px;
 }
-.day-schedule-row.today { background: rgba(74, 222, 128, 0.08); border: 1px solid rgba(74, 222, 128, 0.3); }
-.day-schedule-day { color: rgba(255, 255, 255, 0.6); text-transform: capitalize; min-width: 90px; }
+.day-schedule-row.today { background: oklch(0.5 0.16 255 / 0.07); border: 1.5px solid oklch(0.5 0.16 255 / 0.35); }
+.day-schedule-day { color: #3A3F47; font-weight: 600; text-transform: capitalize; min-width: 90px; }
 .day-schedule-info { display: flex; align-items: center; gap: 8px; }
 
-.jornada-badge { padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 600; }
-.jornada-badge.part_time_manana { background: rgba(134, 239, 172, 0.2); color: #86efac; }
-.jornada-badge.part_time_tarde { background: rgba(74, 222, 128, 0.2); color: #4ade80; }
-.jornada-badge.full_time { background: rgba(96, 165, 250, 0.2); color: #60a5fa; }
-.jornada-badge.academia { background: rgba(251, 146, 60, 0.2); color: #fb923c; }
-.jornada-badge.libre { background: rgba(255, 255, 255, 0.08); color: rgba(255, 255, 255, 0.5); }
-.jornada-badge.empty { background: rgba(255, 255, 255, 0.04); color: rgba(255, 255, 255, 0.3); border: 1px dashed rgba(255, 255, 255, 0.15); }
+.jornada-badge { padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 800; }
+.jornada-badge.part_time_manana { background: oklch(0.62 0.12 220 / 0.18); color: oklch(0.42 0.12 220); }
+.jornada-badge.part_time_tarde { background: oklch(0.52 0.13 285 / 0.18); color: oklch(0.42 0.13 285); }
+.jornada-badge.full_time { background: oklch(0.5 0.16 255 / 0.15); color: oklch(0.42 0.16 255); }
+.jornada-badge.academia { background: oklch(0.62 0.13 60 / 0.2); color: oklch(0.42 0.13 60); }
+.jornada-badge.libre { background: #E7EAEE; color: #5B616B; }
+.jornada-badge.empty { background: #F2F4F7; color: #5B616B; border: 1.5px dashed #DDE1E6; }
 
-.day-schedule-hours { color: rgba(255, 255, 255, 0.7); }
+.day-schedule-hours { color: #3A3F47; font-weight: 600; }
 
 .btn-view-team {
-  width: 100%; padding: 12px;
-  background: rgba(167, 139, 250, 0.15); border: 1px solid rgba(167, 139, 250, 0.4);
-  color: #a78bfa; border-radius: 10px;
-  font-family: inherit; font-size: 13px; font-weight: 600;
+  width: 100%; padding: 13px;
+  background: #F2F4F7; border: 1.5px solid #DDE1E6;
+  color: #0A0A0B; border-radius: 10px;
+  font-family: inherit; font-size: 13.5px; font-weight: 800;
   cursor: pointer; margin-top: 10px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
 }
-.btn-view-team:hover { background: rgba(167, 139, 250, 0.25); }
 
-.admin-msg-box { text-align: center; padding: 40px 20px; margin-top: 40px; }
+.admin-msg-box { text-align: center; padding: 40px 20px; margin-top: 20px; }
 .admin-msg-icon {
-  width: 80px; height: 80px; border-radius: 24px;
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  width: 76px; height: 76px; border-radius: 20px;
+  background: oklch(0.55 0.14 60);
   margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;
-  font-size: 36px;
+  color: #fff; font-size: 34px;
 }
-.admin-msg-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
-.admin-msg-text { font-size: 14px; color: rgba(255, 255, 255, 0.6); margin-bottom: 24px; line-height: 1.5; }
+.admin-msg-title { font-size: 21px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.02em; }
+.admin-msg-text { font-size: 14px; font-weight: 600; color: #5B616B; margin-bottom: 24px; line-height: 1.5; }
 
-.scanner-screen { position: fixed; inset: 0; background: #000; z-index: 100; display: none; flex-direction: column; }
+.scanner-screen { position: fixed; inset: 0; background: #0B0D10; z-index: 100; display: none; flex-direction: column; }
 .scanner-screen.show { display: flex; }
-.scanner-header { padding: 16px; display: flex; justify-content: space-between; align-items: center; background: rgba(0, 0, 0, 0.7); }
-.scanner-title { font-size: 16px; font-weight: 600; }
-.close-btn { background: transparent; border: none; color: #fff; font-size: 28px; cursor: pointer; padding: 0; width: 32px; height: 32px; }
+.scanner-header { padding: 16px; display: flex; justify-content: space-between; align-items: center; background: rgba(11,13,16,0.85); }
+.scanner-title { font-size: 15px; font-weight: 700; color: #F5F7FA; }
+.close-btn { background: transparent; border: none; color: #F5F7FA; font-size: 28px; cursor: pointer; padding: 0; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
 .video-wrap { flex: 1; position: relative; overflow: hidden; }
 #scanner-video { width: 100%; height: 100%; object-fit: cover; }
 .scan-frame {
   position: absolute; top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   width: 250px; height: 250px;
-  border: 3px solid #4ade80; border-radius: 20px;
-  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+  border: 3px solid #fff; border-radius: 20px;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.55);
 }
-.scanner-hint { position: absolute; bottom: 100px; left: 0; right: 0; text-align: center; color: #fff; font-size: 14px; padding: 0 20px; }
+.scanner-hint { position: absolute; bottom: 100px; left: 0; right: 0; text-align: center; color: #F5F7FA; font-size: 14px; font-weight: 600; padding: 0 20px; }
 
-.result-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); display: none; align-items: center; justify-content: center; z-index: 200; padding: 20px; backdrop-filter: blur(10px); }
+.result-overlay { position: fixed; inset: 0; background: rgba(10,10,11,0.6); display: none; align-items: center; justify-content: center; z-index: 200; padding: 20px; }
 .result-overlay.show { display: flex; }
-.result-card { background: linear-gradient(135deg, #1a1a2e, #16213e); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 32px; max-width: 360px; width: 100%; text-align: center; }
-.result-icon { font-size: 64px; margin-bottom: 16px; }
-.result-card.success { border-color: rgba(74, 222, 128, 0.4); }
-.result-card.error { border-color: rgba(255, 107, 107, 0.4); }
-.result-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
-.result-message { font-size: 14px; color: rgba(255, 255, 255, 0.7); margin-bottom: 24px; }
-.result-time { font-family: 'JetBrains Mono', monospace; font-size: 18px; color: #4ade80; margin-bottom: 24px; }
+.result-card { background: oklch(0.5 0.16 255); color: #fff; border-radius: 20px; padding: 34px 28px; max-width: 360px; width: 100%; text-align: center; }
+.result-icon { width: 62px; height: 62px; border-radius: 17px; background: rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; font-size: 32px; }
+.result-card.error { background: oklch(0.45 0.17 27); }
+.result-title { font-size: 23px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.02em; }
+.result-message { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.85); margin-bottom: 24px; }
+.result-time { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; margin-bottom: 24px; }
+.result-card .btn { background: #fff; color: #0A0A0B; }
 
-.loading-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); display: none; align-items: center; justify-content: center; z-index: 300; backdrop-filter: blur(10px); }
+.loading-overlay { position: fixed; inset: 0; background: rgba(10,10,11,0.5); display: none; align-items: center; justify-content: center; z-index: 300; }
 .loading-overlay.show { display: flex; }
-.spinner { width: 40px; height: 40px; border: 3px solid rgba(255, 255, 255, 0.1); border-top-color: #4ade80; border-radius: 50%; animation: spin 0.8s linear infinite; }
+.spinner { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* MODAL CAMBIO CONTRASEÑA */
-.modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7); display: none; align-items: center; justify-content: center; z-index: 250; padding: 20px; backdrop-filter: blur(8px); overflow-y: auto; }
+.modal-overlay { position: fixed; inset: 0; background: rgba(10,10,11,0.55); display: none; align-items: center; justify-content: center; z-index: 250; padding: 20px; overflow-y: auto; }
 .modal-overlay.show { display: flex; }
-.modal-card { background: linear-gradient(135deg, #1a1a2e, #16213e); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 28px; max-width: 400px; width: 100%; margin: auto; }
+.modal-card { background: #FFFFFF; color: #0A0A0B; border-radius: 18px; padding: 26px; max-width: 400px; width: 100%; margin: auto; }
 .modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
-.modal-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
-.modal-subtitle { font-size: 13px; color: rgba(255, 255, 255, 0.5); }
-.close-x { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; width: 32px; height: 32px; font-size: 18px; color: #fff; cursor: pointer; }
+.modal-title { font-size: 20px; font-weight: 800; margin-bottom: 4px; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+.modal-subtitle { font-size: 13px; font-weight: 600; color: #5B616B; }
+.close-x { background: #F2F4F7; border: 1.5px solid #DDE1E6; border-radius: 11px; width: 36px; height: 36px; font-size: 18px; color: #0A0A0B; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
-.modal-actions button { flex: 1; }
+.modal-actions button { flex: 1; margin-top: 0; height: 56px; }
 
 /* MODAL EQUIPO (más grande) */
 .modal-card-team {
-  background: linear-gradient(135deg, #1a1a2e, #16213e);
-  border: 1px solid rgba(167, 139, 250, 0.3);
-  border-radius: 20px;
+  background: #FFFFFF; color: #0A0A0B;
+  border: 1.5px solid #DDE1E6;
+  border-radius: 18px;
   padding: 24px;
   max-width: 480px;
   width: 100%;
@@ -288,55 +287,58 @@ input:focus { border-color: #4ade80; }
 }
 
 .team-section-title {
-  font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.5); margin: 18px 0 10px;
+  font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em;
+  color: #5B616B; margin: 18px 0 10px;
   font-family: 'JetBrains Mono', monospace;
-  padding-bottom: 6px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 6px; border-bottom: 1px solid #E7EAEE;
+  display: flex; align-items: center; gap: 6px;
 }
 
 .team-today-row {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 10px 12px; margin-bottom: 6px;
-  background: rgba(255, 255, 255, 0.03); border-radius: 8px;
+  padding: 11px 12px; margin-bottom: 6px;
+  background: #F2F4F7; border-radius: 10px;
 }
-.team-today-row .name { font-size: 13px; font-weight: 500; }
-.team-today-row .hours { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: rgba(255,255,255,0.7); }
+.team-today-row .name { font-size: 13.5px; font-weight: 700; }
+.team-today-row .hours { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; color: #3A3F47; }
 
 .team-week-table {
   width: 100%; border-collapse: collapse;
-  font-size: 11px; background: rgba(255, 255, 255, 0.02);
+  font-size: 11px; background: #FFFFFF;
   border-radius: 8px; overflow: hidden; margin-top: 8px;
 }
 .team-week-table th {
   padding: 6px 4px; text-align: center;
-  background: rgba(167, 139, 250, 0.1); color: rgba(255,255,255,0.6);
-  font-weight: 600; font-size: 10px; text-transform: uppercase;
+  background: #F2F4F7; color: #5B616B;
+  font-weight: 700; font-size: 10px; text-transform: uppercase;
   font-family: 'JetBrains Mono', monospace;
 }
 .team-week-table th:first-child { text-align: left; padding-left: 10px; }
 .team-week-table td {
   padding: 4px 2px; text-align: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid #E7EAEE;
 }
 .team-week-table td:first-child {
   text-align: left; padding-left: 10px;
-  font-size: 11px; white-space: nowrap;
+  font-size: 11px; font-weight: 600; white-space: nowrap;
   overflow: hidden; text-overflow: ellipsis; max-width: 100px;
 }
 
 .mini-cell {
   display: inline-block; width: 22px; height: 22px; border-radius: 5px;
 }
-.mini-cell.part_time_manana { background: rgba(134, 239, 172, 0.4); }
-.mini-cell.part_time_tarde { background: rgba(74, 222, 128, 0.4); }
-.mini-cell.full_time { background: rgba(96, 165, 250, 0.4); }
-.mini-cell.academia { background: rgba(251, 146, 60, 0.4); }
-.mini-cell.libre { background: rgba(255, 255, 255, 0.1); }
-.mini-cell.empty { background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(255,255,255,0.1); }
+.mini-cell.part_time_manana { background: oklch(0.62 0.12 220); }
+.mini-cell.part_time_tarde { background: oklch(0.52 0.13 285); }
+.mini-cell.full_time { background: oklch(0.5 0.16 255); }
+.mini-cell.academia { background: oklch(0.62 0.13 60); }
+.mini-cell.libre { background: #E7EAEE; }
+.mini-cell.empty { background: #F2F4F7; border: 1.5px dashed #DDE1E6; }
 
-.legend-mini { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; font-size: 10px; }
-.legend-mini-item { display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.6); }
+.legend-mini { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; font-size: 11px; }
+.legend-mini-item { display: flex; align-items: center; gap: 5px; color: #3A3F47; font-weight: 600; }
 .legend-mini-color { width: 12px; height: 12px; border-radius: 3px; }
+
+.jefa-tag { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.06em; background: #0A0A0B; color: #fff; border-radius: 5px; padding: 2px 6px; margin-left: 6px; }
 </style>
 </head>
 <body>
@@ -344,7 +346,7 @@ input:focus { border-color: #4ade80; }
 <!-- LOGIN -->
 <div class="screen" id="loginScreen">
   <div class="login-header">
-    <div class="logo">⏱</div>
+    <div class="logo"><span class="msi">schedule</span></div>
     <div class="login-title">Fichaje</div>
     <div class="login-subtitle">Ingresá con tu usuario</div>
   </div>
@@ -362,15 +364,29 @@ input:focus { border-color: #4ade80; }
   </div>
 </div>
 
+<!-- CUENTA INACTIVA -->
+<div class="screen hidden" id="inactiveScreen">
+  <div class="force-change-header">
+    <div class="warning-icon"><span class="msi">person_off</span></div>
+    <div class="login-title">Tu cuenta está inactiva</div>
+    <div class="login-subtitle" style="margin-top:6px;">No podés fichar entradas ni salidas. Tus fichajes anteriores siguen guardados y tu jefa los puede consultar.</div>
+  </div>
+  <div class="login-box" style="margin-top:6px;">
+    <div class="field-label">Si volviste al equipo</div>
+    <div style="font-size:13.5px;font-weight:600;color:#3A3F47;line-height:1.5;">Pedile a tu jefa que te reactive. Vas a volver a entrar con el mismo usuario.</div>
+    <button class="btn" onclick="backToLoginFromInactive()">Volver a intentar</button>
+  </div>
+</div>
+
 <!-- CAMBIO OBLIGATORIO -->
 <div class="screen hidden" id="forceChangeScreen">
   <div class="force-change-header">
-    <div class="warning-icon">🔒</div>
+    <div class="warning-icon"><span class="msi">lock</span></div>
     <div class="login-title">Cambiá tu contraseña</div>
-    <div class="login-subtitle">Es tu primera vez, tenés que crear una nueva</div>
+    <div class="login-subtitle" style="margin-top:6px;">Es tu primera vez, tenés que crear una nueva</div>
   </div>
   <div class="login-box">
-    <div class="warning-banner">⚠ Por seguridad, no podés seguir usando la contraseña inicial.</div>
+    <div class="warning-banner">Por seguridad, no podés seguir usando la contraseña inicial.</div>
     <div class="field-group">
       <label class="field-label">NUEVA CONTRASEÑA</label>
       <input type="password" id="forceNewPassword" placeholder="Mínimo 6 caracteres">
@@ -396,7 +412,7 @@ input:focus { border-color: #4ade80; }
       </div>
     </div>
     <div class="top-actions">
-      <button class="topbar-btn" onclick="openChangePassword()" title="Cambiar contraseña">🔒</button>
+      <button class="topbar-btn" onclick="openChangePassword()" title="Cambiar contraseña"><span class="msi" style="font-size:17px;">lock</span></button>
       <button class="topbar-btn" onclick="logout()">Salir</button>
     </div>
   </div>
@@ -404,23 +420,23 @@ input:focus { border-color: #4ade80; }
   <div class="admin-banner" id="adminBanner" style="display:none;">
     <div class="admin-text">
       <strong>Acceso de Jefa</strong>
-      <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;">Podés gestionar al equipo</div>
+      <div style="font-size:11.5px;font-weight:600;color:#5B616B;margin-top:2px;">Podés gestionar al equipo</div>
     </div>
     <a class="admin-link" href="admin.html">Panel →</a>
   </div>
 
   <div id="adminMessage" style="display:none;">
     <div class="admin-msg-box">
-      <div class="admin-msg-icon">⚙️</div>
+      <div class="admin-msg-icon"><span class="msi">settings</span></div>
       <div class="admin-msg-title">Sos administrador</div>
       <div class="admin-msg-text">Vos no fichás como empleada.<br>Andá al panel.</div>
-      <a class="admin-link" href="admin.html" style="display:inline-block;padding:14px 24px;">Ir al Panel →</a>
+      <a class="admin-link" href="admin.html" style="display:inline-flex;padding:16px 24px;">Ir al Panel →</a>
     </div>
   </div>
 
   <div id="noRoleMessage" style="display:none;">
     <div class="admin-msg-box">
-      <div class="admin-msg-icon" style="background:linear-gradient(135deg,#ff6b6b,#ee5a52);">⚠</div>
+      <div class="admin-msg-icon" style="background:oklch(0.45 0.17 27);"><span class="msi">error</span></div>
       <div class="admin-msg-title">No tenés puesto asignado</div>
       <div class="admin-msg-text">Hablá con tu jefa para que pueda fichar.</div>
     </div>
@@ -449,14 +465,14 @@ input:focus { border-color: #4ade80; }
     <!-- HORARIO PROPIO -->
     <div class="my-schedule" id="mySchedule" style="display:none;">
       <h4>
-        <span>📅 TU HORARIO ESTA SEMANA</span>
+        <span><span class="msi" style="font-size:15px;">calendar_month</span>TU HORARIO ESTA SEMANA</span>
         <div class="week-nav-mini">
-          <button onclick="changeMySchedWeek(-1)">◀</button>
-          <button onclick="changeMySchedWeek(1)">▶</button>
+          <button onclick="changeMySchedWeek(-1)"><span class="msi" style="font-size:15px;">chevron_left</span></button>
+          <button onclick="changeMySchedWeek(1)"><span class="msi" style="font-size:15px;">chevron_right</span></button>
         </div>
       </h4>
       <div id="mySchedContent"></div>
-      <button class="btn-view-team" onclick="openTeamSchedule()">👥 Ver horario del equipo</button>
+      <button class="btn-view-team" onclick="openTeamSchedule()"><span class="msi" style="font-size:17px;">group</span>Ver horario del equipo</button>
     </div>
   </div>
 </div>
@@ -466,7 +482,7 @@ input:focus { border-color: #4ade80; }
   <div class="modal-card">
     <div class="modal-header">
       <div>
-        <div class="modal-title">🔒 Cambiar contraseña</div>
+        <div class="modal-title"><span class="msi" style="font-size:19px;">lock</span>Cambiar contraseña</div>
         <div class="modal-subtitle">Actualizá tu contraseña</div>
       </div>
       <button class="close-x" onclick="closeChangePassword()">×</button>
@@ -497,26 +513,26 @@ input:focus { border-color: #4ade80; }
   <div class="modal-card-team">
     <div class="modal-header">
       <div>
-        <div class="modal-title" id="teamModalTitle">👥 Equipo</div>
+        <div class="modal-title" id="teamModalTitle"><span class="msi" style="font-size:19px;">group</span>Equipo</div>
         <div class="modal-subtitle" id="teamModalSubtitle">--</div>
       </div>
       <button class="close-x" onclick="closeTeamSchedule()">×</button>
     </div>
 
     <div id="teamTodayContent">
-      <div class="team-section-title">🌟 HOY</div>
+      <div class="team-section-title"><span class="msi" style="font-size:14px;">today</span>HOY</div>
       <div id="teamTodayList"></div>
     </div>
 
-    <div class="team-section-title">📆 RESTO DE LA SEMANA</div>
+    <div class="team-section-title"><span class="msi" style="font-size:14px;">calendar_month</span>RESTO DE LA SEMANA</div>
     <div id="teamWeekContent"></div>
 
     <div class="legend-mini">
-      <div class="legend-mini-item"><div class="legend-mini-color" style="background:rgba(134,239,172,0.4);"></div>PT Mañana</div>
-      <div class="legend-mini-item"><div class="legend-mini-color" style="background:rgba(74,222,128,0.4);"></div>PT Tarde</div>
-      <div class="legend-mini-item"><div class="legend-mini-color" style="background:rgba(96,165,250,0.4);"></div>Full-time</div>
-      <div class="legend-mini-item"><div class="legend-mini-color" style="background:rgba(251,146,60,0.4);"></div>Academia</div>
-      <div class="legend-mini-item"><div class="legend-mini-color" style="background:rgba(255,255,255,0.1);"></div>Libre</div>
+      <div class="legend-mini-item"><div class="legend-mini-color" style="background:oklch(0.62 0.12 220);"></div>PT Mañana</div>
+      <div class="legend-mini-item"><div class="legend-mini-color" style="background:oklch(0.52 0.13 285);"></div>PT Tarde</div>
+      <div class="legend-mini-item"><div class="legend-mini-color" style="background:oklch(0.5 0.16 255);"></div>Full-time</div>
+      <div class="legend-mini-item"><div class="legend-mini-color" style="background:oklch(0.62 0.13 60);"></div>Academia</div>
+      <div class="legend-mini-item"><div class="legend-mini-color" style="background:#E7EAEE;"></div>Libre</div>
     </div>
   </div>
 </div>
@@ -538,7 +554,7 @@ input:focus { border-color: #4ade80; }
 <!-- RESULT -->
 <div class="result-overlay" id="resultOverlay">
   <div class="result-card" id="resultCard">
-    <div class="result-icon" id="resultIcon">✓</div>
+    <div class="result-icon"><span class="msi" id="resultIcon">task_alt</span></div>
     <div class="result-title" id="resultTitle">Fichaje exitoso</div>
     <div class="result-message" id="resultMessage">--</div>
     <div class="result-time" id="resultTime">--:--:--</div>
@@ -625,8 +641,13 @@ async function doLogin() {
   const errBox = document.getElementById('loginError');
   if (!username || !password) { errBox.textContent = 'Completá los campos'; errBox.classList.add('show'); return; }
   try {
-    const { data, error } = await db.from('employees').select('*').eq('username', username).eq('active', true).single();
+    const { data, error } = await db.from('employees').select('*').eq('username', username).single();
     if (error || !data || data.password !== password) { errBox.textContent = 'Usuario o contraseña incorrectos'; errBox.classList.add('show'); return; }
+    if (!data.active) {
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('inactiveScreen').classList.remove('hidden');
+      return;
+    }
     currentUser = data;
     errBox.classList.remove('show');
     document.getElementById('passwordInput').value = '';
@@ -645,7 +666,15 @@ function logout() {
   document.getElementById('loginScreen').classList.remove('hidden');
   document.getElementById('dashboardScreen').classList.add('hidden');
   document.getElementById('forceChangeScreen').classList.add('hidden');
+  document.getElementById('inactiveScreen').classList.add('hidden');
   document.getElementById('usernameInput').value = '';
+}
+
+function backToLoginFromInactive() {
+  document.getElementById('inactiveScreen').classList.add('hidden');
+  document.getElementById('loginScreen').classList.remove('hidden');
+  document.getElementById('usernameInput').value = '';
+  document.getElementById('passwordInput').value = '';
 }
 
 // FORCE CHANGE
@@ -673,7 +702,7 @@ async function submitForceChange() {
     if (error) throw error;
     currentUser.password = np;
     currentUser.password_changed = true;
-    oB.textContent = '✓ Continuando...'; oB.classList.add('show');
+    oB.textContent = 'Continuando...'; oB.classList.add('show');
     setTimeout(async () => {
       document.getElementById('forceChangeScreen').classList.add('hidden');
       await loadTodayPunches();
@@ -712,7 +741,7 @@ async function submitChangePassword() {
     if (error) throw error;
     currentUser.password = np;
     currentUser.password_changed = true;
-    oB.textContent = '✓ Actualizada'; oB.classList.add('show');
+    oB.textContent = 'Actualizada'; oB.classList.add('show');
     setTimeout(closeChangePassword, 1500);
   } catch (err) { eB.textContent = 'Error'; eB.classList.add('show'); }
 }
@@ -792,14 +821,14 @@ function updateStatusAndButtons() {
     counter.style.display = 'flex';
     const bt = todayPunches.filter(p => p.punch_type === 'break_start').length;
     const cb = bt < currentUser.max_breaks_per_shift;
-    actions.innerHTML = `<button class="action-btn break-start" onclick="startFichaje('break_start')" ${cb?'':'disabled'}>${cb?'☕ INICIAR BREAK':`☕ Sin breaks (${bt}/${currentUser.max_breaks_per_shift})`}</button><button class="action-btn out" onclick="startFichaje('out')">FICHAR SALIDA</button>`;
+    actions.innerHTML = `<button class="action-btn break-start" onclick="startFichaje('break_start')" ${cb?'':'disabled'}><span class="msi" style="font-size:19px;">local_cafe</span>${cb?'INICIAR BREAK':`SIN BREAKS (${bt}/${currentUser.max_breaks_per_shift})`}</button><button class="action-btn out" onclick="startFichaje('out')">FICHAR SALIDA</button>`;
     startLiveCounter('work');
     showDaySummary();
   } else if (currentState === 'break') {
     pill.className = 'status-pill break';
-    text.textContent = '☕ En break';
+    text.textContent = 'En break';
     counter.style.display = 'flex';
-    actions.innerHTML = `<button class="action-btn break-end" onclick="startFichaje('break_end')">TERMINAR BREAK</button><div style="text-align:center;color:rgba(255,255,255,0.5);font-size:12px;margin-top:8px;">Terminá el break para fichar salida</div>`;
+    actions.innerHTML = `<button class="action-btn break-end" onclick="startFichaje('break_end')">TERMINAR BREAK</button><div style="text-align:center;color:#5B616B;font-size:12.5px;font-weight:600;margin-top:8px;">Terminá el break para fichar salida</div>`;
     startLiveCounter('break');
     showDaySummary();
   }
@@ -864,14 +893,14 @@ function showDaySummary() {
   if (ent) h += `<div class="summary-row"><span class="label">Entrada</span><span>${formatTime(ent.timestamp)}</span></div>`;
   if (sal) h += `<div class="summary-row"><span class="label">Salida</span><span>${formatTime(sal.timestamp)}</span></div>`;
   if (bks.length > 0) {
-    h += `<div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.1);"><div class="label" style="margin-bottom:6px;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;">BREAKS (${bks.length})</div>`;
+    h += `<div style="margin-top:12px;padding-top:10px;border-top:1px solid #DDE1E6;"><div class="label" style="margin-bottom:6px;font-size:11px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;">BREAKS (${bks.length})</div>`;
     bks.forEach((b, i) => {
-      const es = b.ongoing ? `<span style="color:#fbbf24;">en curso</span>` : formatTime(b.et);
-      h += `<div class="summary-row" style="font-size:12px;"><span class="label">Break ${i+1}</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;">${formatTime(b.st)} → ${es} <span style="color:rgba(255,255,255,0.5);">(${formatMinutes(b.dm)})</span></span></div>`;
+      const es = b.ongoing ? `<span style="color:oklch(0.45 0.14 60);font-weight:700;">en curso</span>` : formatTime(b.et);
+      h += `<div class="summary-row" style="font-size:12px;"><span class="label">Break ${i+1}</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;">${formatTime(b.st)} → ${es} <span style="color:#5B616B;">(${formatMinutes(b.dm)})</span></span></div>`;
     });
-    h += `<div class="summary-row" style="font-size:12px;margin-top:4px;color:rgba(255,255,255,0.6);"><span class="label">Total breaks</span><span>${formatMinutes(tbm)}</span></div></div>`;
+    h += `<div class="summary-row" style="font-size:12px;margin-top:4px;color:#5B616B;"><span class="label">Total breaks</span><span>${formatMinutes(tbm)}</span></div></div>`;
   }
-  h += `<div class="summary-row" style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.1);"><span class="label">Productivas</span><span style="color:#4ade80;font-weight:600;">${formatMinutes(pm)}</span></div>`;
+  h += `<div class="summary-row" style="margin-top:10px;padding-top:10px;border-top:1px solid #DDE1E6;"><span class="label">Productivas</span><span style="color:oklch(0.4 0.13 150);font-weight:800;">${formatMinutes(pm)}</span></div>`;
   c.innerHTML = h;
   s.style.display = 'block';
 }
@@ -946,7 +975,7 @@ async function openTeamSchedule() {
     const wStart = myWeekStart.getDate(), wEnd = weekEnd.getDate();
     const m1 = myWeekStart.toLocaleDateString('es-AR', { month: 'short' });
     const m2 = weekEnd.toLocaleDateString('es-AR', { month: 'short' });
-    document.getElementById('teamModalTitle').textContent = `👥 Equipo ${teamName}`;
+    document.getElementById('teamModalTitle').innerHTML = `<span class="msi" style="font-size:19px;">group</span>Equipo ${teamName}`;
     document.getElementById('teamModalSubtitle').textContent = m1 === m2 ? `Semana ${wStart}-${wEnd} ${m1}` : `${wStart} ${m1} - ${wEnd} ${m2}`;
     renderTeamToday();
     renderTeamWeek();
@@ -992,7 +1021,7 @@ function renderTeamToday() {
       <div class="hours">${r.hours}</div>
     </div>`;
   }
-  c.innerHTML = h || '<div style="text-align:center;color:rgba(255,255,255,0.4);padding:20px;">Sin datos del equipo</div>';
+  c.innerHTML = h || '<div style="text-align:center;color:#5B616B;font-weight:600;padding:20px;">Sin datos del equipo</div>';
 }
 
 function renderTeamWeek() {
@@ -1019,7 +1048,7 @@ function renderTeamWeek() {
     // Nombre corto para móvil
     const parts = emp.full_name.split(' ');
     const shortName = parts.length >= 2 ? `${parts[0]} ${parts[1].charAt(0)}.` : emp.full_name;
-    h += `<tr><td>${shortName}${emp.is_manager ? ' 👑' : ''}</td>`;
+    h += `<tr><td>${shortName}${emp.is_manager ? '<span class="jefa-tag">JEFA</span>' : ''}</td>`;
     for (const d of dates) {
       const ds = toDateStr(d);
       const shift = teamShifts.find(s => s.employee_id === emp.id && s.shift_date === ds);
@@ -1048,7 +1077,7 @@ async function processBreak(actionType) {
     if (error) throw error;
     showLoading(false);
     const isStart = actionType === 'break_start';
-    showResult('success', isStart ? '☕ Break iniciado' : '✓ Break terminado', isStart ? 'Disfrutá tu descanso' : 'Volviste al trabajo');
+    showResult('success', isStart ? 'Break iniciado' : 'Break terminado', isStart ? 'Disfrutá tu descanso' : 'Volviste al trabajo');
     await loadTodayPunches();
     updateStatusAndButtons();
   } catch (err) { showLoading(false); showResult('error', 'No se pudo registrar', err.message); }
@@ -1121,7 +1150,7 @@ async function verifyAndUpdateIP() {
 
 function showResult(type, title, message) {
   const card = document.getElementById('resultCard');
-  document.getElementById('resultIcon').textContent = type === 'success' ? '✓' : '✕';
+  document.getElementById('resultIcon').textContent = type === 'success' ? 'task_alt' : 'close';
   document.getElementById('resultTitle').textContent = title;
   document.getElementById('resultMessage').textContent = message;
   document.getElementById('resultTime').textContent = new Date().toLocaleTimeString('es-AR', { hour12: false });
