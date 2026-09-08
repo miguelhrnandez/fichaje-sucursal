@@ -6,219 +6,221 @@
 <title>Panel de Jefa - Fichaje</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,600,0,0&display=block');
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; min-height: 100vh; }
+.msi { font-family: 'Material Symbols Rounded'; font-variation-settings: 'wght' 600; line-height: 1; vertical-align: middle; }
+body { font-family: 'Inter', sans-serif; background: #0B0D10; color: #F5F7FA; min-height: 100vh; }
 .screen { display: none; }
 .screen.show { display: block; }
 .login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
-.login-box { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(167, 139, 250, 0.3); border-radius: 24px; padding: 40px 32px; max-width: 380px; width: 100%; }
-.logo-admin { width: 72px; height: 72px; background: linear-gradient(135deg, #a78bfa, #8b5cf6); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 32px; }
+.login-box { background: #14171B; border: 1.5px solid #22262D; border-radius: 20px; padding: 40px 32px; max-width: 380px; width: 100%; }
+.logo-admin { width: 72px; height: 72px; background: oklch(0.5 0.16 255); border-radius: 17px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: #fff; font-size: 32px; }
 .login-title { text-align: center; font-size: 26px; font-weight: 700; margin-bottom: 4px; }
-.login-subtitle { text-align: center; font-size: 13px; color: rgba(167, 139, 250, 0.8); margin-bottom: 28px; }
+.login-subtitle { text-align: center; font-size: 13px; font-weight: 600; color: #8C929B; margin-bottom: 28px; }
 .field-group { margin-bottom: 14px; }
 .field-label { display: block; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255, 255, 255, 0.4); margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; }
-input, select, textarea { width: 100%; padding: 13px 16px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: #fff; font-family: inherit; font-size: 15px; outline: none; }
-input:focus, select:focus, textarea:focus { border-color: #a78bfa; }
-select option { background: #1a1a2e; }
+input, select, textarea { width: 100%; padding: 13px 16px; background: #14171B; border: 1.5px solid #22262D; border-radius: 12px; color: #F5F7FA; font-family: inherit; font-size: 15px; font-weight: 600; outline: none; }
+input:focus, select:focus, textarea:focus { border-color: #F5F7FA; border-width: 2px; }
+select option { background: #14171B; }
 textarea { resize: vertical; min-height: 60px; font-size: 13px; }
-.btn-admin { width: 100%; padding: 14px; background: linear-gradient(135deg, #a78bfa, #8b5cf6); color: #fff; border: none; border-radius: 12px; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 14px; }
-.btn-ghost { width: 100%; padding: 12px; background: transparent; border: 1px solid rgba(255, 255, 255, 0.15); color: rgba(255, 255, 255, 0.7); border-radius: 12px; font-family: inherit; font-size: 13px; cursor: pointer; margin-top: 8px; }
-.btn-danger { background: linear-gradient(135deg, #ff6b6b, #ee5a52); color: #fff; border: none; }
-.btn-success { background: linear-gradient(135deg, #4ade80, #22d3ee); color: #0f3460; border: none; }
-.btn-secondary { background: rgba(255, 255, 255, 0.08); color: #fff; border: 1px solid rgba(255, 255, 255, 0.1); }
-.error-box { background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.3); color: #ff6b6b; padding: 12px; border-radius: 10px; font-size: 13px; margin-top: 12px; display: none; }
+.btn-admin { width: 100%; height: 56px; background: oklch(0.5 0.16 255); color: #fff; border: none; border-radius: 13px; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; margin-top: 14px; }
+.btn-ghost { width: 100%; padding: 12px; background: transparent; border: 1.5px solid #22262D; color: #C6CBD3; border-radius: 12px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; margin-top: 8px; }
+.btn-danger { background: oklch(0.5 0.19 27); color: #fff; border: none; }
+.btn-success { background: oklch(0.42 0.13 150); color: #fff; border: none; }
+.btn-secondary { background: #1B1F24; color: #F5F7FA; border: 1.5px solid #22262D; }
+.error-box { background: oklch(0.5 0.19 27 / 0.12); border: 1.5px solid oklch(0.5 0.19 27 / 0.4); color: oklch(0.75 0.19 27); padding: 12px; border-radius: 10px; font-size: 13px; font-weight: 700; margin-top: 12px; display: none; }
 .error-box.show { display: block; }
-.success-box { background: rgba(74, 222, 128, 0.1); border: 1px solid rgba(74, 222, 128, 0.3); color: #4ade80; padding: 12px; border-radius: 10px; font-size: 13px; margin-top: 12px; display: none; }
+.success-box { background: oklch(0.42 0.13 150 / 0.12); border: 1.5px solid oklch(0.42 0.13 150 / 0.4); color: oklch(0.75 0.13 150); padding: 12px; border-radius: 10px; font-size: 13px; font-weight: 700; margin-top: 12px; display: none; }
 .success-box.show { display: block; }
 .admin-wrap { max-width: 1200px; margin: 0 auto; padding: 20px; }
-.admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(167, 139, 250, 0.2); }
+.admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #22262D; }
 .admin-title-block { display: flex; align-items: center; gap: 14px; }
 .admin-title h1 { font-size: 22px; font-weight: 700; }
-.admin-title .subtitle { font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-top: 2px; }
-.admin-title .team-tag { display: inline-block; margin-top: 4px; padding: 2px 8px; background: rgba(167, 139, 250, 0.2); border-radius: 6px; font-size: 10px; color: #a78bfa; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace; }
+.admin-title .subtitle { font-size: 12px; font-weight: 600; color: #8C929B; margin-top: 2px; }
+.admin-title .team-tag { display: inline-block; margin-top: 4px; padding: 2px 8px; background: oklch(0.5 0.16 255 / 0.2); border-radius: 6px; font-size: 10px; color: oklch(0.72 0.16 255); text-transform: uppercase; letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace; font-weight: 700; }
 .admin-actions { display: flex; gap: 10px; }
-.back-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 10px 16px; color: rgba(255, 255, 255, 0.7); font-family: inherit; font-size: 13px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
-.tabs { display: flex; gap: 4px; margin-bottom: 24px; background: rgba(255, 255, 255, 0.03); padding: 4px; border-radius: 12px; overflow-x: auto; }
-.tab { background: transparent; border: none; padding: 10px 18px; color: rgba(255, 255, 255, 0.6); font-family: inherit; font-size: 13px; font-weight: 500; cursor: pointer; border-radius: 8px; white-space: nowrap; position: relative; }
-.tab.active { background: linear-gradient(135deg, #a78bfa, #8b5cf6); color: #fff; }
+.back-btn { background: #14171B; border: 1.5px solid #22262D; border-radius: 10px; padding: 10px 16px; color: #C6CBD3; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+.tabs { display: flex; gap: 4px; margin-bottom: 24px; background: #14171B; padding: 4px; border-radius: 12px; overflow-x: auto; }
+.tab { background: transparent; border: none; padding: 10px 18px; color: #8C929B; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; border-radius: 8px; white-space: nowrap; position: relative; display: inline-flex; align-items: center; gap: 7px; }
+.tab.active { background: oklch(0.5 0.16 255); color: #fff; }
 .tab.disabled { opacity: 0.3; cursor: not-allowed; }
-.tab-badge { display: inline-block; background: #ff6b6b; color: #fff; border-radius: 10px; padding: 1px 8px; font-size: 10px; font-weight: 700; margin-left: 6px; font-family: 'JetBrains Mono', monospace; }
+.tab-badge { display: inline-block; background: oklch(0.5 0.19 27); color: #fff; border-radius: 10px; padding: 1px 8px; font-size: 10px; font-weight: 700; margin-left: 6px; font-family: 'JetBrains Mono', monospace; }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
-.filters-bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 20px; padding: 14px; background: rgba(255, 255, 255, 0.03); border-radius: 12px; }
+.filters-bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 20px; padding: 14px; background: #14171B; border: 1px solid #22262D; border-radius: 12px; }
 .filter-group { display: flex; align-items: center; gap: 8px; }
-.filter-label { font-size: 11px; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 0.08em; font-family: 'JetBrains Mono', monospace; }
-.filter-select { padding: 8px 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: #fff; font-family: inherit; font-size: 13px; cursor: pointer; }
-.filter-input { padding: 8px 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: #fff; font-family: inherit; font-size: 13px; }
-.month-nav { display: flex; align-items: center; gap: 4px; background: rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 4px; }
-.month-btn { background: transparent; border: none; color: #fff; padding: 6px 10px; cursor: pointer; border-radius: 6px; font-family: inherit; }
+.filter-label { font-size: 11px; font-weight: 700; color: #8C929B; text-transform: uppercase; letter-spacing: 0.08em; font-family: 'JetBrains Mono', monospace; }
+.filter-select { padding: 8px 12px; background: #1B1F24; border: 1.5px solid #22262D; border-radius: 8px; color: #F5F7FA; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+.filter-input { padding: 8px 12px; background: #1B1F24; border: 1.5px solid #22262D; border-radius: 8px; color: #F5F7FA; font-family: inherit; font-size: 13px; font-weight: 600; }
+.month-nav { display: flex; align-items: center; gap: 4px; background: #1B1F24; border-radius: 8px; padding: 4px; }
+.month-btn { background: transparent; border: none; color: #F5F7FA; padding: 6px 10px; cursor: pointer; border-radius: 6px; font-family: inherit; display: inline-flex; align-items: center; }
 .month-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 .month-display { padding: 6px 14px; font-size: 13px; font-weight: 500; text-transform: capitalize; min-width: 130px; text-align: center; }
 .group-section { margin-bottom: 28px; }
 .group-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(167, 139, 250, 0.2); }
-.group-title { font-size: 14px; font-weight: 600; color: #a78bfa; letter-spacing: 0.04em; text-transform: uppercase; }
-.group-count { font-size: 11px; color: rgba(255, 255, 255, 0.4); font-family: 'JetBrains Mono', monospace; }
-.team-section { background: rgba(167, 139, 250, 0.04); border: 1px solid rgba(167, 139, 250, 0.15); border-radius: 16px; padding: 18px; margin-bottom: 20px; }
-.team-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(167, 139, 250, 0.15); }
-.team-name { font-size: 18px; font-weight: 700; background: linear-gradient(135deg, #a78bfa, #c4b5fd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.team-meta { font-size: 11px; color: rgba(255, 255, 255, 0.4); font-family: 'JetBrains Mono', monospace; }
-.summary-table { width: 100%; border-collapse: collapse; font-size: 13px; background: rgba(255, 255, 255, 0.02); border-radius: 10px; overflow: hidden; }
-.summary-table th { text-align: left; padding: 12px 14px; background: rgba(255, 255, 255, 0.03); color: rgba(255, 255, 255, 0.5); font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; font-family: 'JetBrains Mono', monospace; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
-.summary-table td { padding: 12px 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.04); }
+.group-title { font-size: 14px; font-weight: 800; color: oklch(0.7 0.16 255); letter-spacing: 0.04em; text-transform: uppercase; }
+.group-count { font-size: 11px; color: #8C929B; font-family: 'JetBrains Mono', monospace; }
+.team-section { background: #14171B; border: 1px solid #22262D; border-radius: 16px; padding: 18px; margin-bottom: 20px; }
+.team-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid #22262D; }
+.team-name { font-size: 18px; font-weight: 800; color: oklch(0.72 0.16 255); }
+.team-meta { font-size: 11px; color: #8C929B; font-family: 'JetBrains Mono', monospace; }
+.summary-table { width: 100%; border-collapse: collapse; font-size: 13px; background: #14171B; border-radius: 10px; overflow: hidden; }
+.summary-table th { text-align: left; padding: 12px 14px; background: #1B1F24; color: #8C929B; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; font-family: 'JetBrains Mono', monospace; border-bottom: 1px solid #22262D; }
+.summary-table td { padding: 12px 14px; border-bottom: 1px solid #1B1F24; font-weight: 600; }
 .summary-table tr:last-child td { border-bottom: none; }
 .summary-table tr.clickable { cursor: pointer; }
-.summary-table tr.clickable:hover td { background: rgba(167, 139, 250, 0.08); }
-.cell-name { font-weight: 500; }
+.summary-table tr.clickable:hover td { background: oklch(0.5 0.16 255 / 0.08); }
+.cell-name { font-weight: 700; }
 .cell-num { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
-.cell-num.green { color: #4ade80; }
-.cell-num.muted { color: rgba(255, 255, 255, 0.5); }
-.cell-num.warn { color: #fbbf24; }
-.cell-num.bad { color: #ff6b6b; }
-.badge-jefa { display: inline-block; padding: 2px 6px; background: rgba(167, 139, 250, 0.2); color: #a78bfa; border-radius: 4px; font-size: 9px; text-transform: uppercase; letter-spacing: 0.05em; margin-left: 6px; vertical-align: middle; font-family: 'JetBrains Mono', monospace; }
-.badge-admin { display: inline-block; padding: 2px 6px; background: rgba(251, 191, 36, 0.2); color: #fbbf24; border-radius: 4px; font-size: 9px; text-transform: uppercase; letter-spacing: 0.05em; margin-left: 6px; vertical-align: middle; font-family: 'JetBrains Mono', monospace; }
-.badge-alert { display: inline-block; padding: 2px 6px; background: rgba(255, 107, 107, 0.15); color: #ff6b6b; border-radius: 4px; font-size: 9px; margin-left: 6px; vertical-align: middle; font-weight: 700; }
-.badge-manual { display: inline-block; padding: 2px 8px; background: rgba(251, 191, 36, 0.2); color: #fbbf24; border-radius: 4px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
-.empty-state { text-align: center; padding: 40px 20px; color: rgba(255, 255, 255, 0.4); font-size: 14px; }
+.cell-num.green { color: oklch(0.62 0.13 150); font-weight: 700; }
+.cell-num.muted { color: #8C929B; }
+.cell-num.warn { color: oklch(0.68 0.14 60); font-weight: 700; }
+.cell-num.bad { color: oklch(0.65 0.19 27); font-weight: 700; }
+.badge-jefa { display: inline-block; padding: 2px 6px; background: #F5F7FA; color: #0A0A0B; border-radius: 4px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-left: 6px; vertical-align: middle; font-family: 'JetBrains Mono', monospace; }
+.badge-admin { display: inline-block; padding: 2px 6px; background: oklch(0.55 0.14 60 / 0.25); color: oklch(0.78 0.14 60); border-radius: 4px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-left: 6px; vertical-align: middle; font-family: 'JetBrains Mono', monospace; }
+.badge-alert { display: inline-block; padding: 2px 6px; background: oklch(0.5 0.19 27 / 0.2); color: oklch(0.68 0.19 27); border-radius: 4px; font-size: 9px; margin-left: 6px; vertical-align: middle; font-weight: 700; }
+.badge-manual { display: inline-block; padding: 2px 8px; background: oklch(0.55 0.14 60 / 0.25); color: oklch(0.78 0.14 60); border-radius: 4px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace; font-weight: 700; }
+.empty-state { text-align: center; padding: 40px 20px; color: #8C929B; font-size: 14px; font-weight: 600; }
 .actions-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-.btn-add-emp { background: linear-gradient(135deg, #4ade80, #22d3ee); color: #0f3460; border: none; border-radius: 10px; padding: 10px 18px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
-.btn-action { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 6px 12px; border-radius: 8px; font-family: inherit; font-size: 12px; cursor: pointer; margin-left: 4px; }
+.btn-add-emp { background: oklch(0.5 0.16 255); color: #fff; border: none; border-radius: 10px; padding: 12px 18px; font-family: inherit; font-size: 13px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.btn-action { background: #1B1F24; border: 1.5px solid #22262D; color: #F5F7FA; padding: 7px 12px; border-radius: 8px; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer; margin-left: 4px; }
 .cell-actions { text-align: right; white-space: nowrap; }
-.inactive-toggle { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 14px 18px; margin-top: 30px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-.inactive-toggle h3 { font-size: 13px; font-weight: 500; color: rgba(255, 255, 255, 0.5); }
+.inactive-toggle { background: #14171B; border: 1px solid #22262D; border-radius: 12px; padding: 14px 18px; margin-top: 30px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+.inactive-toggle h3 { font-size: 13px; font-weight: 700; color: #8C929B; display: flex; align-items: center; gap: 8px; }
 .inactive-content { display: none; padding-top: 20px; }
 .inactive-content.show { display: block; }
 .week-nav { display: flex; align-items: center; gap: 10px; }
-.week-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 8px 14px; border-radius: 8px; font-family: inherit; font-size: 13px; cursor: pointer; }
+.week-btn { background: #1B1F24; border: 1.5px solid #22262D; color: #F5F7FA; padding: 8px 14px; border-radius: 8px; font-family: inherit; font-size: 13px; cursor: pointer; display: inline-flex; align-items: center; }
 .week-display { font-size: 14px; font-weight: 600; padding: 8px 16px; min-width: 220px; text-align: center; }
-.btn-copy-week { background: linear-gradient(135deg, #4ade80, #22d3ee); color: #0f3460; border: none; border-radius: 8px; padding: 8px 14px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
-.shifts-table { width: 100%; border-collapse: collapse; font-size: 12px; background: rgba(255, 255, 255, 0.02); border-radius: 10px; overflow: hidden; }
-.shifts-table th { text-align: center; padding: 10px 6px; background: rgba(167, 139, 250, 0.1); color: rgba(255, 255, 255, 0.7); font-weight: 600; font-size: 11px; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+.btn-copy-week { background: oklch(0.5 0.16 255); color: #fff; border: none; border-radius: 8px; padding: 9px 14px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
+.shifts-table { width: 100%; border-collapse: collapse; font-size: 12px; background: #14171B; border-radius: 10px; overflow: hidden; }
+.shifts-table th { text-align: center; padding: 10px 6px; background: #1B1F24; color: #C6CBD3; font-weight: 700; font-size: 11px; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; border-bottom: 1px solid #22262D; }
 .shifts-table th:first-child { text-align: left; padding-left: 14px; width: 160px; }
-.shifts-table th.today { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
-.shifts-table td { padding: 6px; border-bottom: 1px solid rgba(255, 255, 255, 0.04); text-align: center; }
+.shifts-table th.today { background: oklch(0.5 0.16 255 / 0.25); color: oklch(0.78 0.16 255); }
+.shifts-table td { padding: 6px; border-bottom: 1px solid #1B1F24; text-align: center; }
 .shifts-table td:first-child { text-align: left; padding-left: 14px; }
-.shifts-table td.today-col { background: rgba(74, 222, 128, 0.03); }
+.shifts-table td.today-col { background: oklch(0.5 0.16 255 / 0.05); }
 .shift-cell { display: inline-block; padding: 6px 8px; border-radius: 6px; font-size: 10px; font-weight: 600; cursor: pointer; min-width: 65px; font-family: 'JetBrains Mono', monospace; }
-.shift-cell.empty { background: rgba(255, 255, 255, 0.04); color: rgba(255, 255, 255, 0.3); border: 1px dashed rgba(255, 255, 255, 0.15); }
-.shift-cell.part_time_manana { background: rgba(134, 239, 172, 0.2); color: #86efac; border: 1px solid rgba(134, 239, 172, 0.4); }
-.shift-cell.part_time_tarde { background: rgba(74, 222, 128, 0.2); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.4); }
-.shift-cell.full_time { background: rgba(96, 165, 250, 0.2); color: #60a5fa; border: 1px solid rgba(96, 165, 250, 0.4); }
-.shift-cell.academia { background: rgba(251, 146, 60, 0.2); color: #fb923c; border: 1px solid rgba(251, 146, 60, 0.4); }
-.shift-cell.libre { background: rgba(255, 255, 255, 0.04); color: rgba(255, 255, 255, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); }
-.jornada-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; padding: 14px; background: rgba(255, 255, 255, 0.03); border-radius: 10px; font-size: 11px; }
+.shift-cell.empty { background: #1B1F24; color: #5B616B; border: 1.5px dashed #22262D; }
+.shift-cell.part_time_manana { background: oklch(0.62 0.12 220 / 0.22); color: oklch(0.78 0.12 220); border: 1.5px solid oklch(0.62 0.12 220 / 0.45); }
+.shift-cell.part_time_tarde { background: oklch(0.52 0.13 285 / 0.25); color: oklch(0.75 0.13 285); border: 1.5px solid oklch(0.52 0.13 285 / 0.5); }
+.shift-cell.full_time { background: oklch(0.5 0.16 255 / 0.22); color: oklch(0.75 0.16 255); border: 1.5px solid oklch(0.5 0.16 255 / 0.45); }
+.shift-cell.academia { background: oklch(0.62 0.13 60 / 0.22); color: oklch(0.78 0.13 60); border: 1.5px solid oklch(0.62 0.13 60 / 0.45); }
+.shift-cell.libre { background: #1B1F24; color: #8C929B; border: 1.5px solid #22262D; }
+.jornada-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; padding: 14px; background: #14171B; border: 1px solid #22262D; border-radius: 10px; font-size: 11px; font-weight: 600; }
 .legend-item { display: flex; align-items: center; gap: 6px; }
 .legend-color { width: 14px; height: 14px; border-radius: 4px; }
-.modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7); display: none; align-items: flex-start; justify-content: center; z-index: 200; padding: 20px; overflow-y: auto; backdrop-filter: blur(8px); }
+.modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.65); display: none; align-items: flex-start; justify-content: center; z-index: 200; padding: 20px; overflow-y: auto; }
 .modal-overlay.show { display: flex; }
-.modal-card { background: linear-gradient(135deg, #1a1a2e, #16213e); border: 1px solid rgba(167, 139, 250, 0.3); border-radius: 20px; padding: 28px; max-width: 500px; width: 100%; margin: auto; }
+.modal-card { background: #14171B; border: 1.5px solid #22262D; border-radius: 18px; padding: 28px; max-width: 500px; width: 100%; margin: auto; }
 .modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
-.modal-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
-.modal-subtitle { font-size: 13px; color: rgba(255, 255, 255, 0.5); }
-.close-x { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; width: 32px; height: 32px; font-size: 18px; color: #fff; cursor: pointer; }
+.modal-title { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+.modal-subtitle { font-size: 13px; font-weight: 600; color: #8C929B; }
+.close-x { background: #1B1F24; border: 1.5px solid #22262D; border-radius: 10px; width: 36px; height: 36px; font-size: 18px; color: #F5F7FA; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 .jornada-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px; }
-.jornada-option { padding: 12px; border-radius: 10px; cursor: pointer; text-align: center; border: 2px solid transparent; background: rgba(255, 255, 255, 0.03); font-size: 12px; font-weight: 600; }
-.jornada-option.selected { background: rgba(167, 139, 250, 0.15); border-color: #a78bfa; }
+.jornada-option { padding: 12px; border-radius: 10px; cursor: pointer; text-align: center; border: 2px solid #22262D; background: #1B1F24; font-size: 12px; font-weight: 700; }
+.jornada-option.selected { background: oklch(0.5 0.16 255 / 0.15); border-color: oklch(0.6 0.16 255); }
 .time-row { display: flex; gap: 10px; }
 .time-row .field-group { flex: 1; }
-.hint { font-size: 11px; color: rgba(255, 255, 255, 0.4); margin-top: 6px; }
+.hint { font-size: 11px; font-weight: 600; color: #8C929B; margin-top: 6px; }
 .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
-.modal-actions button { flex: 1; padding: 12px; border-radius: 10px; font-family: inherit; font-size: 13px; cursor: pointer; font-weight: 600; }
-.advanced-toggle { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 12px 14px; margin: 14px 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: rgba(255, 255, 255, 0.7); }
+.modal-actions button { flex: 1; padding: 12px; border-radius: 10px; font-family: inherit; font-size: 13px; cursor: pointer; font-weight: 700; }
+.advanced-toggle { background: #1B1F24; border: 1px solid #22262D; border-radius: 10px; padding: 12px 14px; margin: 14px 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 700; color: #C6CBD3; }
 .advanced-content { display: none; padding-top: 10px; }
 .advanced-content.show { display: block; }
-.detail-card { background: linear-gradient(135deg, #1a1a2e, #16213e); border: 1px solid rgba(167, 139, 250, 0.3); border-radius: 20px; padding: 28px; max-width: 750px; width: 100%; margin: auto; }
+.detail-card { background: #14171B; border: 1.5px solid #22262D; border-radius: 18px; padding: 28px; max-width: 750px; width: 100%; margin: auto; }
 .detail-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
-.detail-title { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
-.detail-subtitle { font-size: 13px; color: rgba(255, 255, 255, 0.5); }
+.detail-title { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 4px; }
+.detail-subtitle { font-size: 13px; font-weight: 600; color: #8C929B; }
 .detail-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 24px; }
-.stat-box { background: rgba(255, 255, 255, 0.04); border-radius: 10px; padding: 12px; text-align: center; }
-.stat-value { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; color: #a78bfa; }
-.stat-value.warn { color: #fbbf24; }
-.stat-value.bad { color: #ff6b6b; }
-.stat-value.good { color: #4ade80; }
-.stat-label { font-size: 10px; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
-.day-row { background: rgba(255, 255, 255, 0.03); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; }
-.day-row.has-issue { border-left: 3px solid #fbbf24; }
-.day-row.absent { border-left: 3px solid #ff6b6b; background: rgba(255, 107, 107, 0.05); }
+.stat-box { background: #1B1F24; border: 1px solid #22262D; border-radius: 10px; padding: 12px; text-align: center; }
+.stat-value { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; color: oklch(0.72 0.16 255); }
+.stat-value.warn { color: oklch(0.72 0.14 60); }
+.stat-value.bad { color: oklch(0.65 0.19 27); }
+.stat-value.good { color: oklch(0.65 0.13 150); }
+.stat-label { font-size: 10px; font-weight: 700; color: #8C929B; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+.day-row { background: #1B1F24; border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; }
+.day-row.has-issue { border-left: 3px solid oklch(0.6 0.14 60); }
+.day-row.absent { border-left: 3px solid oklch(0.5 0.19 27); background: oklch(0.5 0.19 27 / 0.08); }
 .day-row-header { display: flex; justify-content: space-between; margin-bottom: 6px; align-items: center; }
-.day-date { font-weight: 500; text-transform: capitalize; font-size: 14px; }
-.day-prod { font-family: 'JetBrains Mono', monospace; color: #4ade80; font-size: 13px; font-weight: 600; }
-.day-detail { font-size: 11px; color: rgba(255, 255, 255, 0.6); font-family: 'JetBrains Mono', monospace; margin-top: 4px; }
+.day-date { font-weight: 700; text-transform: capitalize; font-size: 14px; }
+.day-prod { font-family: 'JetBrains Mono', monospace; color: oklch(0.65 0.13 150); font-size: 13px; font-weight: 700; }
+.day-detail { font-size: 11px; color: #C6CBD3; font-family: 'JetBrains Mono', monospace; margin-top: 4px; }
 .day-issue { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 10px; font-weight: 600; margin-left: 6px; font-family: 'JetBrains Mono', monospace; }
-.day-issue.late { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
-.day-issue.early { background: rgba(255, 107, 107, 0.15); color: #ff6b6b; }
-.day-issue.absent { background: rgba(255, 107, 107, 0.2); color: #ff6b6b; }
-.day-jornada { font-size: 11px; color: rgba(255, 255, 255, 0.5); font-family: 'JetBrains Mono', monospace; }
+.day-issue.late { background: oklch(0.55 0.14 60 / 0.2); color: oklch(0.72 0.14 60); }
+.day-issue.early { background: oklch(0.5 0.19 27 / 0.18); color: oklch(0.68 0.19 27); }
+.day-issue.absent { background: oklch(0.5 0.19 27 / 0.22); color: oklch(0.68 0.19 27); }
+.day-jornada { font-size: 11px; color: #8C929B; font-family: 'JetBrains Mono', monospace; }
 .no-permission { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
-.no-permission-box { background: rgba(255, 107, 107, 0.05); border: 1px solid rgba(255, 107, 107, 0.3); border-radius: 20px; padding: 40px 32px; max-width: 380px; text-align: center; }
-.no-permission-icon { width: 72px; height: 72px; background: linear-gradient(135deg, #ff6b6b, #ee5a52); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 32px; }
-.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #4ade80, #22d3ee); color: #0f3460; padding: 14px 24px; border-radius: 12px; font-weight: 600; font-size: 14px; z-index: 500; display: none; }
+.no-permission-box { background: #14171B; border: 1.5px solid oklch(0.5 0.19 27 / 0.4); border-radius: 20px; padding: 40px 32px; max-width: 380px; text-align: center; }
+.no-permission-icon { width: 72px; height: 72px; background: oklch(0.5 0.19 27); border-radius: 17px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: #fff; font-size: 32px; }
+.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: oklch(0.42 0.13 150); color: #fff; padding: 14px 24px; border-radius: 12px; font-weight: 700; font-size: 14px; z-index: 500; display: none; }
 .toast.show { display: block; }
-.toast.error { background: linear-gradient(135deg, #ff6b6b, #ee5a52); color: #fff; }
+.toast.error { background: oklch(0.5 0.19 27); color: #fff; }
 
 /* ALERTAS DASHBOARD */
 .alert-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
 .alert-stat-card { padding: 20px; border-radius: 16px; text-align: center; border: 1px solid; }
-.alert-stat-card.late { background: rgba(251, 191, 36, 0.08); border-color: rgba(251, 191, 36, 0.3); }
-.alert-stat-card.early { background: rgba(96, 165, 250, 0.08); border-color: rgba(96, 165, 250, 0.3); }
-.alert-stat-card.absent { background: rgba(255, 107, 107, 0.08); border-color: rgba(255, 107, 107, 0.3); }
+.alert-stat-card.late { background: oklch(0.55 0.14 60 / 0.1); border-color: oklch(0.55 0.14 60 / 0.35); }
+.alert-stat-card.early { background: oklch(0.5 0.16 255 / 0.08); border-color: oklch(0.5 0.16 255 / 0.35); }
+.alert-stat-card.absent { background: oklch(0.5 0.19 27 / 0.1); border-color: oklch(0.5 0.19 27 / 0.35); }
 .alert-stat-value { font-family: 'JetBrains Mono', monospace; font-size: 32px; font-weight: 800; }
-.alert-stat-value.late { color: #fbbf24; }
-.alert-stat-value.early { color: #60a5fa; }
-.alert-stat-value.absent { color: #ff6b6b; }
-.alert-stat-detail { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 4px; }
-.alert-stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.6); margin-top: 8px; font-family: 'JetBrains Mono', monospace; }
+.alert-stat-value.late { color: oklch(0.72 0.14 60); }
+.alert-stat-value.early { color: oklch(0.72 0.16 255); }
+.alert-stat-value.absent { color: oklch(0.68 0.19 27); }
+.alert-stat-detail { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #C6CBD3; margin-top: 4px; }
+.alert-stat-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #C6CBD3; margin-top: 8px; font-family: 'JetBrains Mono', monospace; }
 .alert-section { margin-top: 28px; }
-.alert-section-title { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 700; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid rgba(255,255,255,0.06); }
-.alert-section-count { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.4); font-weight: 400; }
-.absence-card { background: rgba(255, 107, 107, 0.06); border: 1px solid rgba(255, 107, 107, 0.25); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; }
-.absence-card.confirmed { background: rgba(255, 255, 255, 0.02); border-color: rgba(255, 255, 255, 0.06); }
+.alert-section-title { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 800; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid #22262D; }
+.alert-section-count { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8C929B; font-weight: 400; }
+.absence-card { background: oklch(0.5 0.19 27 / 0.08); border: 1.5px solid oklch(0.5 0.19 27 / 0.3); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; }
+.absence-card.confirmed { background: #14171B; border-color: #22262D; }
 .absence-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 8px; gap: 8px; }
 .absence-title { font-weight: 600; font-size: 14px; }
-.absence-title .date { color: rgba(255,255,255,0.5); font-weight: 400; margin-right: 6px; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
-.absence-team { font-size: 11px; color: rgba(167, 139, 250, 0.8); text-transform: uppercase; letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace; }
-.absence-info { font-size: 12px; color: rgba(255,255,255,0.5); margin-bottom: 10px; font-family: 'JetBrains Mono', monospace; }
-.absence-notes { font-size: 12px; color: rgba(255,255,255,0.6); font-style: italic; margin-top: 6px; padding: 8px; background: rgba(255,255,255,0.03); border-radius: 6px; }
+.absence-title .date { color: #8C929B; font-weight: 400; margin-right: 6px; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+.absence-team { font-size: 11px; color: oklch(0.72 0.16 255); text-transform: uppercase; letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace; }
+.absence-info { font-size: 12px; color: #8C929B; margin-bottom: 10px; font-family: 'JetBrains Mono', monospace; }
+.absence-notes { font-size: 12px; color: #C6CBD3; font-style: italic; margin-top: 6px; padding: 8px; background: #1B1F24; border-radius: 6px; }
 .absence-status { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace; }
-.absence-status.justified { background: rgba(74, 222, 128, 0.2); color: #4ade80; }
-.absence-status.unjustified { background: rgba(255, 107, 107, 0.2); color: #ff6b6b; }
+.absence-status.justified { background: oklch(0.42 0.13 150 / 0.25); color: oklch(0.72 0.13 150); }
+.absence-status.unjustified { background: oklch(0.5 0.19 27 / 0.25); color: oklch(0.7 0.19 27); }
 .absence-actions { display: flex; gap: 8px; margin-top: 8px; }
 .absence-btn { padding: 8px 14px; border-radius: 8px; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; border: none; flex: 1; }
-.absence-btn.justify { background: rgba(74, 222, 128, 0.2); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.4); }
-.absence-btn.unjustify { background: rgba(255, 107, 107, 0.2); color: #ff6b6b; border: 1px solid rgba(255, 107, 107, 0.4); }
-.absence-btn.notes { background: rgba(255, 255, 255, 0.05); color: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.1); flex: 0 0 auto; padding: 8px 12px; }
+.absence-btn.justify { background: oklch(0.42 0.13 150 / 0.2); color: oklch(0.72 0.13 150); border: 1.5px solid oklch(0.42 0.13 150 / 0.45); }
+.absence-btn.unjustify { background: oklch(0.5 0.19 27 / 0.2); color: oklch(0.7 0.19 27); border: 1.5px solid oklch(0.5 0.19 27 / 0.45); }
+.absence-btn.notes { background: #1B1F24; color: #C6CBD3; border: 1.5px solid #22262D; flex: 0 0 auto; padding: 8px 12px; }
 .absence-notes-field { display: none; margin-top: 10px; }
 .absence-notes-field.show { display: block; }
-.event-row { display: grid; grid-template-columns: 90px 1fr 100px; gap: 12px; align-items: center; padding: 10px 14px; background: rgba(255, 255, 255, 0.02); border-radius: 8px; margin-bottom: 4px; font-size: 12px; }
-.event-date { font-family: 'JetBrains Mono', monospace; color: rgba(255,255,255,0.5); font-size: 11px; }
+.event-row { display: grid; grid-template-columns: 90px 1fr 100px; gap: 12px; align-items: center; padding: 10px 14px; background: #14171B; border-radius: 8px; margin-bottom: 4px; font-size: 12px; }
+.event-date { font-family: 'JetBrains Mono', monospace; color: #8C929B; font-size: 11px; }
 .event-name { font-weight: 500; }
-.event-name .team { color: rgba(167, 139, 250, 0.7); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; margin-left: 6px; font-family: 'JetBrains Mono', monospace; }
+.event-name .team { color: oklch(0.65 0.16 255); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; margin-left: 6px; font-family: 'JetBrains Mono', monospace; }
 .event-detail { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-align: right; }
-.event-detail.late { color: #fbbf24; }
-.event-detail.early { color: #60a5fa; }
+.event-detail.late { color: oklch(0.72 0.14 60); }
+.event-detail.early { color: oklch(0.72 0.16 255); }
 
 /* FICHAJE MANUAL */
-.manual-punch-card { background: rgba(251, 191, 36, 0.04); border: 1px solid rgba(251, 191, 36, 0.2); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; }
+.manual-punch-card { background: oklch(0.55 0.14 60 / 0.06); border: 1.5px solid oklch(0.55 0.14 60 / 0.3); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; }
 .manual-punch-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 8px; gap: 8px; }
 .manual-punch-title { font-weight: 600; font-size: 14px; }
-.manual-punch-title .date { color: rgba(255,255,255,0.5); font-weight: 400; margin-right: 6px; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
-.manual-punch-team { font-size: 11px; color: rgba(167, 139, 250, 0.8); text-transform: uppercase; letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace; }
+.manual-punch-title .date { color: #8C929B; font-weight: 400; margin-right: 6px; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+.manual-punch-team { font-size: 11px; color: oklch(0.7 0.16 255); text-transform: uppercase; letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace; }
 .manual-punch-details { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; font-size: 12px; }
-.manual-punch-detail { padding: 6px 10px; background: rgba(255,255,255,0.03); border-radius: 6px; font-family: 'JetBrains Mono', monospace; }
-.manual-punch-detail .lbl { color: rgba(255,255,255,0.4); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; display: block; }
-.manual-punch-detail .val { color: #fff; font-weight: 500; margin-top: 2px; }
-.manual-reason-badge { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 10px; font-weight: 600; background: rgba(251, 191, 36, 0.15); color: #fbbf24; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace; margin-top: 6px; }
-.manual-punch-meta { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 8px; font-family: 'JetBrains Mono', monospace; }
-.manual-punch-notes { font-size: 12px; color: rgba(255,255,255,0.6); font-style: italic; margin-top: 6px; padding: 8px; background: rgba(255,255,255,0.03); border-radius: 6px; }
+.manual-punch-detail { padding: 6px 10px; background: #1B1F24; border-radius: 6px; font-family: 'JetBrains Mono', monospace; }
+.manual-punch-detail .lbl { color: #8C929B; font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; display: block; }
+.manual-punch-detail .val { color: #F5F7FA; font-weight: 600; margin-top: 2px; }
+.manual-reason-badge { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 10px; font-weight: 700; background: oklch(0.55 0.14 60 / 0.2); color: oklch(0.72 0.14 60); text-transform: uppercase; letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace; margin-top: 6px; }
+.manual-punch-meta { font-size: 11px; color: #8C929B; margin-top: 8px; font-family: 'JetBrains Mono', monospace; }
+.manual-punch-notes { font-size: 12px; color: #C6CBD3; font-style: italic; margin-top: 6px; padding: 8px; background: #1B1F24; border-radius: 6px; }
 .manual-punch-actions { display: flex; gap: 8px; margin-top: 10px; }
-.btn-manual-delete { padding: 6px 12px; background: rgba(255, 107, 107, 0.1); color: #ff6b6b; border: 1px solid rgba(255, 107, 107, 0.3); border-radius: 6px; font-family: inherit; font-size: 11px; font-weight: 600; cursor: pointer; }
+.btn-manual-delete { padding: 6px 12px; background: oklch(0.5 0.19 27 / 0.12); color: oklch(0.68 0.19 27); border: 1.5px solid oklch(0.5 0.19 27 / 0.4); border-radius: 6px; font-family: inherit; font-size: 11px; font-weight: 700; cursor: pointer; }
 .punch-type-badge { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace; }
-.punch-type-badge.in { background: rgba(74, 222, 128, 0.2); color: #4ade80; }
-.punch-type-badge.out { background: rgba(255, 107, 107, 0.2); color: #ff6b6b; }
-.punch-type-badge.break_start { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
-.punch-type-badge.break_end { background: rgba(34, 211, 238, 0.2); color: #22d3ee; }
+.punch-type-badge.in { background: oklch(0.5 0.16 255 / 0.22); color: oklch(0.75 0.16 255); }
+.punch-type-badge.out { background: #F5F7FA; color: #0A0A0B; }
+.punch-type-badge.break_start { background: oklch(0.55 0.14 60 / 0.22); color: oklch(0.75 0.14 60); }
+.punch-type-badge.break_end { background: #22262D; color: #F5F7FA; }
 
 @media (max-width: 768px) {
   .admin-wrap { padding: 14px; }
@@ -237,7 +239,7 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
 <div class="screen show" id="loginScreen">
   <div class="login-wrap">
     <div class="login-box">
-      <div class="logo-admin">⚙️</div>
+      <div class="logo-admin"><span class="msi">settings</span></div>
       <div class="login-title">Panel de Jefa</div>
       <div class="login-subtitle">Acceso exclusivo</div>
       <div class="field-group">
@@ -258,7 +260,7 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
 <div class="screen" id="noPermissionScreen">
   <div class="no-permission">
     <div class="no-permission-box">
-      <div class="no-permission-icon">🚫</div>
+      <div class="no-permission-icon"><span class="msi">block</span></div>
       <div style="font-size:22px;font-weight:700;margin-bottom:8px;">No tenés permisos</div>
       <div style="font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:24px;">Este panel es solo para jefas y administradores.</div>
       <button class="btn-admin" onclick="goToApp()">← Volver a la app</button>
@@ -270,7 +272,7 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
   <div class="admin-wrap">
     <div class="admin-header">
       <div class="admin-title-block">
-        <div class="logo-admin" style="width:44px;height:44px;font-size:20px;">⚙️</div>
+        <div class="logo-admin" style="width:44px;height:44px;font-size:20px;"><span class="msi" style="font-size:20px;">settings</span></div>
         <div class="admin-title">
           <h1 id="adminPanelTitle">Panel</h1>
           <div class="subtitle" id="adminUserName">--</div>
@@ -284,12 +286,12 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
     </div>
 
     <div class="tabs">
-      <button class="tab active" data-tab="summary" onclick="switchTab('summary', event)">📊 Resumen</button>
-      <button class="tab" data-tab="schedules" onclick="switchTab('schedules', event)">📅 Horarios</button>
-      <button class="tab" data-tab="alerts" onclick="switchTab('alerts', event)">⚠ Alertas <span id="alertsBadge" class="tab-badge" style="display:none;">0</span></button>
-      <button class="tab" data-tab="employees" onclick="switchTab('employees', event)">👥 Empleadas</button>
-      <button class="tab" data-tab="manual" onclick="switchTab('manual', event)">📝 Fichaje manual</button>
-      <button class="tab disabled" title="Próxima sesión">📥 Exportar</button>
+      <button class="tab active" data-tab="summary" onclick="switchTab('summary', event)"><span class="msi" style="font-size:17px;">bar_chart</span>Resumen</button>
+      <button class="tab" data-tab="schedules" onclick="switchTab('schedules', event)"><span class="msi" style="font-size:17px;">calendar_month</span>Horarios</button>
+      <button class="tab" data-tab="alerts" onclick="switchTab('alerts', event)"><span class="msi" style="font-size:17px;">warning</span>Alertas <span id="alertsBadge" class="tab-badge" style="display:none;">0</span></button>
+      <button class="tab" data-tab="employees" onclick="switchTab('employees', event)"><span class="msi" style="font-size:17px;">group</span>Empleadas</button>
+      <button class="tab" data-tab="manual" onclick="switchTab('manual', event)"><span class="msi" style="font-size:17px;">edit_note</span>Fichaje manual</button>
+      <button class="tab disabled" title="Próxima sesión"><span class="msi" style="font-size:17px;">download</span>Exportar</button>
     </div>
 
     <div class="tab-content active" id="tab-summary">
@@ -307,9 +309,9 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
           </select>
         </div>
         <div class="month-nav">
-          <button class="month-btn" onclick="changeMonth(-1)">◀</button>
+          <button class="month-btn" onclick="changeMonth(-1)"><span class="msi" style="font-size:16px;">chevron_left</span></button>
           <div class="month-display" id="monthDisplay">--</div>
-          <button class="month-btn" onclick="changeMonth(1)" id="nextMonthBtn">▶</button>
+          <button class="month-btn" onclick="changeMonth(1)" id="nextMonthBtn"><span class="msi" style="font-size:16px;">chevron_right</span></button>
         </div>
       </div>
       <div id="summaryContent"><div class="empty-state">Cargando datos...</div></div>
@@ -324,11 +326,11 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
           </select>
         </div>
         <div class="week-nav">
-          <button class="week-btn" onclick="changeWeek(-1)">◀</button>
+          <button class="week-btn" onclick="changeWeek(-1)"><span class="msi" style="font-size:16px;">chevron_left</span></button>
           <div class="week-display" id="weekDisplay">--</div>
-          <button class="week-btn" onclick="changeWeek(1)">▶</button>
+          <button class="week-btn" onclick="changeWeek(1)"><span class="msi" style="font-size:16px;">chevron_right</span></button>
         </div>
-        <button class="btn-copy-week" onclick="copyPreviousWeek()">📋 Copiar semana anterior</button>
+        <button class="btn-copy-week" onclick="copyPreviousWeek()"><span class="msi" style="font-size:16px;">content_copy</span>Copiar semana anterior</button>
       </div>
       <div id="schedulesContent"><div class="empty-state">Cargando horarios...</div></div>
       <div class="jornada-legend">
@@ -382,8 +384,8 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
       </div>
       <div id="employeesContent"><div class="empty-state">Cargando empleadas...</div></div>
       <div class="inactive-toggle" id="inactiveToggle" onclick="toggleInactive()" style="display:none;">
-        <h3>📁 Empleadas inactivas (<span id="inactiveCount">0</span>)</h3>
-        <span id="inactiveArrow">▼ Mostrar</span>
+        <h3><span class="msi" style="font-size:16px;">folder</span>Empleadas inactivas (<span id="inactiveCount">0</span>)</h3>
+        <span id="inactiveArrow" style="display:flex;align-items:center;gap:5px;"><span class="msi" style="font-size:16px;">expand_more</span>Mostrar</span>
       </div>
       <div class="inactive-content" id="inactiveContent"></div>
     </div>
@@ -407,9 +409,9 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
           </select>
         </div>
         <div class="month-nav">
-          <button class="month-btn" onclick="changeMonth(-1)">◀</button>
+          <button class="month-btn" onclick="changeMonth(-1)"><span class="msi" style="font-size:16px;">chevron_left</span></button>
           <div class="month-display" id="manualMonthDisplay">--</div>
-          <button class="month-btn" onclick="changeMonth(1)" id="manualNextMonthBtn">▶</button>
+          <button class="month-btn" onclick="changeMonth(1)" id="manualNextMonthBtn"><span class="msi" style="font-size:16px;">chevron_right</span></button>
         </div>
       </div>
       <div id="manualContent"><div class="empty-state">Cargando fichajes manuales...</div></div>
@@ -453,8 +455,8 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
       <select id="addTeam" onchange="updateAddRoleOptions()"><option value="">Seleccionar...</option></select>
     </div>
     <div class="advanced-toggle" onclick="toggleAdvanced('add')">
-      <span>⚙️ Opciones avanzadas</span>
-      <span id="addAdvancedArrow">▼</span>
+      <span style="display:flex;align-items:center;gap:8px;"><span class="msi" style="font-size:17px;">tune</span>Opciones avanzadas</span>
+      <span id="addAdvancedArrow" class="msi" style="font-size:17px;">expand_more</span>
     </div>
     <div class="advanced-content" id="addAdvancedContent">
       <div class="field-group">
@@ -492,7 +494,7 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
     <div class="field-group">
       <label class="field-label">NOMBRE COMPLETO</label>
       <input type="text" id="editFullName">
-      <div class="hint" id="editNameHint" style="display:none;">⚠ Solo admin puede cambiar nombres de jefas</div>
+      <div class="hint" id="editNameHint" style="display:none;">Solo admin puede cambiar nombres de jefas</div>
     </div>
     <div class="field-group">
       <label class="field-label">USUARIO</label>
@@ -508,7 +510,7 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
     </div>
     <div class="field-group">
       <label class="field-label">CONTRASEÑA</label>
-      <button class="btn-secondary" onclick="resetPassword()" style="width:100%;padding:12px;border-radius:10px;font-family:inherit;font-size:13px;cursor:pointer;">🔄 Resetear a 123456</button>
+      <button class="btn-secondary" onclick="resetPassword()" style="width:100%;padding:12px;border-radius:10px;font-family:inherit;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;"><span class="msi" style="font-size:16px;">restart_alt</span>Resetear a 123456</button>
     </div>
     <div class="error-box" id="editError"></div>
     <div class="success-box" id="editSuccess"></div>
@@ -530,11 +532,11 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
     </div>
     <label class="field-label">TIPO DE JORNADA</label>
     <div class="jornada-options">
-      <div class="jornada-option part_time_manana" data-jornada="part_time_manana" onclick="selectJornada('part_time_manana')">📗 Part-time<br>Mañana</div>
-      <div class="jornada-option part_time_tarde" data-jornada="part_time_tarde" onclick="selectJornada('part_time_tarde')">📗 Part-time<br>Tarde</div>
-      <div class="jornada-option full_time" data-jornada="full_time" onclick="selectJornada('full_time')">📘 Full-time<br>(9h)</div>
-      <div class="jornada-option academia" data-jornada="academia" onclick="selectJornada('academia')">📙 Academia<br>(10-18)</div>
-      <div class="jornada-option libre" data-jornada="libre" onclick="selectJornada('libre')" style="grid-column:1/-1;">⚫ Libre / Franco</div>
+      <div class="jornada-option part_time_manana" data-jornada="part_time_manana" onclick="selectJornada('part_time_manana')">Part-time<br>Mañana</div>
+      <div class="jornada-option part_time_tarde" data-jornada="part_time_tarde" onclick="selectJornada('part_time_tarde')">Part-time<br>Tarde</div>
+      <div class="jornada-option full_time" data-jornada="full_time" onclick="selectJornada('full_time')">Full-time<br>(9h)</div>
+      <div class="jornada-option academia" data-jornada="academia" onclick="selectJornada('academia')">Academia<br>(10-18)</div>
+      <div class="jornada-option libre" data-jornada="libre" onclick="selectJornada('libre')" style="grid-column:1/-1;">Libre / Franco</div>
     </div>
     <div id="shiftTimeFields">
       <div class="time-row">
@@ -562,7 +564,7 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
   <div class="modal-card">
     <div class="modal-header">
       <div>
-        <div class="modal-title">📝 Crear fichaje manual</div>
+        <div class="modal-title"><span class="msi" style="font-size:19px;">edit_note</span>Crear fichaje manual</div>
         <div class="modal-subtitle">Registrar entrada, salida o break de emergencia</div>
       </div>
       <button class="close-x" onclick="closeManualModal()">×</button>
@@ -579,10 +581,10 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
       <label class="field-label">TIPO DE FICHAJE *</label>
       <select id="manualType">
         <option value="">Seleccionar...</option>
-        <option value="in">🟢 ENTRADA</option>
-        <option value="out">🔴 SALIDA</option>
-        <option value="break_start">🟡 INICIO DE BREAK</option>
-        <option value="break_end">🔵 FIN DE BREAK</option>
+        <option value="in">ENTRADA</option>
+        <option value="out">SALIDA</option>
+        <option value="break_start">INICIO DE BREAK</option>
+        <option value="break_end">FIN DE BREAK</option>
       </select>
     </div>
 
@@ -887,7 +889,7 @@ function renderSummary(){
   if(currentUser.is_admin&&tf==='all'){
     const bt={};f.forEach(e=>{const n=e.teams?.name||'Sin equipo';if(!bt[n])bt[n]=[];bt[n].push(e);});
     const ord=['Salón','Promotoras','Presentación','Ventas','Sin equipo'];
-    for(const n of ord){if(!bt[n])continue;h+=`<div class="team-section"><div class="team-header"><div class="team-name">🏢 ${n}</div><div class="team-meta">${bt[n].length}</div></div>${renderByRole(bt[n])}</div>`;}
+    for(const n of ord){if(!bt[n])continue;h+=`<div class="team-section"><div class="team-header"><div class="team-name">${n}</div><div class="team-meta">${bt[n].length}</div></div>${renderByRole(bt[n])}</div>`;}
   }else h=renderByRole(f);
   c.innerHTML=h;
 }
@@ -905,11 +907,11 @@ function renderByRole(emps){
       const ini=emp.full_name.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
       const isJ=emp.is_manager;
       const hasIssues=s.lateCount>0||s.earlyCount>0||s.absentCount>0;
-      const alertBadge=hasIssues?'<span class="badge-alert">⚠</span>':'';
+      const alertBadge=hasIssues?'<span class="badge-alert">!</span>':'';
       const lateCell=s.lateCount>0?`<span class="cell-num warn">${s.lateCount} · ${fM(s.lateMinTotal)}</span>`:'<span class="cell-num muted">—</span>';
       const earlyCell=s.earlyCount>0?`<span class="cell-num warn">${s.earlyCount} · ${fM(s.earlyMinTotal)}</span>`:'<span class="cell-num muted">—</span>';
       const absentCell=s.absentCount>0?`<span class="cell-num bad">${s.absentCount}</span>`:'<span class="cell-num muted">—</span>';
-      h+=`<tr class="clickable" onclick="showDetail('${emp.id}')"><td><div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,${isJ?'#a78bfa,#8b5cf6':'#4ade80,#22d3ee'});display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;${isJ?'color:#fff;':'color:#0f3460;'}">${ini}</div><div><div class="cell-name">${emp.full_name}${isJ?'<span class="badge-jefa">Jefa</span>':''}${alertBadge}</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">@${emp.username}</div></div></div></td><td class="cell-num">${s.daysWorked}</td><td class="cell-num green">${fH(s.productiveHours)}</td><td>${lateCell}</td><td>${earlyCell}</td><td>${absentCell}</td></tr>`;
+      h+=`<tr class="clickable" onclick="showDetail('${emp.id}')"><td><div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:10px;background:${isJ?'oklch(0.5 0.16 255)':'#22262D'};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;color:#fff;">${ini}</div><div><div class="cell-name">${emp.full_name}${isJ?'<span class="badge-jefa">Jefa</span>':''}${alertBadge}</div><div style="font-size:11px;color:#8C929B;">@${emp.username}</div></div></div></td><td class="cell-num">${s.daysWorked}</td><td class="cell-num green">${fH(s.productiveHours)}</td><td>${lateCell}</td><td>${earlyCell}</td><td>${absentCell}</td></tr>`;
     }
     h+='</tbody></table></div>';
   }
@@ -927,8 +929,8 @@ function showDetail(empId){
   const s=getEmployeeStats(empId),days=getDayDetails(empId);
   document.getElementById('detailName').textContent=emp.full_name;
   document.getElementById('detailSubtitle').textContent=`${ROLE_LABELS[emp.default_role]||emp.default_role} · ${viewMonth.toLocaleDateString('es-AR',{month:'long',year:'numeric'})}`;
-  const lateHtml=s.lateCount>0?`<div class="stat-box"><div class="stat-value warn">${fM(s.lateMinTotal)}</div><div class="stat-label">⏰ Tardanzas (${s.lateCount})</div></div>`:`<div class="stat-box"><div class="stat-value good">✓</div><div class="stat-label">⏰ Sin tardanzas</div></div>`;
-  const earlyHtml=s.earlyCount>0?`<div class="stat-box"><div class="stat-value warn">${fM(s.earlyMinTotal)}</div><div class="stat-label">🚪 Sal. temp. (${s.earlyCount})</div></div>`:`<div class="stat-box"><div class="stat-value good">✓</div><div class="stat-label">🚪 Sin sal. temp.</div></div>`;
+  const lateHtml=s.lateCount>0?`<div class="stat-box"><div class="stat-value warn">${fM(s.lateMinTotal)}</div><div class="stat-label">Tardanzas (${s.lateCount})</div></div>`:`<div class="stat-box"><div class="stat-value good">✓</div><div class="stat-label">⏰ Sin tardanzas</div></div>`;
+  const earlyHtml=s.earlyCount>0?`<div class="stat-box"><div class="stat-value warn">${fM(s.earlyMinTotal)}</div><div class="stat-label">Sal. temp. (${s.earlyCount})</div></div>`:`<div class="stat-box"><div class="stat-value good">✓</div><div class="stat-label">🚪 Sin sal. temp.</div></div>`;
   document.getElementById('detailStats').innerHTML=`<div class="stat-box"><div class="stat-value">${s.daysWorked}</div><div class="stat-label">Días</div></div><div class="stat-box"><div class="stat-value good">${fH(s.productiveHours)}</div><div class="stat-label">Productivas</div></div>${lateHtml}${earlyHtml}`;
   const dc=document.getElementById('detailDays');
   if(days.length===0)dc.innerHTML='<div class="empty-state">Sin actividad este mes</div>';
@@ -938,13 +940,13 @@ function showDetail(empId){
         const abs=monthAbsences.find(a=>a.employee_id===empId&&a.absence_date===toDateStr(d.date));
         let status='';
         if(abs)status=`<span class="absence-status ${abs.status}">${abs.status==='justified'?'✓ Justificada':'✗ Injustificada'}</span>`;
-        return `<div class="day-row absent"><div class="day-row-header"><div class="day-date">${fD(d.date)}</div><span class="day-issue absent">🚫 AUSENTE ${status}</span></div><div class="day-jornada">Debía: ${JORNADA_DEFAULTS[d.shift.jornada_type].label} ${d.shift.start_time?d.shift.start_time.substring(0,5):''} - ${d.shift.end_time?d.shift.end_time.substring(0,5):''}</div>${abs&&abs.notes?`<div class="absence-notes">📝 ${abs.notes}</div>`:''}</div>`;
+        return `<div class="day-row absent"><div class="day-row-header"><div class="day-date">${fD(d.date)}</div><span class="day-issue absent">AUSENTE ${status}</span></div><div class="day-jornada">Debía: ${JORNADA_DEFAULTS[d.shift.jornada_type].label} ${d.shift.start_time?d.shift.start_time.substring(0,5):''} - ${d.shift.end_time?d.shift.end_time.substring(0,5):''}</div>${abs&&abs.notes?`<div class="absence-notes">📝 ${abs.notes}</div>`:''}</div>`;
       }
       let bh='';
       if(d.breaks.length>0)bh=`<div style="margin-top:6px;font-size:11px;color:rgba(255,255,255,0.5);">Breaks: ${d.breaks.map(b=>`${fT(b.start)}-${b.end?fT(b.end):'?'} (${Math.round(b.duration)}m)`).join(', ')}</div>`;
       let issues='';
-      if(d.lateMin>0)issues+=`<span class="day-issue late">⏰ ${fM(d.lateMin)} tarde</span>`;
-      if(d.earlyMin>0)issues+=`<span class="day-issue early">🚪 ${fM(d.earlyMin)} antes</span>`;
+      if(d.lateMin>0)issues+=`<span class="day-issue late">${fM(d.lateMin)} tarde</span>`;
+      if(d.earlyMin>0)issues+=`<span class="day-issue early">${fM(d.earlyMin)} antes</span>`;
       const jornadaInfo=d.shift&&d.shift.jornada_type!=='libre'?`<div class="day-jornada">Horario: ${JORNADA_DEFAULTS[d.shift.jornada_type].label} ${d.shift.start_time.substring(0,5)} - ${d.shift.end_time.substring(0,5)}</div>`:'';
       const rowClass=issues?'day-row has-issue':'day-row';
       return `<div class="${rowClass}"><div class="day-row-header"><div><span class="day-date">${fD(d.date)}</span>${issues}</div><div class="day-prod">${fH(d.productiveMin/60)}</div></div>${jornadaInfo}<div class="day-detail">↓ ${d.entrada?fT(d.entrada):'?'} → ↑ ${d.salida?fT(d.salida):'?'} · ${ROLE_LABELS[d.role]||d.role||''}</div>${bh}</div>`;
@@ -1009,11 +1011,11 @@ function renderAlerts(){
   const totalLateMin=late.reduce((s,x)=>s+x.minutes,0);
   const totalEarlyMin=early.reduce((s,x)=>s+x.minutes,0);
   let h=`<div class="alert-stats">
-    <div class="alert-stat-card late"><div class="alert-stat-value late">${late.length}</div><div class="alert-stat-detail">${fM(totalLateMin)}</div><div class="alert-stat-label">⏰ Tardanzas</div></div>
-    <div class="alert-stat-card early"><div class="alert-stat-value early">${early.length}</div><div class="alert-stat-detail">${fM(totalEarlyMin)}</div><div class="alert-stat-label">🚪 Salidas tempranas</div></div>
-    <div class="alert-stat-card absent"><div class="alert-stat-value absent">${pending.length}</div><div class="alert-stat-detail">${absences.length} totales</div><div class="alert-stat-label">🚫 Pendientes</div></div>
+    <div class="alert-stat-card late"><div class="alert-stat-value late">${late.length}</div><div class="alert-stat-detail">${fM(totalLateMin)}</div><div class="alert-stat-label">Tardanzas</div></div>
+    <div class="alert-stat-card early"><div class="alert-stat-value early">${early.length}</div><div class="alert-stat-detail">${fM(totalEarlyMin)}</div><div class="alert-stat-label">Salidas tempranas</div></div>
+    <div class="alert-stat-card absent"><div class="alert-stat-value absent">${pending.length}</div><div class="alert-stat-detail">${absences.length} totales</div><div class="alert-stat-label">Pendientes</div></div>
   </div>`;
-  h+=`<div class="alert-section"><div class="alert-section-title">🔴 Ausencias pendientes <span class="alert-section-count">(${pending.length})</span></div>`;
+  h+=`<div class="alert-section"><div class="alert-section-title">Ausencias pendientes <span class="alert-section-count">(${pending.length})</span></div>`;
   if(pending.length===0)h+='<div class="empty-state" style="padding:20px;">✓ No hay ausencias pendientes de confirmar</div>';
   else{
     for(const a of pending){
@@ -1024,11 +1026,11 @@ function renderAlerts(){
         <div class="absence-header">
           <div><div class="absence-title"><span class="date">${fD(a.date)}</span>${a.emp.full_name}</div><div class="absence-team">${a.teamName} · ${ROLE_LABELS_SINGLE[a.emp.default_role]||a.emp.default_role}</div></div>
         </div>
-        <div class="absence-info">📅 Debía: ${def.label} ${hours}</div>
+        <div class="absence-info">Debía: ${def.label} ${hours}</div>
         <div class="absence-actions">
           <button class="absence-btn justify" onclick="confirmAbsence('${a.emp.id}','${toDateStr(a.date)}','justified','${absId}')">✓ Justificada</button>
           <button class="absence-btn unjustify" onclick="confirmAbsence('${a.emp.id}','${toDateStr(a.date)}','unjustified','${absId}')">✗ Injustificada</button>
-          <button class="absence-btn notes" onclick="toggleAbsenceNotes('${absId}')">📝</button>
+          <button class="absence-btn notes" onclick="toggleAbsenceNotes('${absId}')"><span class="msi" style="font-size:15px;">edit_note</span></button>
         </div>
         <div class="absence-notes-field" id="notes_${absId}">
           <textarea id="notesText_${absId}" placeholder="Nota opcional (motivo, contexto, etc.)"></textarea>
@@ -1039,7 +1041,7 @@ function renderAlerts(){
   h+='</div>';
   const confirmed=absences.filter(a=>a.confirmed);
   if(confirmed.length>0){
-    h+=`<div class="alert-section"><div class="alert-section-title">📋 Ausencias confirmadas <span class="alert-section-count">(${confirmed.length})</span></div>`;
+    h+=`<div class="alert-section"><div class="alert-section-title">Ausencias confirmadas <span class="alert-section-count">(${confirmed.length})</span></div>`;
     for(const a of confirmed){
       const j=a.shift.jornada_type;const def=JORNADA_DEFAULTS[j];
       const hours=j!=='libre'&&a.shift.start_time?`${a.shift.start_time.substring(0,5)} - ${a.shift.end_time.substring(0,5)}`:'';
@@ -1049,17 +1051,17 @@ function renderAlerts(){
           <div><div class="absence-title"><span class="date">${fD(a.date)}</span>${a.emp.full_name}</div><div class="absence-team">${a.teamName}</div></div>
           <span class="absence-status ${st}">${st==='justified'?'✓ Justificada':'✗ Injustificada'}</span>
         </div>
-        <div class="absence-info">📅 ${def.label} ${hours}</div>
-        ${a.confirmed.notes?`<div class="absence-notes">📝 ${a.confirmed.notes}</div>`:''}
+        <div class="absence-info">${def.label} ${hours}</div>
+        ${a.confirmed.notes?`<div class="absence-notes">${a.confirmed.notes}</div>`:''}
       </div>`;
     }
     h+='</div>';
   }
-  h+=`<div class="alert-section"><div class="alert-section-title">⏰ Tardanzas <span class="alert-section-count">(${late.length}${totalLateMin>0?' · '+fM(totalLateMin):''})</span></div>`;
+  h+=`<div class="alert-section"><div class="alert-section-title">Tardanzas <span class="alert-section-count">(${late.length}${totalLateMin>0?' · '+fM(totalLateMin):''})</span></div>`;
   if(late.length===0)h+='<div class="empty-state" style="padding:20px;">✓ Sin tardanzas en este período</div>';
   else{for(const l of late){const inTime=l.entrada?fT(l.entrada):'?';h+=`<div class="event-row"><div class="event-date">${fD(l.date)}</div><div class="event-name">${l.emp.full_name} <span class="team">${l.teamName}</span></div><div class="event-detail late">${inTime} · +${fM(l.minutes)}</div></div>`;}}
   h+='</div>';
-  h+=`<div class="alert-section"><div class="alert-section-title">🚪 Salidas tempranas <span class="alert-section-count">(${early.length}${totalEarlyMin>0?' · '+fM(totalEarlyMin):''})</span></div>`;
+  h+=`<div class="alert-section"><div class="alert-section-title">Salidas tempranas <span class="alert-section-count">(${early.length}${totalEarlyMin>0?' · '+fM(totalEarlyMin):''})</span></div>`;
   if(early.length===0)h+='<div class="empty-state" style="padding:20px;">✓ Sin salidas tempranas en este período</div>';
   else{for(const e of early){const outTime=e.salida?fT(e.salida):'?';h+=`<div class="event-row"><div class="event-date">${fD(e.date)}</div><div class="event-name">${e.emp.full_name} <span class="team">${e.teamName}</span></div><div class="event-detail early">${outTime} · -${fM(e.minutes)}</div></div>`;}}
   h+='</div>';
@@ -1221,10 +1223,10 @@ async function renderManualPunches(){
         <div class="manual-punch-detail"><span class="lbl">Hora del fichaje</span><span class="val">${fT(p.timestamp)}</span></div>
         <div class="manual-punch-detail"><span class="lbl">Motivo</span><span class="val">${p.manual_reason||'—'}</span></div>
       </div>
-      ${p.manual_notes?`<div class="manual-punch-notes">📝 ${p.manual_notes}</div>`:''}
+      ${p.manual_notes?`<div class="manual-punch-notes">${p.manual_notes}</div>`:''}
       <div class="manual-punch-meta">Creado por ${creator} el ${createdAt.toLocaleDateString('es-AR')} a las ${fT(createdAt.toISOString())}</div>
       <div class="manual-punch-actions">
-        <button class="btn-manual-delete" onclick="deleteManualPunch('${p.id}')">🗑 Eliminar</button>
+        <button class="btn-manual-delete" onclick="deleteManualPunch('${p.id}')">Eliminar</button>
       </div>
     </div>`;
   }
@@ -1263,7 +1265,7 @@ function renderEmployees(){
     if(currentUser.is_admin&&tf==='all'){
       const bt={};f.forEach(e=>{const n=e.teams?.name||'Sin equipo';if(!bt[n])bt[n]=[];bt[n].push(e);});
       const ord=['Salón','Promotoras','Presentación','Ventas','Sin equipo'];
-      for(const n of ord){if(!bt[n])continue;h+=`<div class="team-section"><div class="team-header"><div class="team-name">🏢 ${n}</div><div class="team-meta">${bt[n].length}</div></div>${renderEmpsByRole(bt[n])}</div>`;}
+      for(const n of ord){if(!bt[n])continue;h+=`<div class="team-section"><div class="team-header"><div class="team-name">${n}</div><div class="team-meta">${bt[n].length}</div></div>${renderEmpsByRole(bt[n])}</div>`;}
     }else h=renderEmpsByRole(f);
     c.innerHTML=h;
   }
@@ -1274,7 +1276,7 @@ function renderEmployees(){
     if(currentUser.is_admin&&tf==='all'){
       const bt={};fi.forEach(e=>{const n=e.teams?.name||'Sin equipo';if(!bt[n])bt[n]=[];bt[n].push(e);});
       const ord=['Salón','Promotoras','Presentación','Ventas','Sin equipo'];
-      for(const n of ord){if(!bt[n])continue;h+=`<div class="team-section" style="opacity:0.7;"><div class="team-header"><div class="team-name">🏢 ${n}</div><div class="team-meta">${bt[n].length}</div></div>${renderEmpsByRole(bt[n],true)}</div>`;}
+      for(const n of ord){if(!bt[n])continue;h+=`<div class="team-section" style="opacity:0.7;"><div class="team-header"><div class="team-name">${n}</div><div class="team-meta">${bt[n].length}</div></div>${renderEmpsByRole(bt[n],true)}</div>`;}
     }else h=renderEmpsByRole(fi,true);
     document.getElementById('inactiveContent').innerHTML=h;
   }else tog.style.display='none';
@@ -1292,7 +1294,7 @@ function renderEmpsByRole(emps,isInactive=false){
       const isJ=emp.is_manager,isA=emp.is_admin;
       let act=isInactive?`<button class="btn-action" onclick="reactivateEmployee('${emp.id}')">Reactivar</button>`:`<button class="btn-action" onclick="openEditModal('${emp.id}')">Editar</button>`;
       const mb=emp.max_breaks_per_shift===999?'∞':emp.max_breaks_per_shift;
-      h+=`<tr><td><div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,${isA?'#fbbf24,#f59e0b':isJ?'#a78bfa,#8b5cf6':'#4ade80,#22d3ee'});display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;${isJ||isA?'color:#fff;':'color:#0f3460;'}">${ini}</div><div><div class="cell-name">${emp.full_name}${isJ?'<span class="badge-jefa">Jefa</span>':''}${isA?'<span class="badge-admin">Admin</span>':''}</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">@${emp.username} · Breaks: ${mb}</div></div></div></td><td class="cell-actions">${act}</td></tr>`;
+      h+=`<tr><td><div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:10px;background:${isA?'oklch(0.55 0.14 60)':isJ?'oklch(0.5 0.16 255)':'#22262D'};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;color:#fff;">${ini}</div><div><div class="cell-name">${emp.full_name}${isJ?'<span class="badge-jefa">Jefa</span>':''}${isA?'<span class="badge-admin">Admin</span>':''}</div><div style="font-size:11px;color:#8C929B;">@${emp.username} · Breaks: ${mb}</div></div></div></td><td class="cell-actions">${act}</td></tr>`;
     }
     h+='</tbody></table></div>';
   }
@@ -1444,7 +1446,7 @@ function renderSchedules(){
   if(currentUser.is_admin&&tf==='all'){
     const byTeam={};f.forEach(e=>{const n=e.teams?.name||'Sin equipo';if(!byTeam[n])byTeam[n]=[];byTeam[n].push(e);});
     const ord=['Salón','Promotoras','Presentación','Ventas','Sin equipo'];
-    for(const n of ord){if(!byTeam[n])continue;html+=`<div class="team-section"><div class="team-header"><div class="team-name">🏢 ${n}</div><div class="team-meta">${byTeam[n].length} personas</div></div>${renderShiftsTable(byTeam[n],dates,todayStr)}</div>`;}
+    for(const n of ord){if(!byTeam[n])continue;html+=`<div class="team-section"><div class="team-header"><div class="team-name">${n}</div><div class="team-meta">${byTeam[n].length} personas</div></div>${renderShiftsTable(byTeam[n],dates,todayStr)}</div>`;}
   }else html=renderShiftsTable(f,dates,todayStr);
   c.innerHTML=html;
 }
@@ -1457,7 +1459,7 @@ function renderShiftsTable(emps,dates,todayStr){
   const sorted=[...emps].sort((a,b)=>{const ra=roleOrder.indexOf(a.default_role),rb=roleOrder.indexOf(b.default_role);if(ra!==rb)return ra-rb;return a.full_name.localeCompare(b.full_name);});
   for(const emp of sorted){
     const isJ=emp.is_manager,ini=emp.full_name.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
-    h+=`<tr><td><div style="display:flex;align-items:center;gap:8px;"><div style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,${isJ?'#a78bfa,#8b5cf6':'#4ade80,#22d3ee'});display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;flex-shrink:0;${isJ?'color:#fff;':'color:#0f3460;'}">${ini}</div><div style="min-width:0;"><div style="font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${emp.full_name}</div><div style="font-size:9px;color:rgba(255,255,255,0.4);font-family:'JetBrains Mono',monospace;">${ROLE_LABELS_SINGLE[emp.default_role]||emp.default_role}</div></div></div></td>`;
+    h+=`<tr><td><div style="display:flex;align-items:center;gap:8px;"><div style="width:28px;height:28px;border-radius:8px;background:${isJ?'oklch(0.5 0.16 255)':'#22262D'};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;color:#fff;">${ini}</div><div style="min-width:0;"><div style="font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${emp.full_name}</div><div style="font-size:9px;color:#8C929B;font-family:'JetBrains Mono',monospace;">${ROLE_LABELS_SINGLE[emp.default_role]||emp.default_role}</div></div></div></td>`;
     for(const d of dates){const ds=toDateStr(d);const isToday=ds===todayStr;const shift=allShifts.find(s=>s.employee_id===emp.id&&s.shift_date===ds);h+=`<td class="${isToday?'today-col':''}">${renderShiftCell(emp.id,ds,shift)}</td>`;}
     h+='</tr>';
   }
