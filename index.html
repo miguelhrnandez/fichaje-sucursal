@@ -1116,31 +1116,74 @@ async function respondSwap(swapId,accept){
   const req1=swap.requester_id;
   const req2=swap.receiver_id;
   
-  console.log('DEBUG - Iniciando intercambio:',{shift1Id,shift2Id,req1,req2});
-  
   try{
-    // Paso 1: Actualizar primer shift (asignar al receptor)
-    const {error:err1,data:d1}=await db.from('shifts').update({employee_id:req2}).eq('id',shift1Id).select();
-    console.log('DEBUG - Update shift 1:',{err1,d1});
-    if(err1)throw new Error('Error actualizando shift 1: '+err1.message);
+    // Cargar los shifts completos primero (necesitamos los datos para recrearlos)
+    const {data:shifts,error:errLoad}=await db.from('shifts').select('*').in('id',[shift1Id,shift2Id]);
+    if(errLoad)throw new Error('Error leyendo turnos: '+errLoad.message);
+    if(!shifts||shifts.length!==2)throw new Error('No se encontraron ambos turnos');
     
-    // Paso 2: Actualizar segundo shift (asignar al solicitante)
-    const {error:err2,data:d2}=await db.from('shifts').update({employee_id:req1}).eq('id',shift2Id).select();
-    console.log('DEBUG - Update shift 2:',{err2,d2});
-    if(err2){
-      // Si falla el segundo, revertir el primero
-      await db.from('shifts').update({employee_id:req1}).eq('id',shift1Id);
-      throw new Error('Error actualizando shift 2: '+err2.message);
+    const shift1=shifts.find(s=>s.id===shift1Id);
+    const shift2=shifts.find(s=>s.id===shift2Id);
+    
+    // Estrategia: eliminar ambos shifts y crear 2 nuevos con los dueños intercambiados
+    // Esto evita el conflicto de la restricción única (employee_id, shift_date)
+    
+    // Paso 1: Eliminar ambos shifts viejos
+    const {error:errDel}=await db.from('shifts').delete().in('id',[shift1Id,shift2Id]);
+    if(errDel)throw new Error('Error eliminando turnos viejos: '+errDel.message);
+    
+    // Paso 2: Crear los 2 nuevos con dueños intercambiados
+    const newShift1={
+      employee_id:req2, // era req1, ahora req2
+      branch_id:shift1.branch_id,
+      shift_date:shift1.shift_date,
+      jornada_type:shift1.jornada_type,
+      start_time:shift1.start_time,
+      end_time:shift1.end_time,
+      break_duration_minutes:shift1.break_duration_minutes,
+      notes:shift1.notes,
+      created_by:currentUser.id
+    };
+    const newShift2={
+      employee_id:req1, // era req2, ahora req1
+      branch_id:shift2.branch_id,
+      shift_date:shift2.shift_date,
+      jornada_type:shift2.jornada_type,
+      start_time:shift2.start_time,
+      end_time:shift2.end_time,
+      break_duration_minutes:shift2.break_duration_minutes,
+      notes:shift2.notes,
+      created_by:currentUser.id
+    };
+    
+    const {data:newShifts,error:errIns}=await db.from('shifts').insert([newShift1,newShift2]).select();
+    if(errIns){
+      // Si falla, intentar restaurar los originales
+      console.error('Error insertando nuevos, intentando restaurar...');
+      await db.from('shifts').insert([{
+        id:shift1Id,employee_id:req1,branch_id:shift1.branch_id,shift_date:shift1.shift_date,
+        jornada_type:shift1.jornada_type,start_time:shift1.start_time,end_time:shift1.end_time,
+        break_duration_minutes:shift1.break_duration_minutes,notes:shift1.notes
+      },{
+        id:shift2Id,employee_id:req2,branch_id:shift2.branch_id,shift_date:shift2.shift_date,
+        jornada_type:shift2.jornada_type,start_time:shift2.start_time,end_time:shift2.end_time,
+        break_duration_minutes:shift2.break_duration_minutes,notes:shift2.notes
+      }]);
+      throw new Error('Error creando turnos intercambiados: '+errIns.message);
     }
     
-    // Paso 3: Marcar swap como aprobado
-    const {error:err3}=await db.from('shift_swaps').update({
+    // Paso 3: Actualizar el swap con los NUEVOS IDs de shifts y marcarlo aprobado
+    // Como creamos nuevos shifts, los IDs viejos ya no existen
+    const newShift1FromDb=newShifts.find(s=>s.employee_id===req2&&s.shift_date===shift1.shift_date);
+    const newShift2FromDb=newShifts.find(s=>s.employee_id===req1&&s.shift_date===shift2.shift_date);
+    
+    await db.from('shift_swaps').update({
       status:'approved',
       responded_at:new Date().toISOString(),
-      approved_at:new Date().toISOString()
+      approved_at:new Date().toISOString(),
+      requester_shift_id:newShift1FromDb?.id||shift1Id,
+      receiver_shift_id:newShift2FromDb?.id||shift2Id
     }).eq('id',swapId);
-    console.log('DEBUG - Update swap status:',{err3});
-    if(err3)throw new Error('Error actualizando swap: '+err3.message);
     
     showToast('✓ Cambio hecho');
     await loadMySwaps();
