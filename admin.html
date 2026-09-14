@@ -761,7 +761,28 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
     </div>
   </div>
 </div>
-
+<div class="modal-overlay" id="swapRejectOverlay">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">✗ Rechazar cambio</div>
+        <div class="modal-subtitle" id="swapRejectSubtitle">--</div>
+      </div>
+      <button class="close-x" onclick="closeSwapRejectModal()">×</button>
+    </div>
+    <div class="field-group">
+      <label class="field-label">MOTIVO DEL RECHAZO *</label>
+      <textarea id="swapRejectReason" placeholder="Ej: El local necesita cobertura ese día. Contactá con la jefa para ver alternativas."></textarea>
+      <div class="hint">Este mensaje se le va a mostrar a las empleadas involucradas</div>
+    </div>
+    <div class="error-box" id="swapRejectError"></div>
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeSwapRejectModal()">Cancelar</button>
+      <button class="btn-danger" onclick="confirmSwapReject()" style="border-radius:10px;padding:12px;font-family:inherit;font-size:13px;cursor:pointer;font-weight:600;">Confirmar rechazo</button>
+    </div>
+  </div>
+</div>
+  
 <div class="toast" id="toast"></div>
 <script>
 const SUPABASE_URL = 'https://raykzuncciaaouleezmx.supabase.co';
