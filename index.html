@@ -1082,40 +1082,74 @@ async function submitSwapRequest(){
 
 async function respondSwap(swapId,accept){
   const swap=mySwaps.find(s=>s.id===swapId);
-  if(!swap)return;
+  if(!swap){showToast('✗ Solicitud no encontrada',true);return;}
+  
+  // RECHAZAR
   if(!accept){
     if(!confirm('¿Rechazar esta solicitud de cambio?'))return;
     try{
-      await db.from('shift_swaps').update({status:'rejected_by_receiver',responded_at:new Date().toISOString()}).eq('id',swapId);
+      const {error}=await db.from('shift_swaps').update({status:'rejected_by_receiver',responded_at:new Date().toISOString()}).eq('id',swapId);
+      if(error)throw error;
       showToast('✗ Solicitud rechazada');
       await loadMySwaps();renderSwaps();updateSwapsBadge();
-    }catch(e){showToast('✗ Error',true);}
+    }catch(e){console.error('Error rechazar:',e);showToast('✗ Error al rechazar',true);}
     return;
   }
-  // ACEPTAR
+  
+  // ACEPTAR CON APROBACIÓN DE JEFA
   if(swap.needs_manager_approval){
     if(!confirm('¿Aceptar este cambio?\n\nLa jefa deberá aprobar el cambio final.'))return;
     try{
-      await db.from('shift_swaps').update({status:'accepted_by_receiver',responded_at:new Date().toISOString()}).eq('id',swapId);
+      const {error}=await db.from('shift_swaps').update({status:'accepted_by_receiver',responded_at:new Date().toISOString()}).eq('id',swapId);
+      if(error)throw error;
       showToast('✓ Aceptado. Esperando aprobación de la jefa.');
       await loadMySwaps();renderSwaps();updateSwapsBadge();
-    }catch(e){showToast('✗ Error',true);}
- }else{
-    // Cambio directo → intercambiar turnos ahora
-    if(!confirm('¿Aceptar este cambio?\n\nEl intercambio se hará inmediatamente.'))return;
-    try{
-      const shift1Id=swap.requester_shift_id;
-      const shift2Id=swap.receiver_shift_id;
-      const req1=swap.requester_id;
-      const req2=swap.receiver_id;
-      await db.from('shifts').update({employee_id:req2}).eq('id',shift1Id);
-      await db.from('shifts').update({employee_id:req1}).eq('id',shift2Id);
-      await db.from('shift_swaps').update({status:'approved',responded_at:new Date().toISOString(),approved_at:new Date().toISOString()}).eq('id',swapId);
-      showToast('✓ Cambio hecho!');
-      await loadMySwaps();
-      await loadMySchedule();
-      renderSwaps();updateSwapsBadge();
-    }catch(e){console.error(e);showToast('✗ Error al hacer el cambio',true);}
+    }catch(e){console.error('Error aceptar:',e);showToast('✗ Error al aceptar',true);}
+    return;
+  }
+  
+  // ACEPTAR - CAMBIO DIRECTO
+  if(!confirm('¿Aceptar este cambio?\n\nEl intercambio se hará inmediatamente.'))return;
+  
+  const shift1Id=swap.requester_shift_id;
+  const shift2Id=swap.receiver_shift_id;
+  const req1=swap.requester_id;
+  const req2=swap.receiver_id;
+  
+  console.log('DEBUG - Iniciando intercambio:',{shift1Id,shift2Id,req1,req2});
+  
+  try{
+    // Paso 1: Actualizar primer shift (asignar al receptor)
+    const {error:err1,data:d1}=await db.from('shifts').update({employee_id:req2}).eq('id',shift1Id).select();
+    console.log('DEBUG - Update shift 1:',{err1,d1});
+    if(err1)throw new Error('Error actualizando shift 1: '+err1.message);
+    
+    // Paso 2: Actualizar segundo shift (asignar al solicitante)
+    const {error:err2,data:d2}=await db.from('shifts').update({employee_id:req1}).eq('id',shift2Id).select();
+    console.log('DEBUG - Update shift 2:',{err2,d2});
+    if(err2){
+      // Si falla el segundo, revertir el primero
+      await db.from('shifts').update({employee_id:req1}).eq('id',shift1Id);
+      throw new Error('Error actualizando shift 2: '+err2.message);
+    }
+    
+    // Paso 3: Marcar swap como aprobado
+    const {error:err3}=await db.from('shift_swaps').update({
+      status:'approved',
+      responded_at:new Date().toISOString(),
+      approved_at:new Date().toISOString()
+    }).eq('id',swapId);
+    console.log('DEBUG - Update swap status:',{err3});
+    if(err3)throw new Error('Error actualizando swap: '+err3.message);
+    
+    showToast('✓ Cambio hecho');
+    await loadMySwaps();
+    await loadMySchedule();
+    renderSwaps();
+    updateSwapsBadge();
+  }catch(e){
+    console.error('Error al hacer el cambio:',e);
+    showToast('✗ Error: '+(e.message||'desconocido'),true);
   }
 }
 
