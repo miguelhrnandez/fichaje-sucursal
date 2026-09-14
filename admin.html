@@ -239,6 +239,43 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
 .export-loader { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(15, 52, 96, 0.3); border-top-color: #0f3460; border-radius: 50%; animation: spin 0.8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
+/* CAMBIOS DE TURNO ADMIN */
+.swaps-tab-section { margin-bottom: 28px; }
+.swaps-tab-title { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 700; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid rgba(255,255,255,0.06); }
+.swaps-tab-count { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.4); font-weight: 400; }
+.swap-admin-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+.swap-admin-card.pending { background: rgba(251, 191, 36, 0.06); border-color: rgba(251, 191, 36, 0.3); }
+.swap-admin-card.approved { background: rgba(74, 222, 128, 0.05); border-color: rgba(74, 222, 128, 0.2); }
+.swap-admin-card.rejected { background: rgba(255, 107, 107, 0.05); border-color: rgba(255, 107, 107, 0.2); opacity: 0.75; }
+.swap-admin-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px; gap: 12px; }
+.swap-admin-people { font-size: 15px; font-weight: 700; }
+.swap-admin-people .arrow { color: #a78bfa; margin: 0 6px; }
+.swap-admin-team { font-size: 11px; color: rgba(167, 139, 250, 0.8); text-transform: uppercase; letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
+.swap-admin-shifts { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: center; margin: 12px 0; padding: 12px; background: rgba(0, 0, 0, 0.2); border-radius: 8px; }
+.swap-admin-shift { text-align: center; }
+.swap-admin-shift-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255, 255, 255, 0.4); font-family: 'JetBrains Mono', monospace; margin-bottom: 4px; }
+.swap-admin-shift-person { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.9); margin-bottom: 4px; }
+.swap-admin-shift-date { font-size: 13px; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+.swap-admin-shift-type { font-size: 11px; color: rgba(255, 255, 255, 0.6); margin-top: 2px; }
+.swap-admin-arrow { font-size: 24px; color: #a78bfa; }
+.swap-admin-reason { display: inline-block; padding: 4px 10px; background: rgba(251, 191, 36, 0.15); border: 1px solid rgba(251, 191, 36, 0.4); border-radius: 6px; font-size: 11px; color: #fbbf24; margin-top: 8px; font-weight: 600; }
+.swap-admin-note { font-size: 12px; color: rgba(255,255,255,0.6); font-style: italic; margin-top: 10px; padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 6px; }
+.swap-admin-note .label { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255,255,255,0.4); margin-right: 6px; }
+.swap-admin-meta { font-size: 11px; color: rgba(255, 255, 255, 0.4); font-family: 'JetBrains Mono', monospace; margin-top: 8px; }
+.swap-admin-status-badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace; }
+.swap-admin-status-badge.pending { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
+.swap-admin-status-badge.approved { background: rgba(74, 222, 128, 0.2); color: #4ade80; }
+.swap-admin-status-badge.rejected { background: rgba(255, 107, 107, 0.2); color: #ff6b6b; }
+.swap-admin-actions { display: flex; gap: 10px; margin-top: 14px; }
+.swap-admin-btn { flex: 1; padding: 12px; border-radius: 10px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; border: none; }
+.swap-admin-btn.approve { background: linear-gradient(135deg, #4ade80, #22d3ee); color: #0f3460; }
+.swap-admin-btn.reject { background: rgba(255, 107, 107, 0.15); color: #ff6b6b; border: 1px solid rgba(255, 107, 107, 0.4); }
+
+/* Ícono de swap en tabla de horarios */
+.shift-cell.has-swap { position: relative; }
+.shift-cell .swap-icon { position: absolute; top: 2px; right: 3px; font-size: 11px; opacity: 0.9; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+.shift-cell.has-swap:hover { transform: scale(1.05); box-shadow: 0 0 10px rgba(167, 139, 250, 0.4); }
+  
 @media (max-width: 768px) {
   .admin-wrap { padding: 14px; }
   .shifts-table { font-size: 10px; }
