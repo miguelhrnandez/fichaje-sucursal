@@ -472,7 +472,20 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
       </div>
       <div id="manualContent"><div class="empty-state">Cargando fichajes manuales...</div></div>
     </div>
-
+    <div class="tab-content" id="tab-swaps">
+      <div class="filters-bar">
+        <div class="filter-group" id="swapsAdminTeamFilterGroup" style="display:none;">
+          <span class="filter-label">Equipo:</span>
+          <select class="filter-select" id="swapsAdminFilterTeam" onchange="renderSwapsAdmin()">
+            <option value="all">Todos los equipos</option>
+          </select>
+        </div>
+      </div>
+      <div id="swapsAdminContent">
+        <div class="empty-state">Cargando cambios de turno...</div>
+      </div>
+    </div>
+    
     <div class="tab-content" id="tab-export">
       <div class="export-hero">
         <div class="export-hero-icon">📥</div>
