@@ -861,6 +861,7 @@ async function doLogin(){
     setupFilters();
     renderSummary();
     updateAlertsBadge();
+        initSwapsBadge();
   }catch(err){console.error(err);errBox.textContent='Error de conexión';errBox.classList.add('show');}
 }
 
@@ -876,6 +877,7 @@ function switchTab(name,evt){
   if(name==='schedules'){setupSchedulesView();loadShifts().then(renderSchedules);}
   if(name==='alerts'){setupAlertsView();renderAlerts();}
   if(name==='manual'){setupManualView();renderManualPunches();}
+   if(name==='swaps'){setupSwapsAdminView();renderSwapsAdmin();}
   if(name==='export'){setupExportView();updateExportInfo();}
 }
 
@@ -1832,7 +1834,317 @@ async function copyPreviousWeek(){
     await loadShifts();await loadAllData();renderSchedules();renderSummary();updateAlertsBadge();
   }catch(err){showToast('✗ Error: '+(err.message||''),true);}
 }
+// ============ CAMBIOS DE TURNO (ADMIN) ============
+let allSwaps=[];
 
+async function loadAllSwaps(){
+  try{
+    const {data}=await db.from('shift_swaps').select('*, requester:requester_id(id,full_name,default_role,team_id,teams(name)), receiver:receiver_id(id,full_name,default_role,team_id,teams(name)), requester_shift:requester_shift_id(*), receiver_shift:receiver_shift_id(*), approver:approved_by(full_name)').order('created_at',{ascending:false}).limit(100);
+    allSwaps=data||[];
+  }catch(e){console.error('Error cargando swaps:',e);allSwaps=[];}
+}
+
+function setupSwapsAdminView(){
+  const tFilter=document.getElementById('swapsAdminTeamFilterGroup');
+  const tSel=document.getElementById('swapsAdminFilterTeam');
+  if(currentUser.is_admin){
+    tFilter.style.display='flex';
+    tSel.innerHTML='<option value="all">Todos los equipos</option>';
+    teams.forEach(t=>{tSel.innerHTML+=`<option value="${t.id}">${t.name}</option>`;});
+  }else tFilter.style.display='none';
+}
+
+async function renderSwapsAdmin(){
+  const c=document.getElementById('swapsAdminContent');
+  c.innerHTML='<div class="empty-state">Cargando cambios...</div>';
+  await loadAllSwaps();
+  updateSwapsAdminBadge();
+  
+  const tf=document.getElementById('swapsAdminFilterTeam')?.value||'all';
+  
+  // Filtrar por equipo si aplica
+  let filteredSwaps=allSwaps;
+  if(currentUser.is_admin&&tf!=='all'){
+    filteredSwaps=filteredSwaps.filter(s=>s.requester?.team_id===tf||s.receiver?.team_id===tf);
+  }else if(!currentUser.is_admin){
+    // Jefa: solo ve cambios de su equipo
+    filteredSwaps=filteredSwaps.filter(s=>s.requester?.team_id===currentUser.team_id||s.receiver?.team_id===currentUser.team_id);
+  }
+  
+  // Separar pendientes de aprobación de historial
+  const pending=filteredSwaps.filter(s=>s.status==='accepted_by_receiver');
+  const history=filteredSwaps.filter(s=>['approved','rejected_by_manager','rejected_by_receiver','cancelled','expired'].includes(s.status)).slice(0,20);
+  
+  let h='';
+  
+  // PENDIENTES
+  h+=`<div class="swaps-tab-section"><div class="swaps-tab-title">🔴 Pendientes de aprobación <span class="swaps-tab-count">(${pending.length})</span></div>`;
+  if(pending.length===0){
+    h+='<div class="empty-state" style="padding:24px;">✓ No hay cambios pendientes de aprobación</div>';
+  }else{
+    for(const s of pending){
+      h+=renderSwapAdminCard(s,'pending');
+    }
+  }
+  h+='</div>';
+  
+  // HISTORIAL
+  h+=`<div class="swaps-tab-section"><div class="swaps-tab-title">📋 Historial reciente <span class="swaps-tab-count">(${history.length})</span></div>`;
+  if(history.length===0){
+    h+='<div class="empty-state" style="padding:24px;">Sin historial de cambios</div>';
+  }else{
+    for(const s of history){
+      h+=renderSwapAdminCard(s,'history');
+    }
+  }
+  h+='</div>';
+  
+  c.innerHTML=h;
+}
+
+function renderSwapAdminCard(swap,type){
+  const req=swap.requester;
+  const rec=swap.receiver;
+  const reqShift=swap.requester_shift;
+  const recShift=swap.receiver_shift;
+  if(!req||!rec||!reqShift||!recShift)return '';
+  
+  const teamName=req.teams?.name||rec.teams?.name||'—';
+  
+  // Formato de fechas
+  const reqDate=new Date(reqShift.shift_date+'T00:00:00');
+  const recDate=new Date(recShift.shift_date+'T00:00:00');
+  const reqDateStr=`${DAY_NAMES[reqDate.getDay()]} ${reqDate.getDate()}/${String(reqDate.getMonth()+1).padStart(2,'0')}`;
+  const recDateStr=`${DAY_NAMES[recDate.getDay()]} ${recDate.getDate()}/${String(recDate.getMonth()+1).padStart(2,'0')}`;
+  
+  const reqType=formatShiftTypeForAdmin(reqShift);
+  const recType=formatShiftTypeForAdmin(recShift);
+  
+  // Card class y badge
+  let cardClass='swap-admin-card';
+  let statusBadge='';
+  
+  if(swap.status==='accepted_by_receiver'){
+    cardClass+=' pending';
+    statusBadge='<span class="swap-admin-status-badge pending">Pendiente</span>';
+  }else if(swap.status==='approved'){
+    cardClass+=' approved';
+    statusBadge='<span class="swap-admin-status-badge approved">✓ Aprobado</span>';
+  }else if(['rejected_by_manager','rejected_by_receiver','cancelled','expired'].includes(swap.status)){
+    cardClass+=' rejected';
+    const labels={
+      rejected_by_manager:'✗ Rechazado por jefa',
+      rejected_by_receiver:'✗ Rechazado por empleada',
+      cancelled:'Cancelado',
+      expired:'Expirado'
+    };
+    statusBadge=`<span class="swap-admin-status-badge rejected">${labels[swap.status]}</span>`;
+  }
+  
+  // Razón que requiere aprobación
+  let reasonHtml='';
+  if(swap.needs_manager_approval&&swap.approval_reason){
+    const reasons={
+      franco:'⚠ Uno tiene franco',
+      horas_distintas:'⚠ Cantidad de horas distinta',
+      jornada_academia:'⚠ Una jornada es Academia'
+    };
+    reasonHtml=`<div class="swap-admin-reason">${reasons[swap.approval_reason]||'⚠ Requiere aprobación'}</div>`;
+  }
+  
+  // Motivo del solicitante
+  let requesterReasonHtml='';
+  if(swap.reason){
+    requesterReasonHtml=`<div class="swap-admin-note"><span class="label">Motivo:</span>${swap.reason}</div>`;
+  }
+  
+  // Nota de la jefa (si rechazó)
+  let managerNoteHtml='';
+  if(swap.response_notes&&(swap.status==='rejected_by_manager'||swap.status==='approved')){
+    managerNoteHtml=`<div class="swap-admin-note"><span class="label">Jefa:</span>${swap.response_notes}</div>`;
+  }
+  
+  // Meta
+  const createdAt=new Date(swap.created_at).toLocaleDateString('es-AR');
+  const respondedAt=swap.responded_at?new Date(swap.responded_at).toLocaleDateString('es-AR'):null;
+  const approvedAt=swap.approved_at?new Date(swap.approved_at).toLocaleDateString('es-AR'):null;
+  let metaHtml=`Solicitado ${createdAt}`;
+  if(respondedAt&&type==='pending'){
+    metaHtml+=` · Aceptado por ${rec.full_name.split(' ')[0]} ${respondedAt}`;
+  }
+  if(approvedAt&&swap.status==='approved'){
+    const approver=swap.approver?swap.approver.full_name:'la jefa';
+    metaHtml+=` · Aprobado por ${approver} ${approvedAt}`;
+  }
+  if(approvedAt&&swap.status==='rejected_by_manager'){
+    const approver=swap.approver?swap.approver.full_name:'la jefa';
+    metaHtml+=` · Rechazado por ${approver} ${approvedAt}`;
+  }
+  
+  // Acciones (solo para pendientes)
+  let actions='';
+  if(type==='pending'){
+    actions=`<div class="swap-admin-actions">
+      <button class="swap-admin-btn reject" onclick="openSwapRejectModal('${swap.id}','${req.full_name}','${rec.full_name}')">✗ Rechazar</button>
+      <button class="swap-admin-btn approve" onclick="approveSwap('${swap.id}')">✓ Aprobar</button>
+    </div>`;
+  }
+  
+  return `<div class="${cardClass}">
+    <div class="swap-admin-header">
+      <div>
+        <div class="swap-admin-people">${req.full_name} <span class="arrow">⇄</span> ${rec.full_name}</div>
+        <div class="swap-admin-team">${teamName} · ${ROLE_LABELS_SINGLE[req.default_role]||req.default_role}</div>
+      </div>
+      ${statusBadge}
+    </div>
+    <div class="swap-admin-shifts">
+      <div class="swap-admin-shift">
+        <div class="swap-admin-shift-label">DA</div>
+        <div class="swap-admin-shift-person">${req.full_name.split(' ')[0]}</div>
+        <div class="swap-admin-shift-date">${reqDateStr}</div>
+        <div class="swap-admin-shift-type">${reqType}</div>
+      </div>
+      <div class="swap-admin-arrow">⇄</div>
+      <div class="swap-admin-shift">
+        <div class="swap-admin-shift-label">DA</div>
+        <div class="swap-admin-shift-person">${rec.full_name.split(' ')[0]}</div>
+        <div class="swap-admin-shift-date">${recDateStr}</div>
+        <div class="swap-admin-shift-type">${recType}</div>
+      </div>
+    </div>
+    ${reasonHtml}
+    ${requesterReasonHtml}
+    ${managerNoteHtml}
+    <div class="swap-admin-meta">${metaHtml}</div>
+    ${actions}
+  </div>`;
+}
+
+function formatShiftTypeForAdmin(shift){
+  if(!shift)return '?';
+  const j=shift.jornada_type;
+  const def=JORNADA_DEFAULTS[j];
+  if(j==='libre')return '🌙 Libre';
+  return `${def.label} ${shift.start_time.substring(0,5)}-${shift.end_time.substring(0,5)}`;
+}
+
+function updateSwapsAdminBadge(){
+  let pending=allSwaps.filter(s=>s.status==='accepted_by_receiver');
+  // Filtrar por equipo si es jefa
+  if(!currentUser.is_admin){
+    pending=pending.filter(s=>s.requester?.team_id===currentUser.team_id||s.receiver?.team_id===currentUser.team_id);
+  }
+  const badge=document.getElementById('swapsAdminBadge');
+  if(!badge)return;
+  if(pending.length>0){badge.textContent=pending.length;badge.style.display='inline-block';}
+  else badge.style.display='none';
+}
+
+// APROBAR cambio
+async function approveSwap(swapId){
+  const swap=allSwaps.find(s=>s.id===swapId);
+  if(!swap){showToast('✗ Cambio no encontrado',true);return;}
+  if(!confirm(`¿Aprobar el cambio entre ${swap.requester.full_name} y ${swap.receiver.full_name}?\n\nLos turnos se intercambiarán inmediatamente.`))return;
+  
+  const shift1Id=swap.requester_shift_id;
+  const shift2Id=swap.receiver_shift_id;
+  const req1=swap.requester_id;
+  const req2=swap.receiver_id;
+  
+  try{
+    // Cargar shifts completos
+    const {data:shifts,error:errLoad}=await db.from('shifts').select('*').in('id',[shift1Id,shift2Id]);
+    if(errLoad)throw new Error('Error leyendo turnos: '+errLoad.message);
+    if(!shifts||shifts.length!==2)throw new Error('No se encontraron ambos turnos');
+    
+    const shift1=shifts.find(s=>s.id===shift1Id);
+    const shift2=shifts.find(s=>s.id===shift2Id);
+    
+    // Eliminar los 2 shifts viejos
+    const {error:errDel}=await db.from('shifts').delete().in('id',[shift1Id,shift2Id]);
+    if(errDel)throw new Error('Error eliminando turnos: '+errDel.message);
+    
+    // Crear 2 nuevos con dueños intercambiados
+    const newShift1={
+      employee_id:req2,branch_id:shift1.branch_id,shift_date:shift1.shift_date,
+      jornada_type:shift1.jornada_type,start_time:shift1.start_time,end_time:shift1.end_time,
+      break_duration_minutes:shift1.break_duration_minutes,notes:shift1.notes,created_by:currentUser.id
+    };
+    const newShift2={
+      employee_id:req1,branch_id:shift2.branch_id,shift_date:shift2.shift_date,
+      jornada_type:shift2.jornada_type,start_time:shift2.start_time,end_time:shift2.end_time,
+      break_duration_minutes:shift2.break_duration_minutes,notes:shift2.notes,created_by:currentUser.id
+    };
+    
+    const {data:newShifts,error:errIns}=await db.from('shifts').insert([newShift1,newShift2]).select();
+    if(errIns)throw new Error('Error creando turnos intercambiados: '+errIns.message);
+    
+    const newShift1FromDb=newShifts.find(s=>s.employee_id===req2&&s.shift_date===shift1.shift_date);
+    const newShift2FromDb=newShifts.find(s=>s.employee_id===req1&&s.shift_date===shift2.shift_date);
+    
+    // Actualizar swap
+    await db.from('shift_swaps').update({
+      status:'approved',
+      approved_by:currentUser.id,
+      approved_at:new Date().toISOString(),
+      requester_shift_id:newShift1FromDb?.id||shift1Id,
+      receiver_shift_id:newShift2FromDb?.id||shift2Id
+    }).eq('id',swapId);
+    
+    showToast('✓ Cambio aprobado y ejecutado');
+    await renderSwapsAdmin();
+    await loadAllData();
+    if(document.getElementById('tab-schedules').classList.contains('active'))renderSchedules();
+  }catch(e){
+    console.error('Error aprobando:',e);
+    showToast('✗ Error: '+(e.message||''),true);
+  }
+}
+
+// RECHAZAR cambio (con modal)
+let pendingRejectSwapId=null;
+function openSwapRejectModal(swapId,reqName,recName){
+  pendingRejectSwapId=swapId;
+  document.getElementById('swapRejectSubtitle').textContent=`${reqName} ⇄ ${recName}`;
+  document.getElementById('swapRejectReason').value='';
+  document.getElementById('swapRejectError').classList.remove('show');
+  document.getElementById('swapRejectOverlay').classList.add('show');
+  setTimeout(()=>document.getElementById('swapRejectReason').focus(),100);
+}
+function closeSwapRejectModal(){
+  document.getElementById('swapRejectOverlay').classList.remove('show');
+  pendingRejectSwapId=null;
+}
+async function confirmSwapReject(){
+  if(!pendingRejectSwapId)return;
+  const eB=document.getElementById('swapRejectError');
+  eB.classList.remove('show');
+  const reason=document.getElementById('swapRejectReason').value.trim();
+  if(!reason){eB.textContent='Escribí un motivo para el rechazo';eB.classList.add('show');return;}
+  if(reason.length<10){eB.textContent='Motivo muy corto (mínimo 10 caracteres)';eB.classList.add('show');return;}
+  try{
+    await db.from('shift_swaps').update({
+      status:'rejected_by_manager',
+      approved_by:currentUser.id,
+      approved_at:new Date().toISOString(),
+      response_notes:reason
+    }).eq('id',pendingRejectSwapId);
+    showToast('✗ Cambio rechazado');
+    closeSwapRejectModal();
+    await renderSwapsAdmin();
+  }catch(e){
+    console.error('Error rechazando:',e);
+    eB.textContent='Error: '+(e.message||'');eB.classList.add('show');
+  }
+}
+
+// Cargar swaps al iniciar (para el badge)
+async function initSwapsBadge(){
+  await loadAllSwaps();
+  updateSwapsAdminBadge();
+}
+  
 function showToast(msg,isError=false){const toast=document.getElementById('toast');toast.textContent=msg;toast.className='toast show'+(isError?' error':'');setTimeout(()=>toast.classList.remove('show'),3000);}
 
 updateMonthDisplay();updateWeekDisplay();document.getElementById('usernameInput').focus();
