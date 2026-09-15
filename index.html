@@ -6,6 +6,7 @@
 <title>Fichaje - Más Dueños</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
 
@@ -15,7 +16,6 @@ body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #1a
 .screen { display: none; min-height: 100vh; }
 .screen.show { display: block; }
 
-/* LOGIN */
 .login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
 .login-box { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(74, 222, 128, 0.3); border-radius: 24px; padding: 40px 32px; max-width: 380px; width: 100%; }
 .logo { width: 72px; height: 72px; background: linear-gradient(135deg, #4ade80, #22d3ee); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 32px; }
@@ -44,7 +44,6 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
 .admin-link { text-align: center; margin-top: 20px; }
 .admin-link a { color: rgba(167, 139, 250, 0.7); font-size: 12px; text-decoration: none; }
 
-/* MAIN APP */
 .main-wrap { max-width: 500px; margin: 0 auto; padding: 20px; padding-bottom: 100px; }
 .main-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(74, 222, 128, 0.2); }
 .user-info { display: flex; align-items: center; gap: 12px; }
@@ -55,7 +54,6 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
 .icon-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 8px 10px; color: rgba(255, 255, 255, 0.7); cursor: pointer; font-size: 14px; position: relative; }
 .icon-btn .notif-dot { position: absolute; top: 4px; right: 4px; width: 8px; height: 8px; background: #ff6b6b; border-radius: 50%; }
 
-/* CARD FICHAJE */
 .punch-card { background: rgba(74, 222, 128, 0.06); border: 1px solid rgba(74, 222, 128, 0.25); border-radius: 20px; padding: 24px; margin-bottom: 20px; text-align: center; }
 .punch-status-icon { font-size: 48px; margin-bottom: 12px; }
 .punch-status-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
@@ -76,7 +74,6 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
 .log-type { flex: 1; font-weight: 500; }
 .log-icon { width: 24px; text-align: center; }
 
-/* NAV INFERIOR */
 .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(15, 52, 96, 0.95); backdrop-filter: blur(20px); border-top: 1px solid rgba(74, 222, 128, 0.2); padding: 10px 0; z-index: 100; }
 .bottom-nav-inner { max-width: 500px; margin: 0 auto; display: flex; justify-content: space-around; }
 .nav-btn { flex: 1; background: transparent; border: none; color: rgba(255, 255, 255, 0.5); font-family: inherit; font-size: 11px; padding: 8px 4px; cursor: pointer; text-align: center; position: relative; }
@@ -84,11 +81,9 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
 .nav-btn .icon { font-size: 22px; display: block; margin-bottom: 3px; }
 .nav-btn .badge-nav { position: absolute; top: 4px; right: 20%; background: #ff6b6b; color: #fff; border-radius: 10px; padding: 1px 6px; font-size: 9px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
 
-/* SECCIONES */
 .section { display: none; }
 .section.show { display: block; }
 
-/* HORARIO PROPIO */
 .schedule-title { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
 .schedule-week { background: rgba(255, 255, 255, 0.03); border-radius: 14px; padding: 14px; margin-bottom: 20px; }
 .week-nav-mini { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
@@ -111,7 +106,6 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
 
 .btn-view-team { background: rgba(96, 165, 250, 0.1); border: 1px solid rgba(96, 165, 250, 0.3); color: #60a5fa; padding: 12px; border-radius: 12px; font-family: inherit; font-size: 13px; cursor: pointer; width: 100%; font-weight: 600; }
 
-/* MODAL DE EQUIPO */
 .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7); display: none; align-items: flex-start; justify-content: center; z-index: 200; padding: 20px; overflow-y: auto; backdrop-filter: blur(8px); }
 .modal-overlay.show { display: flex; }
 .modal-card { background: linear-gradient(135deg, #1a1a2e, #16213e); border: 1px solid rgba(74, 222, 128, 0.3); border-radius: 20px; padding: 24px; max-width: 500px; width: 100%; margin: auto; }
@@ -129,7 +123,6 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
 
 .section-mini-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(74, 222, 128, 0.7); font-family: 'JetBrains Mono', monospace; margin: 16px 0 8px; }
 
-/* CAMBIOS DE TURNO */
 .swap-title { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
 .btn-request-swap { background: linear-gradient(135deg, #a78bfa, #8b5cf6); color: #fff; border: none; border-radius: 12px; padding: 12px 18px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; width: 100%; margin-bottom: 20px; }
 
@@ -166,7 +159,6 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
 .swap-btn.reject { background: rgba(255, 107, 107, 0.15); color: #ff6b6b; border: 1px solid rgba(255, 107, 107, 0.3); }
 .swap-btn.cancel { background: rgba(255, 255, 255, 0.05); color: rgba(255, 255, 255, 0.7); border: 1px solid rgba(255, 255, 255, 0.1); }
 
-/* MODAL SOLICITAR CAMBIO */
 .swap-form-hint { font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-top: 4px; font-style: italic; }
 .swap-preview { background: rgba(167, 139, 250, 0.08); border: 1px solid rgba(167, 139, 250, 0.25); border-radius: 12px; padding: 14px; margin: 16px 0; }
 .swap-preview-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(167, 139, 250, 0.8); font-family: 'JetBrains Mono', monospace; margin-bottom: 10px; }
@@ -176,18 +168,15 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
 
 .empty-swaps { text-align: center; padding: 40px 20px; color: rgba(255, 255, 255, 0.4); font-size: 13px; }
 
-/* MODAL COMÚN */
 .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
 .modal-actions button { flex: 1; padding: 12px; border-radius: 10px; font-family: inherit; font-size: 13px; cursor: pointer; font-weight: 600; }
 
-/* QR SCANNER */
 #qr-reader { max-width: 100%; margin: 20px auto; }
 #qr-reader video { border-radius: 12px; }
 .scanner-wrap { text-align: center; padding: 20px; }
 .scanner-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
 .scanner-subtitle { font-size: 13px; color: rgba(255, 255, 255, 0.6); margin-bottom: 16px; }
 
-/* PROFILE */
 .profile-header { text-align: center; padding: 24px; background: rgba(255, 255, 255, 0.03); border-radius: 16px; margin-bottom: 20px; }
 .profile-avatar { width: 80px; height: 80px; border-radius: 20px; background: linear-gradient(135deg, #4ade80, #22d3ee); display: flex; align-items: center; justify-content: center; font-weight: 700; color: #0f3460; font-size: 32px; margin: 0 auto 12px; }
 .profile-name { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
@@ -207,7 +196,6 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
 <div class="screen show" id="loginScreen">
   <div class="login-wrap">
     <div class="login-box">
@@ -231,7 +219,6 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
   </div>
 </div>
 
-<!-- CAMBIO DE CONTRASEÑA OBLIGATORIO (primera vez) -->
 <div class="screen" id="passwordChangeScreen">
   <div class="login-wrap">
     <div class="login-box">
@@ -253,7 +240,6 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
   </div>
 </div>
 
-<!-- MAIN APP -->
 <div class="screen" id="mainScreen">
   <div class="main-wrap">
     <div class="main-header">
@@ -269,7 +255,6 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
       </div>
     </div>
 
-    <!-- SECCIÓN: FICHAR -->
     <div class="section show" id="section-punch">
       <div class="punch-card" id="punchCard">
         <div class="punch-status-icon" id="punchStatusIcon">📍</div>
@@ -288,7 +273,6 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
       </div>
     </div>
 
-    <!-- SECCIÓN: HORARIO -->
     <div class="section" id="section-schedule">
       <div class="schedule-title">📅 Mi horario</div>
       <div class="schedule-week">
@@ -304,7 +288,6 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
       <button class="btn-view-team" onclick="showTeamModal()">👥 Ver horario del equipo</button>
     </div>
 
-    <!-- SECCIÓN: CAMBIOS DE TURNO (NUEVO) -->
     <div class="section" id="section-swaps">
       <div class="swap-title">🔄 Cambios de turno</div>
       <button class="btn-request-swap" onclick="openSwapRequestModal()">+ Solicitar cambio</button>
@@ -334,7 +317,6 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
       </div>
     </div>
 
-    <!-- SECCIÓN: PERFIL -->
     <div class="section" id="section-profile">
       <div class="profile-header">
         <div class="profile-avatar" id="profileAvatar">--</div>
@@ -355,7 +337,6 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
     </div>
   </div>
 
-  <!-- NAV INFERIOR -->
   <div class="bottom-nav">
     <div class="bottom-nav-inner">
       <button class="nav-btn active" data-section="punch" onclick="switchSection('punch', event)">
@@ -379,7 +360,6 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
   </div>
 </div>
 
-<!-- MODAL SCANNER QR -->
 <div class="modal-overlay" id="scannerOverlay">
   <div class="modal-card">
     <div class="modal-header">
@@ -397,7 +377,6 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
   </div>
 </div>
 
-<!-- MODAL TEAM VIEW -->
 <div class="modal-overlay" id="teamOverlay">
   <div class="modal-card">
     <div class="modal-header">
@@ -414,7 +393,6 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
   </div>
 </div>
 
-<!-- MODAL CAMBIAR CONTRASEÑA -->
 <div class="modal-overlay" id="changePwOverlay">
   <div class="modal-card">
     <div class="modal-header">
@@ -445,7 +423,6 @@ textarea { resize: vertical; min-height: 60px; font-size: 13px; }
   </div>
 </div>
 
-<!-- MODAL SOLICITAR CAMBIO DE TURNO (NUEVO) -->
 <div class="modal-overlay" id="swapRequestOverlay">
   <div class="modal-card">
     <div class="modal-header">
@@ -529,8 +506,8 @@ let myShifts=[];
 let teamShifts=[];
 let teamMembers=[];
 let mySwaps=[];
-let allMyShifts=[]; // Todos mis turnos futuros para el modal de swap
-let partnerCandidates=[]; // Compañeros del mismo puesto
+let allMyShifts=[];
+let partnerCandidates=[];
 let selectedPartnerShifts=[];
 let qrScanner=null;
 let currentPunchType=null;
@@ -539,6 +516,24 @@ function getMondayOfWeek(date){const d=new Date(date);const day=d.getDay();const
 function toDateStr(d){const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');return `${y}-${m}-${day}`;}
 function fT(iso){return new Date(iso).toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit',hour12:false});}
 function fD(d){return d.toLocaleDateString('es-AR',{weekday:'short',day:'numeric',month:'short'});}
+
+// ============ HASH DE CONTRASEÑAS ============
+// Verificar contraseña: soporta hash bcrypt Y texto plano (compatibilidad)
+function verifyPassword(inputPassword, storedPassword){
+  if(!storedPassword)return false;
+  // Si empieza con $2 → es un hash bcrypt
+  if(storedPassword.startsWith('$2')){
+    try{return dcodeIO.bcrypt.compareSync(inputPassword, storedPassword);}
+    catch(e){console.error('Error verificando hash:',e);return false;}
+  }
+  // Texto plano (contraseña sin migrar todavía)
+  return inputPassword === storedPassword;
+}
+
+// Hashear una contraseña nueva
+function hashPassword(password){
+  return dcodeIO.bcrypt.hashSync(password, 10);
+}
 
 // ============ LOGIN ============
 async function doLogin(){
@@ -549,9 +544,12 @@ async function doLogin(){
   if(!username||!password){errBox.textContent='Completá los campos';errBox.classList.add('show');return;}
   try{
     const {data}=await db.from('employees').select('*, teams(name)').eq('username',username).eq('active',true).single();
-    if(!data||data.password!==password){errBox.textContent='Usuario o contraseña incorrectos';errBox.classList.add('show');return;}
+    if(!data){errBox.textContent='Usuario o contraseña incorrectos';errBox.classList.add('show');return;}
+    // Verificar contraseña usando función unificada (soporta hash y texto plano)
+    if(!verifyPassword(password, data.password)){
+      errBox.textContent='Usuario o contraseña incorrectos';errBox.classList.add('show');return;
+    }
     currentUser=data;
-    // Si es primera vez, forzar cambio
     if(!data.password_changed){
       document.getElementById('loginScreen').classList.remove('show');
       document.getElementById('passwordChangeScreen').classList.add('show');
@@ -572,9 +570,11 @@ async function submitPasswordChange(){
   if(p1!==p2){eB.textContent='Las contraseñas no coinciden';eB.classList.add('show');return;}
   if(p1==='123456'){eB.textContent='No podés usar la contraseña por defecto';eB.classList.add('show');return;}
   try{
-    const {error}=await db.from('employees').update({password:p1,password_changed:true}).eq('id',currentUser.id);
+    // Hashear la nueva contraseña
+    const hashedPw=hashPassword(p1);
+    const {error}=await db.from('employees').update({password:hashedPw,password_changed:true}).eq('id',currentUser.id);
     if(error)throw error;
-    currentUser.password=p1;currentUser.password_changed=true;
+    currentUser.password=hashedPw;currentUser.password_changed=true;
     oB.textContent='✓ Contraseña cambiada';oB.classList.add('show');
     setTimeout(async()=>{
       document.getElementById('passwordChangeScreen').classList.remove('show');
@@ -610,7 +610,6 @@ function doLogout(){
   document.getElementById('loginPassword').value='';
 }
 
-// ============ NAV ============
 function switchSection(name,evt){
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('show'));
@@ -620,7 +619,6 @@ function switchSection(name,evt){
   if(name==='swaps'){renderSwaps();}
 }
 
-// ============ IP + FICHAJE ============
 async function loadBranchIP(){
   try{
     const {data}=await db.from('branches').select('public_ip').eq('id',BRANCH_ID).single();
@@ -648,7 +646,7 @@ function updatePunchCard(){
   const subtitle=document.getElementById('punchStatusSubtitle');
   const actions=document.getElementById('punchActions');
   const lastPunch=todayPunches[todayPunches.length-1];
-  let currentState='out'; // 'out', 'in', 'in_break'
+  let currentState='out';
   if(lastPunch){
     if(lastPunch.punch_type==='in'||lastPunch.punch_type==='break_end')currentState='in';
     else if(lastPunch.punch_type==='break_start')currentState='in_break';
@@ -680,7 +678,6 @@ function renderTodayLog(){
   c.innerHTML=todayPunches.map(p=>`<div class="log-item"><span class="log-icon">${icons[p.punch_type]}</span><span class="log-time">${fT(p.timestamp)}</span><span class="log-type">${labels[p.punch_type]}${p.is_manual?' (manual)':''}</span></div>`).join('');
 }
 
-// ============ QR SCANNER ============
 function startScan(punchType){
   currentPunchType=punchType;
   const labels={in:'Entrada',out:'Salida',break_start:'Inicio break',break_end:'Fin break'};
@@ -711,22 +708,18 @@ async function processPunch(){
   try{
     const clientIP=await getClientIP();
     if(!clientIP){document.getElementById('scannerError').textContent='No se pudo obtener tu IP. Reintentá.';document.getElementById('scannerError').classList.add('show');document.getElementById('scannerInfo').style.display='none';return;}
-    // Lógica de IP inteligente
     let ipVerified=false;
     if(branchIP&&branchIP===clientIP){ipVerified=true;}
     else{
-      // Ver si hay otras personas hoy con esta IP
       const today=new Date();today.setHours(0,0,0,0);
       const {data:othersToday}=await db.from('punches').select('client_ip').gte('timestamp',today.toISOString()).eq('ip_verified',true);
       const ipsToday=[...new Set((othersToday||[]).map(p=>p.client_ip).filter(Boolean))];
       if(ipsToday.length===0){
-        // Nadie fichó hoy, actualizamos IP
         await db.from('branches').update({public_ip:clientIP}).eq('id',BRANCH_ID);
         branchIP=clientIP;ipVerified=true;
       }else if(ipsToday.includes(clientIP)){ipVerified=true;}
       else{document.getElementById('scannerError').textContent=`⚠ No estás en el local. Solo podés fichar desde la sucursal.`;document.getElementById('scannerError').classList.add('show');document.getElementById('scannerInfo').style.display='none';return;}
     }
-    // Registrar fichaje
     const {error}=await db.from('punches').insert({
       employee_id:currentUser.id,branch_id:BRANCH_ID,punch_type:currentPunchType,role:currentUser.default_role,
       method:'qr',timestamp:new Date().toISOString(),client_ip:clientIP,ip_verified:ipVerified,is_manual:false
@@ -744,7 +737,6 @@ function closeScannerModal(){
   document.getElementById('scannerOverlay').classList.remove('show');
 }
 
-// ============ HORARIO ============
 function renderMyWeek(){
   const end=new Date(myWeekStart);end.setDate(end.getDate()+6);
   const d1=myWeekStart.getDate(),d2=end.getDate();
@@ -790,12 +782,10 @@ async function showTeamModal(){
   document.getElementById('teamTodayList').innerHTML='<div style="text-align:center;padding:16px;color:rgba(255,255,255,0.4);font-size:12px;">Cargando...</div>';
   document.getElementById('teamWeekList').innerHTML='';
   try{
-    // Cargar miembros del equipo (excepto uno mismo)
     const {data:members}=await db.from('employees').select('*').eq('team_id',currentUser.team_id).eq('active',true).neq('id',currentUser.id).order('full_name');
     teamMembers=members||[];
     const teamName=currentUser.teams?.name||'Sin equipo';
     document.getElementById('teamModalSubtitle').textContent=`Equipo ${teamName} · ${teamMembers.length} compañeros`;
-    // Cargar horarios de la semana
     const weekEnd=new Date(myWeekStart);weekEnd.setDate(weekEnd.getDate()+6);
     const memberIds=teamMembers.map(m=>m.id);
     if(memberIds.length===0){document.getElementById('teamTodayList').innerHTML='<div style="text-align:center;padding:16px;color:rgba(255,255,255,0.4);font-size:12px;">Sin compañeros</div>';return;}
@@ -809,7 +799,6 @@ function renderTeamModal(){
   const todayStr=toDateStr(new Date());
   const todayList=document.getElementById('teamTodayList');
   const weekList=document.getElementById('teamWeekList');
-  // HOY
   const todayShifts=teamShifts.filter(s=>s.shift_date===todayStr);
   if(todayShifts.length===0)todayList.innerHTML='<div style="text-align:center;padding:12px;color:rgba(255,255,255,0.4);font-size:12px;">Nadie tiene horario cargado para hoy</div>';
   else{
@@ -823,7 +812,6 @@ function renderTeamModal(){
     }
     todayList.innerHTML=h;
   }
-  // RESTO DE LA SEMANA
   const dates=[];for(let i=0;i<7;i++){const d=new Date(myWeekStart);d.setDate(d.getDate()+i);dates.push(d);}
   let h='';
   for(const d of dates){
@@ -845,7 +833,6 @@ function renderTeamModal(){
 
 function closeTeamModal(){document.getElementById('teamOverlay').classList.remove('show');}
 
-// ============ CAMBIAR CONTRASEÑA ============
 function openChangePasswordModal(){
   document.getElementById('currentPassword').value='';
   document.getElementById('newPasswordChange1').value='';
@@ -863,14 +850,19 @@ async function submitChangePassword(){
   const p1=document.getElementById('newPasswordChange1').value;
   const p2=document.getElementById('newPasswordChange2').value;
   if(!current||!p1||!p2){eB.textContent='Completá todos los campos';eB.classList.add('show');return;}
-  if(current!==currentUser.password){eB.textContent='La contraseña actual es incorrecta';eB.classList.add('show');return;}
+  // Verificar contraseña actual (soporta hash y texto plano)
+  if(!verifyPassword(current, currentUser.password)){
+    eB.textContent='La contraseña actual es incorrecta';eB.classList.add('show');return;
+  }
   if(p1.length<6){eB.textContent='Mínimo 6 caracteres';eB.classList.add('show');return;}
   if(p1!==p2){eB.textContent='Las contraseñas no coinciden';eB.classList.add('show');return;}
   if(p1===current){eB.textContent='La nueva debe ser distinta a la actual';eB.classList.add('show');return;}
   try{
-    const {error}=await db.from('employees').update({password:p1,password_changed:true}).eq('id',currentUser.id);
+    // Hashear la nueva contraseña
+    const hashedPw=hashPassword(p1);
+    const {error}=await db.from('employees').update({password:hashedPw,password_changed:true}).eq('id',currentUser.id);
     if(error)throw error;
-    currentUser.password=p1;
+    currentUser.password=hashedPw;
     oB.textContent='✓ Contraseña actualizada';oB.classList.add('show');
     setTimeout(closeChangePasswordModal,1500);
   }catch(err){eB.textContent='Error: '+(err.message||'');eB.classList.add('show');}
@@ -914,7 +906,6 @@ function renderSwapCard(swap,type){
   else if(swap.status==='accepted_by_receiver'){cardClass+=' pending';statusBadge='<span class="swap-status-badge waiting_manager">⏳ Esperando jefa</span>';}
   else if(swap.status==='approved'){cardClass+=' approved';statusBadge='<span class="swap-status-badge approved">✓ Aprobado</span>';}
   else if(['rejected_by_receiver','rejected_by_manager','cancelled','expired'].includes(swap.status)){cardClass+=' rejected';const labels={rejected_by_receiver:'✗ Rechazado',rejected_by_manager:'✗ Rechazado por jefa',cancelled:'✗ Cancelado',expired:'⏱ Expirado'};statusBadge=`<span class="swap-status-badge rejected">${labels[swap.status]}</span>`;}
-  // Formato de turnos
   const myShiftStr=formatShiftForSwap(myShift);
   const otherShiftStr=formatShiftForSwap(otherShift);
   const withLabel=type==='incoming'?`${otherPerson.full_name} te propone`:`Con ${otherPerson.full_name}`;
@@ -930,6 +921,7 @@ function renderSwapCard(swap,type){
     actions=`<div class="swap-actions"><button class="swap-btn cancel" onclick="cancelSwap('${swap.id}')">Cancelar solicitud</button></div>`;
   }
   const reasonHtml=swap.reason?`<div class="swap-reason">💬 ${swap.reason}</div>`:'';
+  const managerNoteHtml=swap.response_notes&&swap.status==='rejected_by_manager'?`<div class="swap-reason">🚫 Jefa: ${swap.response_notes}</div>`:'';
   const createdAt=new Date(swap.created_at).toLocaleDateString('es-AR');
   return `<div class="${cardClass}">
     <div class="swap-header">
@@ -943,6 +935,7 @@ function renderSwapCard(swap,type){
     </div>
     ${approvalInfo}
     ${reasonHtml}
+    ${managerNoteHtml}
     <div class="swap-meta">Solicitado ${createdAt}</div>
     ${actions}
   </div>`;
@@ -957,7 +950,6 @@ function formatShiftForSwap(shift){
   return{date:dateStr,type:`${def.label} ${shift.start_time.substring(0,5)}-${shift.end_time.substring(0,5)}`};
 }
 
-// ============ MODAL SOLICITAR CAMBIO ============
 async function openSwapRequestModal(){
   document.getElementById('swapError').classList.remove('show');
   document.getElementById('swapSuccess').classList.remove('show');
@@ -966,7 +958,6 @@ async function openSwapRequestModal(){
   document.getElementById('swapPartnerShift').innerHTML='<option value="">Seleccionar compañero primero...</option>';
   document.getElementById('swapReason').value='';
   document.getElementById('swapPreview').style.display='none';
-  // Cargar mis turnos futuros (más de 24hs)
   try{
     const now=new Date();
     const min24h=new Date(now.getTime()+24*60*60*1000);
@@ -976,7 +967,6 @@ async function openSwapRequestModal(){
     sel.innerHTML='<option value="">Seleccionar...</option>';
     if(allMyShifts.length===0){sel.innerHTML='<option value="">No tenés turnos con 24hs de anticipación</option>';}
     else{allMyShifts.forEach(s=>{const info=formatShiftForSwap(s);sel.innerHTML+=`<option value="${s.id}">${info.date} · ${info.type}</option>`;});}
-    // Cargar compañeros del mismo equipo y mismo puesto
     const {data:mates}=await db.from('employees').select('id, full_name, default_role').eq('team_id',currentUser.team_id).eq('default_role',currentUser.default_role).eq('active',true).neq('id',currentUser.id).order('full_name');
     partnerCandidates=mates||[];
     const pSel=document.getElementById('swapPartner');
@@ -1036,11 +1026,8 @@ function updateSwapPreview(){
 }
 
 function checkNeedsManagerApproval(shift1,shift2){
-  // Si alguno es libre → necesita jefa (franco)
   if(shift1.jornada_type==='libre'||shift2.jornada_type==='libre')return{needsManager:true,reason:'franco'};
-  // Si alguno es academia y el otro no → necesita jefa
   if((shift1.jornada_type==='academia'&&shift2.jornada_type!=='academia')||(shift2.jornada_type==='academia'&&shift1.jornada_type!=='academia'))return{needsManager:true,reason:'jornada_academia'};
-  // Comparar horas totales
   const h1=JORNADA_DEFAULTS[shift1.jornada_type]?.hours||0;
   const h2=JORNADA_DEFAULTS[shift2.jornada_type]?.hours||0;
   if(h1!==h2)return{needsManager:true,reason:'horas_distintas'};
@@ -1059,9 +1046,7 @@ async function submitSwapRequest(){
   if(!partnerShiftId){eB.textContent='Elegí el turno de tu compañero';eB.classList.add('show');return;}
   const myShift=allMyShifts.find(s=>s.id===myShiftId);
   const partnerShift=selectedPartnerShifts.find(s=>s.id===partnerShiftId);
-  // Validar: ambos libres = no permitido
   if(myShift.jornada_type==='libre'&&partnerShift.jornada_type==='libre'){eB.textContent='No podés intercambiar dos francos';eB.classList.add('show');return;}
-  // Verificar si ya hay solicitud pendiente sobre estos turnos
   const {data:existing}=await db.from('shift_swaps').select('id').or(`requester_shift_id.eq.${myShiftId},receiver_shift_id.eq.${myShiftId},requester_shift_id.eq.${partnerShiftId},receiver_shift_id.eq.${partnerShiftId}`).in('status',['pending','accepted_by_receiver']);
   if(existing&&existing.length>0){eB.textContent='Ya hay una solicitud pendiente sobre uno de estos turnos';eB.classList.add('show');return;}
   const {needsManager,reason:reasonWhy}=checkNeedsManagerApproval(myShift,partnerShift);
@@ -1083,8 +1068,6 @@ async function submitSwapRequest(){
 async function respondSwap(swapId,accept){
   const swap=mySwaps.find(s=>s.id===swapId);
   if(!swap){showToast('✗ Solicitud no encontrada',true);return;}
-  
-  // RECHAZAR
   if(!accept){
     if(!confirm('¿Rechazar esta solicitud de cambio?'))return;
     try{
@@ -1095,8 +1078,6 @@ async function respondSwap(swapId,accept){
     }catch(e){console.error('Error rechazar:',e);showToast('✗ Error al rechazar',true);}
     return;
   }
-  
-  // ACEPTAR CON APROBACIÓN DE JEFA
   if(swap.needs_manager_approval){
     if(!confirm('¿Aceptar este cambio?\n\nLa jefa deberá aprobar el cambio final.'))return;
     try{
@@ -1107,93 +1088,41 @@ async function respondSwap(swapId,accept){
     }catch(e){console.error('Error aceptar:',e);showToast('✗ Error al aceptar',true);}
     return;
   }
-  
-  // ACEPTAR - CAMBIO DIRECTO
   if(!confirm('¿Aceptar este cambio?\n\nEl intercambio se hará inmediatamente.'))return;
-  
   const shift1Id=swap.requester_shift_id;
   const shift2Id=swap.receiver_shift_id;
   const req1=swap.requester_id;
   const req2=swap.receiver_id;
-  
   try{
-    // Cargar los shifts completos primero (necesitamos los datos para recrearlos)
     const {data:shifts,error:errLoad}=await db.from('shifts').select('*').in('id',[shift1Id,shift2Id]);
     if(errLoad)throw new Error('Error leyendo turnos: '+errLoad.message);
     if(!shifts||shifts.length!==2)throw new Error('No se encontraron ambos turnos');
-    
     const shift1=shifts.find(s=>s.id===shift1Id);
     const shift2=shifts.find(s=>s.id===shift2Id);
-    
-    // Estrategia: eliminar ambos shifts y crear 2 nuevos con los dueños intercambiados
-    // Esto evita el conflicto de la restricción única (employee_id, shift_date)
-    
-    // Paso 1: Eliminar ambos shifts viejos
     const {error:errDel}=await db.from('shifts').delete().in('id',[shift1Id,shift2Id]);
     if(errDel)throw new Error('Error eliminando turnos viejos: '+errDel.message);
-    
-    // Paso 2: Crear los 2 nuevos con dueños intercambiados
     const newShift1={
-      employee_id:req2, // era req1, ahora req2
-      branch_id:shift1.branch_id,
-      shift_date:shift1.shift_date,
-      jornada_type:shift1.jornada_type,
-      start_time:shift1.start_time,
-      end_time:shift1.end_time,
-      break_duration_minutes:shift1.break_duration_minutes,
-      notes:shift1.notes,
-      created_by:currentUser.id
+      employee_id:req2,branch_id:shift1.branch_id,shift_date:shift1.shift_date,
+      jornada_type:shift1.jornada_type,start_time:shift1.start_time,end_time:shift1.end_time,
+      break_duration_minutes:shift1.break_duration_minutes,notes:shift1.notes,created_by:currentUser.id
     };
     const newShift2={
-      employee_id:req1, // era req2, ahora req1
-      branch_id:shift2.branch_id,
-      shift_date:shift2.shift_date,
-      jornada_type:shift2.jornada_type,
-      start_time:shift2.start_time,
-      end_time:shift2.end_time,
-      break_duration_minutes:shift2.break_duration_minutes,
-      notes:shift2.notes,
-      created_by:currentUser.id
+      employee_id:req1,branch_id:shift2.branch_id,shift_date:shift2.shift_date,
+      jornada_type:shift2.jornada_type,start_time:shift2.start_time,end_time:shift2.end_time,
+      break_duration_minutes:shift2.break_duration_minutes,notes:shift2.notes,created_by:currentUser.id
     };
-    
     const {data:newShifts,error:errIns}=await db.from('shifts').insert([newShift1,newShift2]).select();
-    if(errIns){
-      // Si falla, intentar restaurar los originales
-      console.error('Error insertando nuevos, intentando restaurar...');
-      await db.from('shifts').insert([{
-        id:shift1Id,employee_id:req1,branch_id:shift1.branch_id,shift_date:shift1.shift_date,
-        jornada_type:shift1.jornada_type,start_time:shift1.start_time,end_time:shift1.end_time,
-        break_duration_minutes:shift1.break_duration_minutes,notes:shift1.notes
-      },{
-        id:shift2Id,employee_id:req2,branch_id:shift2.branch_id,shift_date:shift2.shift_date,
-        jornada_type:shift2.jornada_type,start_time:shift2.start_time,end_time:shift2.end_time,
-        break_duration_minutes:shift2.break_duration_minutes,notes:shift2.notes
-      }]);
-      throw new Error('Error creando turnos intercambiados: '+errIns.message);
-    }
-    
-    // Paso 3: Actualizar el swap con los NUEVOS IDs de shifts y marcarlo aprobado
-    // Como creamos nuevos shifts, los IDs viejos ya no existen
+    if(errIns)throw new Error('Error creando turnos intercambiados: '+errIns.message);
     const newShift1FromDb=newShifts.find(s=>s.employee_id===req2&&s.shift_date===shift1.shift_date);
     const newShift2FromDb=newShifts.find(s=>s.employee_id===req1&&s.shift_date===shift2.shift_date);
-    
     await db.from('shift_swaps').update({
-      status:'approved',
-      responded_at:new Date().toISOString(),
-      approved_at:new Date().toISOString(),
-      requester_shift_id:newShift1FromDb?.id||shift1Id,
-      receiver_shift_id:newShift2FromDb?.id||shift2Id
+      status:'approved',responded_at:new Date().toISOString(),approved_at:new Date().toISOString(),
+      requester_shift_id:newShift1FromDb?.id||shift1Id,receiver_shift_id:newShift2FromDb?.id||shift2Id
     }).eq('id',swapId);
-    
     showToast('✓ Cambio hecho');
-    await loadMySwaps();
-    await loadMySchedule();
-    renderSwaps();
-    updateSwapsBadge();
-  }catch(e){
-    console.error('Error al hacer el cambio:',e);
-    showToast('✗ Error: '+(e.message||'desconocido'),true);
-  }
+    await loadMySwaps();await loadMySchedule();
+    renderSwaps();updateSwapsBadge();
+  }catch(e){console.error('Error al hacer el cambio:',e);showToast('✗ Error: '+(e.message||'desconocido'),true);}
 }
 
 async function cancelSwap(swapId){
